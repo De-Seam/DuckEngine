@@ -1,6 +1,8 @@
 #pragma once
 #include "de/core.h"
 
+#include "SDL/SDL.h"
+
 namespace da
 {
 	class Editor
@@ -15,5 +17,7 @@ namespace da
 	private:
 		static bool m_is_running;
 		static f32 m_delta_time;
+
+		static SDL_Texture* m_viewport_texture;
 	};
 }

@@ -7,14 +7,13 @@
 #include "imgui/imgui_impl_sdl.h"
 #include "imgui/imgui_impl_sdlrenderer.h"
 
-#include "SDL/SDL.h"
-
 #include <chrono>
 
 namespace da
 {
 	bool Editor::m_is_running = false;
 	f32 Editor::m_delta_time = F32_EPSILON;
+	SDL_Texture* Editor::m_viewport_texture = nullptr;
 
 	void Editor::init()
 	{
@@ -29,6 +28,8 @@ namespace da
 		// Setup Dear ImGui style
 		ImGui::StyleColorsDark();
 		//ImGui::StyleColorsLight();
+
+		m_viewport_texture = SDL_CreateTexture(de::Renderer::get_renderer(), SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 1920, 1080);
 
 		// Setup Platform/Renderer backends
 		ImGui_ImplSDL2_InitForSDLRenderer(de::Renderer::get_window(), de::Renderer::get_renderer());
@@ -69,6 +70,7 @@ namespace da
 			ImGui_ImplSDL2_ProcessEvent(&event);
 		}
 
+		SDL_SetRenderTarget(de::Renderer::get_renderer(), m_viewport_texture);
 
 		de::Engine::update(m_delta_time);
 
@@ -76,6 +78,10 @@ namespace da
 		ImGui::Text("Wow");
 		ImGui::End();
 
+		ImGui::Image((ImTextureID)m_viewport_texture, {1280, 720});
+
+
+		SDL_SetRenderTarget(de::Renderer::get_renderer(), nullptr);
 		ImGui::Render();
 		ImGui_ImplSDLRenderer_RenderDrawData(ImGui::GetDrawData());
 		de::Engine::end_frame();
