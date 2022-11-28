@@ -1,0 +1,86 @@
+#include "da/editor/editor.h"
+
+#include "de/engine/engine.h"
+#include "de/renderer/renderer.h"
+
+#include "imgui/imgui.h"
+#include "imgui/imgui_impl_sdl.h"
+#include "imgui/imgui_impl_sdlrenderer.h"
+
+#include "SDL/SDL.h"
+
+#include <chrono>
+
+namespace da
+{
+	bool Editor::m_is_running = false;
+	f32 Editor::m_delta_time = F32_EPSILON;
+
+	void Editor::init()
+	{
+		de::Engine::init();
+
+		IMGUI_CHECKVERSION();
+		ImGui::CreateContext();
+		ImGuiIO& io = ImGui::GetIO(); (void)io;
+		//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+		//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+
+		// Setup Dear ImGui style
+		ImGui::StyleColorsDark();
+		//ImGui::StyleColorsLight();
+
+		// Setup Platform/Renderer backends
+		ImGui_ImplSDL2_InitForSDLRenderer(de::Renderer::get_window(), de::Renderer::get_renderer());
+		ImGui_ImplSDLRenderer_Init(de::Renderer::get_renderer());
+
+		main_loop();
+	}
+
+	void Editor::main_loop()
+	{
+		m_is_running = true;
+		auto current_time = std::chrono::steady_clock::now();
+
+		while(m_is_running)
+		{
+			auto start = std::chrono::steady_clock::now();
+
+			update(m_delta_time);
+
+			auto end = std::chrono::steady_clock::now();
+			std::chrono::duration<f32> elapsed_chrono_time = end - start;
+			m_delta_time = elapsed_chrono_time.count();
+		}
+
+		de::Engine::shutdown();
+	}
+
+	void Editor::update(f32 dt)
+	{
+		de::Engine::begin_frame();
+		ImGui_ImplSDLRenderer_NewFrame();
+		ImGui_ImplSDL2_NewFrame();
+		ImGui::NewFrame();
+
+		SDL_Event event;
+		while (SDL_PollEvent(&event))
+		{
+			ImGui_ImplSDL2_ProcessEvent(&event);
+		}
+
+
+		de::Engine::update(m_delta_time);
+
+		ImGui::Begin("Window");
+		ImGui::Text("Wow");
+		ImGui::End();
+
+		ImGui::Render();
+		ImGui_ImplSDLRenderer_RenderDrawData(ImGui::GetDrawData());
+		de::Engine::end_frame();
+
+		if(!de::Engine::get_is_running())
+			m_is_running = false;
+	}
+}
