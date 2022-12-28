@@ -1,7 +1,11 @@
 #pragma once
-#include "de/core.h"
 #include "variables.h"
 
+#ifdef DUCK_EXPORTS
+#define DUCK_API __declspec(dllexport)
+#else
+#define DUCK_API __declspec(dllimport)
+#endif
 
 namespace de
 {

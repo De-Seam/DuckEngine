@@ -9,7 +9,7 @@
 
 namespace de //DuckEngine
 {
-	struct SDLEventFunction
+	struct SDLEventFunction : public Object
 	{
 		SDL_EventType event_type = SDL_EventType::SDL_FIRSTEVENT;
 		std::function<void(SDL_Event&)> function_ptr = nullptr;
@@ -18,7 +18,8 @@ namespace de //DuckEngine
 	class DUCK_API SDLEventManager
 	{
 	public:
-		static void add_event_function(SDLEventFunction event_function, bool all_events = false);
+		static void remove_event_function(UID uid);
+		static UID add_event_function(SDLEventFunction event_function, bool all_events = false);
 		static void update();
 
 	private:

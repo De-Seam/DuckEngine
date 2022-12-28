@@ -7,4 +7,9 @@ namespace de
 	{
 		Engine::add_object(this);
 	}
+
+	Object::~Object()
+	{
+		Engine::remove_object(this);
+	}
 }

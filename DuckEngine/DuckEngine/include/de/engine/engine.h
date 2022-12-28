@@ -23,9 +23,11 @@ namespace de //DuckEngine
 
 		static f32 get_delta_time() { return m_delta_time; }
 		static bool get_is_running() { return m_is_running; }
+		static Object* get_object(UID uid);
 	private:
 		static void shutdown_internal(); //Actual shutdown logic
 		static void add_object(Object* object); //For objects to add themselves
+		static void remove_object(Object* object); //For objects to remove themselves
 
 	private:
 		static bool m_is_running;

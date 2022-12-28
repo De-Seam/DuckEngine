@@ -7,6 +7,8 @@
 #endif
 
 #include "utils/variables.h"
+#include "utils/uid.h"
+#include "engine/object.h"
 
 #include <string>
 

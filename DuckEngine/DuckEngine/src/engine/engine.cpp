@@ -71,6 +71,11 @@ namespace de
 		Renderer::end_frame();
 	}
 
+	Object* Engine::get_object(UID uid)
+	{
+		return m_objects[uid];
+	}
+
 	void Engine::shutdown_internal()
 	{
 		Renderer::shutdown();
@@ -81,5 +86,10 @@ namespace de
 	void Engine::add_object(Object* object)
 	{
 		m_objects[object->uid] = object;
+	}
+
+	void Engine::remove_object(Object* object)
+	{
+		m_objects.erase(object->uid);
 	}
 }
