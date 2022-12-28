@@ -1,5 +1,6 @@
 #pragma once
 #include "de/core.h"
+#include "de/engine/object.h"
 #include "de/world/world.h"
 
 #include <entt/entt.hpp>
@@ -10,7 +11,7 @@ namespace de
 {
 	class World;
 
-	class Entity
+	class DUCK_API Entity : public Object
 	{
 	public:
 		~Entity();

@@ -2,10 +2,12 @@
 
 #include "de/engine/engine.h"
 #include "de/renderer/renderer.h"
+#include "de/events/sdl_event_manager.h"
 
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_sdl.h"
 #include "imgui/imgui_impl_sdlrenderer.h"
+
 
 #include <chrono>
 
@@ -34,6 +36,14 @@ namespace da
 		// Setup Platform/Renderer backends
 		ImGui_ImplSDL2_InitForSDLRenderer(de::Renderer::get_window(), de::Renderer::get_renderer());
 		ImGui_ImplSDLRenderer_Init(de::Renderer::get_renderer());
+
+		de::SDLEventFunction sdl_imgui_event_function;
+		sdl_imgui_event_function.function_ptr = 
+		{[](SDL_Event& e)
+		{
+			ImGui_ImplSDL2_ProcessEvent(&e);
+		}};
+		de::SDLEventManager::add_event_function(sdl_imgui_event_function, true);
 
 		main_loop();
 	}
@@ -64,21 +74,13 @@ namespace da
 		ImGui_ImplSDL2_NewFrame();
 		ImGui::NewFrame();
 
-		SDL_Event event;
-		while (SDL_PollEvent(&event))
-		{
-			ImGui_ImplSDL2_ProcessEvent(&event);
-		}
-
 		SDL_SetRenderTarget(de::Renderer::get_renderer(), m_viewport_texture);
 
 		de::Engine::update(m_delta_time);
 
-		ImGui::Begin("Window");
-		ImGui::Text("Wow");
+		ImGui::Begin("Viewport");
+			ImGui::Image((ImTextureID)m_viewport_texture, {1280, 720});
 		ImGui::End();
-
-		ImGui::Image((ImTextureID)m_viewport_texture, {1280, 720});
 
 
 		SDL_SetRenderTarget(de::Renderer::get_renderer(), nullptr);

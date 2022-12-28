@@ -112,22 +112,40 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\engine\object.cpp" />
     <ClCompile Include="src\ecs\systems\render_systems.cpp" />
     <ClCompile Include="src\core.cpp" />
     <ClCompile Include="src\engine\engine.cpp" />
     <ClCompile Include="src\entity\entity.cpp" />
+    <ClCompile Include="src\events\sdl_event_manager.cpp" />
+    <ClCompile Include="src\renderer\camera.cpp" />
     <ClCompile Include="src\renderer\renderer.cpp" />
+    <ClCompile Include="src\utils\uid.cpp" />
     <ClCompile Include="src\world\world.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ext\include\phmap\btree.h" />
+    <ClInclude Include="ext\include\phmap\meminfo.h" />
+    <ClInclude Include="ext\include\phmap\phmap.h" />
+    <ClInclude Include="ext\include\phmap\phmap_base.h" />
+    <ClInclude Include="ext\include\phmap\phmap_bits.h" />
+    <ClInclude Include="ext\include\phmap\phmap_config.h" />
+    <ClInclude Include="ext\include\phmap\phmap_dump.h" />
+    <ClInclude Include="ext\include\phmap\phmap_fwd_decl.h" />
+    <ClInclude Include="ext\include\phmap\phmap_utils.h" />
     <ClInclude Include="include\de\core.h" />
     <ClInclude Include="include\de\ecs\components\gameplay_component.h" />
     <ClInclude Include="include\de\ecs\components\render_component.h" />
     <ClInclude Include="include\de\ecs\systems\render_systems.h" />
     <ClInclude Include="include\de\engine\engine.h" />
+    <ClInclude Include="include\de\engine\game_instance.h" />
+    <ClInclude Include="include\de\engine\object.h" />
     <ClInclude Include="include\de\entity\entity.h" />
+    <ClInclude Include="include\de\events\sdl_event_manager.h" />
+    <ClInclude Include="include\de\renderer\camera.h" />
     <ClInclude Include="include\de\renderer\renderer.h" />
     <ClInclude Include="include\de\utils\fmath.h" />
+    <ClInclude Include="include\de\utils\uid.h" />
     <ClInclude Include="include\de\utils\variables.h" />
     <ClInclude Include="include\de\world\world.h" />
   </ItemGroup>

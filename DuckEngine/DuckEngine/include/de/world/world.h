@@ -1,16 +1,15 @@
 #pragma once
 #include "de/core.h"
+#include "de/engine/object.h"
 
 #include <entt/entt.hpp>
 #include <phmap/phmap.h>
-
-#include <unordered_map>
 
 namespace de
 {
 	class Entity;
 
-	class DUCK_API World
+	class DUCK_API World : public Object
 	{
 	public:
 		virtual void begin_play();
@@ -26,8 +25,8 @@ namespace de
 		entt::registry& get_registry() { return m_registry; }
 
 	protected:
-		std::unordered_map<entt::entity, Entity*> m_entities;
-		entt::registry m_registry; 
+		phmap::flat_hash_map<entt::entity, Entity*> m_entities = {};
+		entt::registry m_registry = {}; 
 
 	private:
 		void delete_entities();

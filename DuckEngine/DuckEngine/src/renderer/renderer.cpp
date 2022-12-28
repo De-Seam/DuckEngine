@@ -4,6 +4,7 @@ namespace de
 {
 	SDL_Window* Renderer::m_window = nullptr;
 	SDL_Renderer* Renderer::m_renderer = nullptr;
+	Camera* Renderer::m_camera = nullptr;
 
 	void Renderer::init()
 	{
@@ -15,6 +16,8 @@ namespace de
 
 		u32 render_flags = SDL_RENDERER_ACCELERATED;
 		m_renderer = SDL_CreateRenderer(m_window, -1, render_flags);
+
+		m_camera = new Camera;
 	}
 
 	void Renderer::begin_frame()

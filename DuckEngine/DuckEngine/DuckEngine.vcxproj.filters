@@ -33,6 +33,18 @@
     <ClCompile Include="src\ecs\systems\render_systems.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\events\sdl_event_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\renderer\camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\uid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\de\core.h">
@@ -63,6 +75,48 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\de\ecs\systems\render_systems.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\de\events\sdl_event_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\de\renderer\camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\de\engine\object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\de\utils\uid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\include\phmap\btree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\include\phmap\meminfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\include\phmap\phmap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\include\phmap\phmap_base.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\include\phmap\phmap_bits.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\include\phmap\phmap_config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\include\phmap\phmap_dump.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\include\phmap\phmap_fwd_decl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\include\phmap\phmap_utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\de\engine\game_instance.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

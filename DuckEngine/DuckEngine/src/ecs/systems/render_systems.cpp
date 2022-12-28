@@ -3,6 +3,7 @@
 #include "de/ecs/systems/render_systems.h"
 #include "de/engine/engine.h"
 #include "de/renderer/renderer.h"
+#include "de/renderer/camera.h"
 
 namespace de
 {
@@ -18,6 +19,9 @@ namespace de::internal
 	{
 		auto view = reg.view<RenderRectangleComponent, RenderColorComponent, PositionComponent>();
 		SDL_Renderer* renderer = Renderer::get_renderer();
+		Camera* camera = Renderer::get_camera();
+		fm::vec2 camera_position = camera->get_position();
+		fm::vec2 camera_scale = camera->get_scale();
 
 		view.each([&](const entt::entity entity, 
 			const RenderRectangleComponent& rectangle_c, 
@@ -31,10 +35,10 @@ namespace de::internal
 				u8 a = (rgba & 0x000000FF);
 				SDL_SetRenderDrawColor(renderer, r, g, b, a);
 				SDL_FRect rect;
-				rect.x = position_c.position.x;
-				rect.y = position_c.position.y;
-				rect.w = rectangle_c.size.x;
-				rect.h = rectangle_c.size.x;
+				rect.x = position_c.position.x - camera_position.x;
+				rect.y = position_c.position.y - camera_position.y;
+				rect.w = rectangle_c.size.x * camera_scale.x;
+				rect.h = rectangle_c.size.y * camera_scale.y; 
 				SDL_RenderFillRectF(renderer, &rect);
 		});
 	}

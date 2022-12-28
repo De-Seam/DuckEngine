@@ -25,7 +25,7 @@ namespace de
 
 	void World::draw()
 	{
-		for(auto entity_pair : m_entities)
+		for(const auto& entity_pair : m_entities)
 			entity_pair.second->draw();
 
 		render_systems(m_registry);
