@@ -24,6 +24,7 @@ namespace da
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
+		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 		//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
 		//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 
@@ -74,14 +75,25 @@ namespace da
 		ImGui_ImplSDL2_NewFrame();
 		ImGui::NewFrame();
 
+		ImGuiID m_dock_id = ImGui::DockSpaceOverViewport();
+
 		SDL_SetRenderTarget(de::Renderer::get_renderer(), m_viewport_texture);
 
 		de::Engine::update(m_delta_time);
 
-		ImGui::Begin("Viewport");
-			ImGui::Image((ImTextureID)m_viewport_texture, {1280, 720});
+		ImGui::Begin("ViewportWindow");
+		{
+			ImGui::BeginChild("ViewportGame");
+			{
+				ImVec2 im_window_size = ImGui::GetWindowSize();
+
+				ImGui::Image((ImTextureID)m_viewport_texture, im_window_size);
+			}
+			ImGui::EndChild();
+		}
 		ImGui::End();
 
+		ImGui::ShowDemoWindow();
 
 		SDL_SetRenderTarget(de::Renderer::get_renderer(), nullptr);
 		ImGui::Render();
