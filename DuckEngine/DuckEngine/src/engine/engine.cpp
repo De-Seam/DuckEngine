@@ -4,8 +4,8 @@
 #include "de/world/world.h"
 #include "de/events/sdl_event_manager.h"
 
-#include "de/ecs/components/gameplay_component.h"
-#include "de/ecs/components/render_component.h"
+#include "de/ecs/components/gameplay_components.h"
+#include "de/ecs/components/render_components.h"
 
 namespace de
 {

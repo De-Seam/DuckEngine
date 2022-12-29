@@ -1,6 +1,6 @@
 #include "de/world/world.h"
 
-#include "de/ecs/components/gameplay_component.h"
+#include "de/ecs/components/gameplay_components.h"
 #include "de/ecs/systems/render_systems.h"
 
 #include "de/entity/entity.h"

@@ -45,6 +45,9 @@
     <ClCompile Include="src\engine\object.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ecs\functions\render_collisions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\de\core.h">
@@ -68,10 +71,10 @@
     <ClInclude Include="include\de\entity\entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\de\ecs\components\gameplay_component.h">
+    <ClInclude Include="include\de\ecs\components\gameplay_components.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\de\ecs\components\render_component.h">
+    <ClInclude Include="include\de\ecs\components\render_components.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\de\ecs\systems\render_systems.h">
@@ -117,6 +120,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\de\engine\game_instance.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\de\ecs\functions\render_collisions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

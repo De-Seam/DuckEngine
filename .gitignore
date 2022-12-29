@@ -35,3 +35,4 @@ v17/
 build/
 .vs/
 *.pdb
+*.exp

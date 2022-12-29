@@ -1,7 +1,7 @@
 #include "de/entity/entity.h"
 #include "de/world/world.h"
 
-#include "de/ecs/components/gameplay_component.h"
+#include "de/ecs/components/gameplay_components.h"
 
 namespace de
 {

@@ -16,11 +16,11 @@ namespace de
 	public:
 		~Entity();
 
-		virtual void begin_play() {};
-		virtual void end_play() {};
+		virtual void begin_play() {}; //Begin play called after beginning play
+		virtual void end_play() {}; //End play called before ending play
 		
-		virtual void update(f32 dt) {};
-		virtual void draw() {};
+		virtual void update(f32 dt) {}; //Update called every tick
+		virtual void draw() {}; //Additional draw calls.
 
 		void destroy();
 
@@ -69,7 +69,7 @@ namespace de
 	template<typename T>
 	inline bool Entity::has_component()
 	{
-		return m_world->get_registry().has<T>(m_entity_id);
+		return m_world->get_registry().any_of<T>(m_entity_id);
 	}
 
 	template<typename T>
