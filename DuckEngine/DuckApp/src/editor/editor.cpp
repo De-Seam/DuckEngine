@@ -1,9 +1,9 @@
 #include "da/editor/editor.h"
+#include "da/editor/layers/viewport_layer.h"
 
 #include "de/engine/engine.h"
 #include "de/renderer/renderer.h"
 #include "de/events/sdl_event_manager.h"
-#include "de/ecs/functions/render_collisions.h"
 
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_sdl.h"
@@ -16,10 +16,8 @@ namespace da
 {
 	bool Editor::m_is_running = false;
 	f32 Editor::m_delta_time = F32_EPSILON;
+	phmap::flat_hash_map<LayerType, Layer*> Editor::m_layers = {};
 	SDL_Texture* Editor::m_viewport_texture = nullptr;
-	entt::entity Editor::m_selected_entity = entt::null;
-	fm::vec2 Editor::m_viewport_position = {0.f,0.f};
-	fm::vec2 Editor::m_viewport_size = {0.f,0.f};
 
 	void Editor::init()
 	{
@@ -50,7 +48,14 @@ namespace da
 		}};
 		de::SDLEventManager::add_event_function(sdl_imgui_event_function, true);
 
+		new ViewportLayer;
+
 		main_loop();
+	}
+
+	SDL_Texture*& Editor::get_viewport_texture()
+	{
+		return m_viewport_texture;
 	}
 
 	void Editor::main_loop()
@@ -85,38 +90,8 @@ namespace da
 
 		de::Engine::update(m_delta_time);
 
-		ImGui::Begin("ViewportWindow");
-		{
-
-			ImGui::BeginChild("ViewportGame");
-			{
-				m_viewport_position = im_to_fm(ImGui::GetWindowPos());
-
-				ImVec2 im_window_size = ImGui::GetWindowSize();
-				ImGui::Image((ImTextureID)m_viewport_texture, im_window_size);
-
-				fm::vec2 window_size = im_to_fm(im_window_size);
-				if(window_size.x != m_viewport_size.x || 
-					window_size.y != m_viewport_size.y)
-				{
-					SDL_DestroyTexture(m_viewport_texture);
-					m_viewport_texture = SDL_CreateTexture(de::Renderer::get_renderer(), SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, static_cast<int>(window_size.x), static_cast<int>(window_size.y));
-					m_viewport_size = window_size;
-				}
-
-
-				if(ImGui::IsMouseClicked(ImGuiMouseButton_Left))
-				{
-					ImVec2 im_mouse_pos = ImGui::GetMousePos();
-					fm::vec2 mouse_pos = im_to_fm(ImGui::GetMousePos());
-					m_selected_entity = de::get_entity_id_at_point(mouse_pos - m_viewport_position);
-
-					de::log("%i", m_selected_entity);
-				}
-			}
-			ImGui::EndChild();
-		}
-		ImGui::End();
+		for(auto layer : m_layers)
+			layer.second->update(dt);
 
 		ImGui::ShowDemoWindow();
 
@@ -127,5 +102,24 @@ namespace da
 
 		if(!de::Engine::get_is_running())
 			m_is_running = false;
+	}
+
+	int Editor::add_layer(Layer* layer)
+	{
+		auto it = m_layers.find(layer->get_type());
+		if(it != m_layers.end())
+		{
+			de::log(de::LogType::error, "Editor tried to add layer that already exists!");
+			return 1; //Failure
+		}
+		m_layers[layer->get_type()] = layer;
+		return 0; //Success
+	}
+
+	int Editor::delete_layer(Layer* layer)
+	{
+		if(m_layers.erase(layer->get_type()) == 0)
+			return 1; //Failure
+		return 0; //Success
 	}
 }
