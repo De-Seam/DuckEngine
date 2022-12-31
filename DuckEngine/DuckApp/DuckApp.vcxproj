@@ -115,6 +115,7 @@
     <ClCompile Include="ext\include\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\app\app.cpp" />
     <ClCompile Include="src\editor\editor.cpp" />
+    <ClCompile Include="src\helper_functions.cpp" />
     <ClCompile Include="src\Source.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -128,6 +129,7 @@
     <ClInclude Include="ext\include\imgui\imstb_truetype.h" />
     <ClInclude Include="include\da\app\app.h" />
     <ClInclude Include="include\da\editor\editor.h" />
+    <ClInclude Include="include\da\helper_functions.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

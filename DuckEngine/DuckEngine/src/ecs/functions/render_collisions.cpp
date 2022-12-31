@@ -9,14 +9,13 @@ namespace de
 {
 	entt::entity get_entity_id_at_point(fm::vec2 point, entt::registry& reg)
 	{
-		entt::entity rectangle_collision = get_entity_id_at_point_rectangles(point);
+		entt::entity rectangle_collision = get_entity_id_at_point_rectangles(point, reg);
 		return rectangle_collision;
 	}
 
 	entt::entity get_entity_id_at_point_rectangles(fm::vec2 point, entt::registry& reg)
 	{
-		auto view = reg.view<RenderRectangleComponent, RenderColorComponent, PositionComponent>();
-		SDL_Renderer* renderer = Renderer::get_renderer();
+		auto view = reg.view<RenderRectangleComponent, PositionComponent>();
 		Camera* camera = Renderer::get_camera();
 		fm::vec2 camera_position = camera->get_position();
 		fm::vec2 camera_scale = camera->get_scale();
@@ -25,7 +24,6 @@ namespace de
 
 		view.each([&](const entt::entity entity, 
 			const RenderRectangleComponent& rectangle_c, 
-			const RenderColorComponent& color_c, 
 			const PositionComponent& position_c)
 		{
 				fm::vec4 rectangle;

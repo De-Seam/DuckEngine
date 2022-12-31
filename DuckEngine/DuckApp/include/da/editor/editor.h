@@ -1,7 +1,10 @@
 #pragma once
+#include "da/helper_functions.h"
+
 #include "de/core.h"
 
 #include "SDL/SDL.h"
+#include "entt/entt.hpp"
 
 namespace da
 {
@@ -19,5 +22,8 @@ namespace da
 		static f32 m_delta_time;
 
 		static SDL_Texture* m_viewport_texture;
+		static entt::entity m_selected_entity;
+		static fm::vec2 m_viewport_position;
+		static fm::vec2 m_viewport_size;
 	};
 }

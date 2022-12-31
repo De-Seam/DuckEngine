@@ -11,6 +11,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DuckApp", "DuckApp\DuckApp.
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sandbox", "Sandbox\Sandbox.vcxproj", "{90F95F60-552A-409E-AE6E-6C3B28BC9F87}"
+	ProjectSection(ProjectDependencies) = postProject
+		{68A3A132-1CE7-4630-840C-234AF863C2FB} = {68A3A132-1CE7-4630-840C-234AF863C2FB}
+		{EBE84329-992A-4F92-92FA-7771AD3CC74E} = {EBE84329-992A-4F92-92FA-7771AD3CC74E}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

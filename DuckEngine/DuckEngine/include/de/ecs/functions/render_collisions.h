@@ -8,6 +8,6 @@
 
 namespace de
 {
-	entt::entity get_entity_id_at_point(fm::vec2 point, entt::registry& reg = Engine::get_world()->get_registry());
-	entt::entity get_entity_id_at_point_rectangles(fm::vec2 point, entt::registry& reg = Engine::get_world()->get_registry());
+	entt::entity DUCK_API get_entity_id_at_point(fm::vec2 point, entt::registry& reg = Engine::get_world()->get_registry());
+	entt::entity DUCK_API get_entity_id_at_point_rectangles(fm::vec2 point, entt::registry& reg = Engine::get_world()->get_registry());
 }
