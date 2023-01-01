@@ -21,6 +21,7 @@ namespace de
 		template<typename T>
 		T* create_entity();
 		void add_entity(Entity* entity);
+		Entity* get_entity(entt::entity entity_id) { return m_entities[entity_id];}
 
 		entt::registry& get_registry() { return m_registry; }
 

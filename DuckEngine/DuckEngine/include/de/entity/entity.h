@@ -62,7 +62,7 @@ namespace de
 	template<typename T>
 	inline T& Entity::get_component()
 	{
-		assert(!has_component<T>() && "Entity does not have component!");
+		assert(has_component<T>() && "Entity does not have component!");
 		return m_world->get_registry().get<T>(m_entity_id);
 	}
 

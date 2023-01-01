@@ -23,7 +23,6 @@ namespace da
 		static int add_layer(Layer*);
 		static int delete_layer(Layer*);
 
-
 	private:
 		static bool m_is_running;
 		static f32 m_delta_time;

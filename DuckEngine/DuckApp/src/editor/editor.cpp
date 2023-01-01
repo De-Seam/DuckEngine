@@ -27,6 +27,7 @@ namespace da
 		ImGui::CreateContext();
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 		//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
 		//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 
@@ -88,9 +89,11 @@ namespace da
 
 		SDL_SetRenderTarget(de::Renderer::get_renderer(), m_viewport_texture);
 
+		SDL_SetRenderDrawColor(de::Renderer::get_renderer(), 0, 0, 0, 255);
+		SDL_RenderClear(de::Renderer::get_renderer());
 		de::Engine::update(m_delta_time);
 
-		for(auto layer : m_layers)
+		for(auto& layer : m_layers)
 			layer.second->update(dt);
 
 		ImGui::ShowDemoWindow();

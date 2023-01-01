@@ -3,6 +3,8 @@
 
 #include "de/renderer/renderer.h"
 #include "de/ecs/functions/render_collisions.h"
+#include "de/entity/entity.h"
+#include "de/ecs/components/gameplay_components.h"
 
 namespace da
 {
@@ -16,7 +18,7 @@ namespace da
 		ImGui::Begin("ViewportWindow");
 		{
 			m_context = ImGui::GetCurrentContext();
-			ImGui::BeginChild("ViewportGame");
+			ImGui::BeginChild("ViewportGame", {0,0}, false, ImGuiWindowFlags_NoMove);
 			{
 				m_position = im_to_fm(ImGui::GetWindowPos());
 
@@ -41,9 +43,24 @@ namespace da
 
 					de::log("%i", m_selected_entity);
 				}
+
+				if(m_selected_entity != entt::null)
+				{
+					if(ImGui::IsMouseDragging(ImGuiMouseButton_Left))
+					{
+						de::Entity* entity = de::Engine::get_world()->get_entity(m_selected_entity);
+						de::PositionComponent& position_c = entity->get_component<de::PositionComponent>();
+						fm::vec2 mouse_position = im_to_fm(ImGui::GetMousePos());
+						//de::log("%f : %f", position_c.position.x, position_c.position.y);
+						position_c.position += (mouse_position - m_mouse_position);
+						//de::log("%f : %f", mouse_delta.x, mouse_delta.y);
+					}
+				}
 			}
 			ImGui::EndChild();
 		}
 		ImGui::End();
+
+		m_mouse_position = im_to_fm(ImGui::GetMousePos());
 	}
 }
