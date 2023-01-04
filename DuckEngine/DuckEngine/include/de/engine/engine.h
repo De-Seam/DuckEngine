@@ -7,13 +7,12 @@
 
 namespace de //DuckEngine
 {
-	class World;
-
 	class DUCK_API Engine
 	{
 	public:
 		static void init(); //Initialize engine
 		static void shutdown(); //Clean Shutdown
+		static void internal_begin_play(); //Begin Play. Internal use only!
 
 		static void set_game_instance(GameInstance* game_instance);
 
@@ -24,7 +23,7 @@ namespace de //DuckEngine
 		static f32 get_delta_time() { return m_delta_time; }
 		static bool get_is_running() { return m_is_running; }
 		static Object* get_object(UID uid);
-		static World* get_world() { return m_world; }
+		static World* get_world() { return m_game_instance->get_world(); }
 	private:
 		static void shutdown_internal(); //Actual shutdown logic
 		static void add_object(Object* object); //For objects to add themselves
@@ -37,7 +36,6 @@ namespace de //DuckEngine
 		static phmap::flat_hash_map<UID, Object*> m_objects;
 
 		static GameInstance* m_game_instance;
-		static World* m_world;
 
 		friend class Object;
 	};

@@ -4,11 +4,18 @@
 
 namespace de //DuckEngine
 {
-	class GameInstance
+	class World;
+
+	class DUCK_API GameInstance : public Object
 	{
 	public:
-		virtual void begin_play() {}
-		virtual void update([[maybe_unused]] f32 dt) {}
-		virtual void end_play() {}
+		//Make sure to call these parents!
+		virtual void begin_play();
+		virtual void update(f32 dt);
+		virtual void end_play();
+
+		World* get_world() { return m_world; }
+	protected:
+		World* m_world = nullptr;
 	};
 }

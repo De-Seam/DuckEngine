@@ -13,7 +13,7 @@ namespace da
 		m_type = LayerType::Viewport;
 	}
 
-	void ViewportLayer::update(f32 dt)
+	void ViewportLayer::update(f32)
 	{
 		ImGui::Begin("ViewportWindow");
 		{

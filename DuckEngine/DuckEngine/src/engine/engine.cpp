@@ -4,9 +4,6 @@
 #include "de/world/world.h"
 #include "de/events/sdl_event_manager.h"
 
-#include "de/ecs/components/gameplay_components.h"
-#include "de/ecs/components/render_components.h"
-
 namespace de
 {
 	bool Engine::m_is_running = false;
@@ -15,7 +12,6 @@ namespace de
 	phmap::flat_hash_map<UID, Object*> Engine::m_objects = {};
 
 	GameInstance* Engine::m_game_instance = nullptr;
-	World* Engine::m_world = nullptr;
 
 	void Engine::init()
 	{
@@ -29,21 +25,18 @@ namespace de
 			Engine::shutdown();
 		}};
 		SDLEventManager::add_event_function(shutdown_event);
-
-		m_game_instance = new GameInstance;
-
-		m_world = new World;
-		Entity* entity = m_world->create_entity<Entity>();
-		PositionComponent& position_c = entity->add_component<PositionComponent>(fm::vec2(10.f, 10.f));
-		entity->add_component<RenderRectangleComponent>(fm::vec2{80.f, 40.f});
-		entity->add_component<RenderColorComponent>(fm::vec4(1.f, 1.f, 1.f, 1.f));
-
+		
 		m_is_running = true;
 	}
 
 	void Engine::shutdown()
 	{
 		m_is_running = false;
+	}
+
+	void Engine::internal_begin_play()
+	{
+		m_game_instance->begin_play();
 	}
 
 	void Engine::set_game_instance(GameInstance* game_instance)
@@ -62,8 +55,7 @@ namespace de
 		m_delta_time = dt;
 		SDLEventManager::update();
 
-		m_world->update(dt);
-		m_world->draw();
+		m_game_instance->update(dt);
 	}
 
 	void Engine::end_frame()

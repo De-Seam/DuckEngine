@@ -25,10 +25,10 @@ namespace da
 
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
-		ImGuiIO& io = ImGui::GetIO(); (void)io;
+		ImGuiIO& io = ImGui::GetIO();
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
-		//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
 		//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 
 		// Setup Dear ImGui style
@@ -101,6 +101,10 @@ namespace da
 		SDL_SetRenderTarget(de::Renderer::get_renderer(), nullptr);
 		ImGui::Render();
 		ImGui_ImplSDLRenderer_RenderDrawData(ImGui::GetDrawData());
+
+		ImGui::UpdatePlatformWindows();
+		ImGui::RenderPlatformWindowsDefault();
+
 		de::Engine::end_frame();
 
 		if(!de::Engine::get_is_running())

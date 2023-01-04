@@ -54,6 +54,9 @@
     <ClCompile Include="src\editor\layers\layer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\dll_loader_windows.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\da\app\app.h">
@@ -93,6 +96,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\da\editor\layers\viewport_layer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\da\dll_loader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -13,6 +13,7 @@ namespace da //DuckApp
 	void App::init()
 	{
 		de::Engine::init();
+		de::Engine::internal_begin_play();
 		main_loop();
 	}
 

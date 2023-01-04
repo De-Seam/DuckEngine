@@ -114,6 +114,7 @@
     <ClCompile Include="ext\include\imgui\imgui_tables.cpp" />
     <ClCompile Include="ext\include\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\app\app.cpp" />
+    <ClCompile Include="src\dll_loader_windows.cpp" />
     <ClCompile Include="src\editor\editor.cpp" />
     <ClCompile Include="src\editor\layers\layer.cpp" />
     <ClCompile Include="src\editor\layers\viewport_layer.cpp" />
@@ -130,6 +131,7 @@
     <ClInclude Include="ext\include\imgui\imstb_textedit.h" />
     <ClInclude Include="ext\include\imgui\imstb_truetype.h" />
     <ClInclude Include="include\da\app\app.h" />
+    <ClInclude Include="include\da\dll_loader.h" />
     <ClInclude Include="include\da\editor\editor.h" />
     <ClInclude Include="include\da\editor\layers\layer.h" />
     <ClInclude Include="include\da\editor\layers\viewport_layer.h" />

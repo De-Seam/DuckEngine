@@ -4,6 +4,7 @@
 #include "de/world/world.h"
 
 #include <entt/entt.hpp>
+#include <rapidjson/document.h>
 
 #include <cassert>
 
@@ -19,8 +20,12 @@ namespace de
 		virtual void begin_play() {}; //Begin play called after beginning play
 		virtual void end_play() {}; //End play called before ending play
 		
-		virtual void update(f32 dt) {}; //Update called every tick
+		virtual void update([[maybe_unused]] f32 dt) {}; //Update called every tick
 		virtual void draw() {}; //Additional draw calls.
+
+		//Make sure to call these parent functions as well.
+		virtual void load_from_value(rapidjson::Value& value);
+		virtual void save_to_value();
 
 		void destroy();
 
@@ -34,6 +39,9 @@ namespace de
 		bool has_component();
 		template<typename T>
 		void remove_component();
+
+	protected:
+		std::string m_name = "Entity";
 
 	private:
 		entt::entity m_entity_id = entt::null;

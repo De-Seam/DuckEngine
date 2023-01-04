@@ -113,6 +113,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\ecs\functions\render_collisions.cpp" />
+    <ClCompile Include="src\engine\game_instance.cpp" />
     <ClCompile Include="src\engine\object.cpp" />
     <ClCompile Include="src\ecs\systems\render_systems.cpp" />
     <ClCompile Include="src\core.cpp" />
