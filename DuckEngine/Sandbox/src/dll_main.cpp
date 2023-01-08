@@ -16,7 +16,6 @@ BOOL APIENTRY DllMain( HMODULE hModule,
     {
         TestGameInstance* game_instance = new TestGameInstance;
         de::Engine::set_game_instance(game_instance);
-        game_instance->begin_play();
     }
         break;
     case DLL_THREAD_ATTACH:

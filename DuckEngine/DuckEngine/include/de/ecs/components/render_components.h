@@ -4,6 +4,15 @@
 
 namespace de
 {
+	struct TextureResource;
+
+	struct DUCK_API RenderTextureComponent
+	{
+		RenderTextureComponent(TextureResource* resource);
+		RenderTextureComponent(const std::string& file_name);
+		TextureResource* texture_resource;
+	};
+
 	struct RenderColorComponent
 	{
 		fm::vec4 color;

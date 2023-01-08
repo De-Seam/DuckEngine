@@ -10,5 +10,6 @@ namespace de
 	namespace internal
 	{
 		void rectangle_render_system(entt::registry& reg);
+		void texture_render_system(entt::registry& reg);
 	}
 }

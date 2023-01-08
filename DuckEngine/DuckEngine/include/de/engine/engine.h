@@ -24,6 +24,7 @@ namespace de //DuckEngine
 		static bool get_is_running() { return m_is_running; }
 		static Object* get_object(UID uid);
 		static World* get_world() { return m_game_instance->get_world(); }
+		static GameInstance* get_game_instance() { return m_game_instance; }
 	private:
 		static void shutdown_internal(); //Actual shutdown logic
 		static void add_object(Object* object); //For objects to add themselves

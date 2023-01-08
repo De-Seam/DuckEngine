@@ -18,7 +18,8 @@ public:
 		de::Entity* entity = m_world->create_entity<de::Entity>();
 		de::PositionComponent& position_c = entity->add_component<de::PositionComponent>(fm::vec2(10.f, 10.f));
 		entity->add_component<de::RenderRectangleComponent>(fm::vec2{80.f, 40.f});
-		entity->add_component<de::RenderColorComponent>(fm::vec4(1.f, 1.f, 1.f, 1.f));
+		entity->add_component<de::RenderTextureComponent>("assets/top.jpg");
+		//entity->add_component<de::RenderColorComponent>(fm::vec4(1.f, 1.f, 1.f, 1.f));
 	}
 
 	virtual void update(f32 dt) override

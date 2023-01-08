@@ -51,6 +51,8 @@ namespace da
 
 		new ViewportLayer;
 
+		de::Engine::get_game_instance()->begin_play();
+
 		main_loop();
 	}
 
