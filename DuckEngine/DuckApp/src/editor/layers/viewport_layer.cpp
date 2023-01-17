@@ -51,9 +51,7 @@ namespace da
 						de::Entity* entity = de::Engine::get_world()->get_entity(m_selected_entity);
 						de::PositionComponent& position_c = entity->get_component<de::PositionComponent>();
 						fm::vec2 mouse_position = im_to_fm(ImGui::GetMousePos());
-						//de::log("%f : %f", position_c.position.x, position_c.position.y);
 						position_c.position += (mouse_position - m_mouse_position);
-						//de::log("%f : %f", mouse_delta.x, mouse_delta.y);
 					}
 				}
 			}

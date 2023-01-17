@@ -115,6 +115,7 @@
     <ClCompile Include="src\ecs\component\render_components.cpp" />
     <ClCompile Include="src\ecs\functions\render_collisions.cpp" />
     <ClCompile Include="src\engine\game_instance.cpp" />
+    <ClCompile Include="src\events\input_manager.cpp" />
     <ClCompile Include="src\engine\object.cpp" />
     <ClCompile Include="src\ecs\systems\render_systems.cpp" />
     <ClCompile Include="src\core.cpp" />
@@ -149,6 +150,7 @@
     <ClInclude Include="include\de\engine\resources.h" />
     <ClInclude Include="include\de\engine\resource_manager.h" />
     <ClInclude Include="include\de\entity\entity.h" />
+    <ClInclude Include="include\de\events\input_manager.h" />
     <ClInclude Include="include\de\events\sdl_event_manager.h" />
     <ClInclude Include="include\de\renderer\camera.h" />
     <ClInclude Include="include\de\renderer\renderer.h" />

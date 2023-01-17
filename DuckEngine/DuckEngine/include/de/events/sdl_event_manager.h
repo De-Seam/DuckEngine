@@ -11,6 +11,10 @@ namespace de //DuckEngine
 {
 	struct SDLEventFunction : public Object
 	{
+		SDLEventFunction() = default;
+		SDLEventFunction(SDL_EventType event_type, std::function<void(SDL_Event&)> function_ptr)
+			: event_type(event_type), function_ptr(function_ptr) {}
+
 		SDL_EventType event_type = SDL_EventType::SDL_FIRSTEVENT;
 		std::function<void(SDL_Event&)> function_ptr = nullptr;
 	};

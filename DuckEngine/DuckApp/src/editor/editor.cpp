@@ -51,7 +51,7 @@ namespace da
 
 		new ViewportLayer;
 
-		de::Engine::get_game_instance()->begin_play();
+		de::Engine::internal_begin_play();
 
 		main_loop();
 	}
@@ -98,7 +98,7 @@ namespace da
 		for(auto& layer : m_layers)
 			layer.second->update(dt);
 
-		ImGui::ShowDemoWindow();
+		//ImGui::ShowDemoWindow();
 
 		SDL_SetRenderTarget(de::Renderer::get_renderer(), nullptr);
 		ImGui::Render();
