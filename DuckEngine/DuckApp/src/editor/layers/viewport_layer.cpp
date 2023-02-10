@@ -17,6 +17,9 @@ namespace da
 	{
 		ImGui::Begin("ViewportWindow");
 		{
+			if(ImGui::Button("Play##ViewportPlayButton"))
+				de::Engine::internal_begin_play();
+
 			m_context = ImGui::GetCurrentContext();
 			ImGui::BeginChild("ViewportGame", {0,0}, false, ImGuiWindowFlags_NoMove);
 			{

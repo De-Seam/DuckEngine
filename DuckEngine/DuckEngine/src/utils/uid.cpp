@@ -4,13 +4,16 @@
 namespace de
 {
 	u64 g_last_uid = 0;
-	std::mutex g_mutex = {};
+	std::mutex* g_mutex = nullptr;
 
 	UID::UID()
 	{
-		g_mutex.lock();
+		if(!g_mutex)
+			g_mutex = new std::mutex;
+
+		g_mutex->lock();
 		g_last_uid++;
 		m_uid = g_last_uid;
-		g_mutex.unlock();
+		g_mutex->unlock();
 	}
 }

@@ -6,6 +6,8 @@
 
 namespace de
 {
+	GameState Engine::m_game_state = GameState::NotPlaying;
+
 	bool Engine::m_is_running = false;
 	f32 Engine::m_delta_time = F32_EPSILON;
 
@@ -36,6 +38,8 @@ namespace de
 
 	void Engine::internal_begin_play()
 	{
+		m_game_state = GameState::Playing;
+
 		m_game_instance->begin_play();
 	}
 
@@ -55,7 +59,8 @@ namespace de
 		m_delta_time = dt;
 		SDLEventManager::update();
 
-		m_game_instance->update(dt);
+		if(m_game_state == GameState::Playing)
+			m_game_instance->update(dt);
 	}
 
 	void Engine::end_frame()

@@ -9,6 +9,13 @@
 
 namespace da
 {
+	enum class GameState
+	{
+		NotPlaying,
+		Playing,
+		Paused
+	};
+
 	class Editor
 	{
 	public:
@@ -22,8 +29,9 @@ namespace da
 		//0 on success
 		static int add_layer(Layer*);
 		static int delete_layer(Layer*);
-
 	private:
+		static GameState m_game_state;
+
 		static bool m_is_running;
 		static f32 m_delta_time;
 

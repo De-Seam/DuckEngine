@@ -7,6 +7,13 @@
 
 namespace de //DuckEngine
 {
+	enum class GameState
+	{
+		NotPlaying,
+		Playing,
+		Paused
+	};
+
 	class DUCK_API Engine
 	{
 	public:
@@ -31,6 +38,8 @@ namespace de //DuckEngine
 		static void remove_object(Object* object); //For objects to remove themselves
 
 	private:
+		static GameState m_game_state;
+
 		static bool m_is_running;
 		static f32 m_delta_time;
 

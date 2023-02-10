@@ -112,6 +112,8 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\collision\collision_manager.cpp" />
+    <ClCompile Include="src\collision\quadtree.cpp" />
     <ClCompile Include="src\ecs\component\render_components.cpp" />
     <ClCompile Include="src\ecs\functions\render_collisions.cpp" />
     <ClCompile Include="src\engine\game_instance.cpp" />
@@ -139,7 +141,10 @@
     <ClInclude Include="ext\include\phmap\phmap_dump.h" />
     <ClInclude Include="ext\include\phmap\phmap_fwd_decl.h" />
     <ClInclude Include="ext\include\phmap\phmap_utils.h" />
+    <ClInclude Include="include\de\collision\collision_manager.h" />
+    <ClInclude Include="include\de\collision\quadtree.h" />
     <ClInclude Include="include\de\core.h" />
+    <ClInclude Include="include\de\ecs\components\collision_components.h" />
     <ClInclude Include="include\de\ecs\components\gameplay_components.h" />
     <ClInclude Include="include\de\ecs\components\render_components.h" />
     <ClInclude Include="include\de\ecs\functions\render_collisions.h" />
