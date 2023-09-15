@@ -17,11 +17,11 @@ namespace da
 	{
 		ImGui::Begin("ViewportWindow");
 		{
-			if(ImGui::Button("Play##ViewportPlayButton"))
+			if (ImGui::Button("Play##ViewportPlayButton"))
 				de::Engine::internal_begin_play();
 
 			m_context = ImGui::GetCurrentContext();
-			ImGui::BeginChild("ViewportGame", {0,0}, false, ImGuiWindowFlags_NoMove);
+			ImGui::BeginChild("ViewportGame", { 0,0 }, false, ImGuiWindowFlags_NoMove);
 			{
 				m_position = im_to_fm(ImGui::GetWindowPos());
 
@@ -29,7 +29,7 @@ namespace da
 				ImGui::Image((ImTextureID)Editor::get_viewport_texture(), im_window_size);
 
 				fm::vec2 window_size = im_to_fm(im_window_size);
-				if(window_size.x != m_size.x || 
+				if (window_size.x != m_size.x ||
 					window_size.y != m_size.y)
 				{
 					SDL_DestroyTexture(Editor::get_viewport_texture());
@@ -38,18 +38,21 @@ namespace da
 				}
 
 
-				if(ImGui::IsMouseClicked(ImGuiMouseButton_Left))
+				if (ImGui::IsMouseClicked(ImGuiMouseButton_Left))
 				{
-					ImVec2 im_mouse_pos = ImGui::GetMousePos();
-					fm::vec2 mouse_pos = im_to_fm(ImGui::GetMousePos());
-					m_selected_entity = de::get_entity_id_at_point(mouse_pos - m_position);
+					if (de::Engine::get_world())
+					{
+						ImVec2 im_mouse_pos = ImGui::GetMousePos();
+						fm::vec2 mouse_pos = im_to_fm(ImGui::GetMousePos());
+						m_selected_entity = de::get_entity_id_at_point(mouse_pos - m_position);
 
-					de::log("%i", m_selected_entity);
+						de::log("%i", m_selected_entity);
+					}
 				}
 
-				if(m_selected_entity != entt::null)
+				if (m_selected_entity != entt::null)
 				{
-					if(ImGui::IsMouseDragging(ImGuiMouseButton_Left))
+					if (ImGui::IsMouseDragging(ImGuiMouseButton_Left))
 					{
 						de::Entity* entity = de::Engine::get_world()->get_entity(m_selected_entity);
 						de::PositionComponent& position_c = entity->get_component<de::PositionComponent>();

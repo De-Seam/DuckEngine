@@ -17,25 +17,27 @@ namespace de
 	{
 		auto view = reg.view<RenderRectangleComponent, PositionComponent>();
 		Camera* camera = Renderer::get_camera();
+		if (!camera)
+			return entt::null;
 		fm::vec2 camera_position = camera->get_position();
 		fm::vec2 camera_scale = camera->get_scale();
 
 		entt::entity return_entity = entt::null;
 
-		view.each([&](const entt::entity entity, 
-			const RenderRectangleComponent& rectangle_c, 
+		view.each([&](const entt::entity entity,
+			const RenderRectangleComponent& rectangle_c,
 			const PositionComponent& position_c)
-		{
+			{
 				fm::vec4 rectangle;
 				rectangle.x = position_c.position.x - camera_position.x;
 				rectangle.y = position_c.position.y - camera_position.y;
 				rectangle.z = rectangle_c.size.x * camera_scale.x;
-				rectangle.w = rectangle_c.size.y * camera_scale.y; 
+				rectangle.w = rectangle_c.size.y * camera_scale.y;
 
-				if(point.x > rectangle.x && point.x < rectangle.x + rectangle.z 
+				if (point.x > rectangle.x && point.x < rectangle.x + rectangle.z
 					&& point.y > rectangle.y && point.y < rectangle.y + rectangle.w)
 					return_entity = entity;
-		});
+			});
 
 		return return_entity;
 	}
