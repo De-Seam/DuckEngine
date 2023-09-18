@@ -5,13 +5,7 @@ VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DuckEngine", "DuckEngine\DuckEngine.vcxproj", "{EBE84329-992A-4F92-92FA-7771AD3CC74E}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DuckApp", "DuckApp\DuckApp.vcxproj", "{68A3A132-1CE7-4630-840C-234AF863C2FB}"
-	ProjectSection(ProjectDependencies) = postProject
-		{90F95F60-552A-409E-AE6E-6C3B28BC9F87} = {90F95F60-552A-409E-AE6E-6C3B28BC9F87}
-		{EBE84329-992A-4F92-92FA-7771AD3CC74E} = {EBE84329-992A-4F92-92FA-7771AD3CC74E}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sandbox", "Sandbox\Sandbox.vcxproj", "{90F95F60-552A-409E-AE6E-6C3B28BC9F87}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DuckEditor", "DuckEditor\DuckEditor.vcxproj", "{68A3A132-1CE7-4630-840C-234AF863C2FB}"
 	ProjectSection(ProjectDependencies) = postProject
 		{EBE84329-992A-4F92-92FA-7771AD3CC74E} = {EBE84329-992A-4F92-92FA-7771AD3CC74E}
 	EndProjectSection
@@ -19,21 +13,27 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
 		Release|x64 = Release|x64
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{EBE84329-992A-4F92-92FA-7771AD3CC74E}.Debug|x64.ActiveCfg = Debug|x64
 		{EBE84329-992A-4F92-92FA-7771AD3CC74E}.Debug|x64.Build.0 = Debug|x64
+		{EBE84329-992A-4F92-92FA-7771AD3CC74E}.Debug|x86.ActiveCfg = Debug|x64
+		{EBE84329-992A-4F92-92FA-7771AD3CC74E}.Debug|x86.Build.0 = Debug|x64
 		{EBE84329-992A-4F92-92FA-7771AD3CC74E}.Release|x64.ActiveCfg = Release|x64
 		{EBE84329-992A-4F92-92FA-7771AD3CC74E}.Release|x64.Build.0 = Release|x64
+		{EBE84329-992A-4F92-92FA-7771AD3CC74E}.Release|x86.ActiveCfg = Release|x64
+		{EBE84329-992A-4F92-92FA-7771AD3CC74E}.Release|x86.Build.0 = Release|x64
 		{68A3A132-1CE7-4630-840C-234AF863C2FB}.Debug|x64.ActiveCfg = Debug|x64
 		{68A3A132-1CE7-4630-840C-234AF863C2FB}.Debug|x64.Build.0 = Debug|x64
+		{68A3A132-1CE7-4630-840C-234AF863C2FB}.Debug|x86.ActiveCfg = Debug|x64
+		{68A3A132-1CE7-4630-840C-234AF863C2FB}.Debug|x86.Build.0 = Debug|x64
 		{68A3A132-1CE7-4630-840C-234AF863C2FB}.Release|x64.ActiveCfg = Release|x64
 		{68A3A132-1CE7-4630-840C-234AF863C2FB}.Release|x64.Build.0 = Release|x64
-		{90F95F60-552A-409E-AE6E-6C3B28BC9F87}.Debug|x64.ActiveCfg = Debug|x64
-		{90F95F60-552A-409E-AE6E-6C3B28BC9F87}.Debug|x64.Build.0 = Debug|x64
-		{90F95F60-552A-409E-AE6E-6C3B28BC9F87}.Release|x64.ActiveCfg = Release|x64
-		{90F95F60-552A-409E-AE6E-6C3B28BC9F87}.Release|x64.Build.0 = Release|x64
+		{68A3A132-1CE7-4630-840C-234AF863C2FB}.Release|x86.ActiveCfg = Release|x64
+		{68A3A132-1CE7-4630-840C-234AF863C2FB}.Release|x86.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

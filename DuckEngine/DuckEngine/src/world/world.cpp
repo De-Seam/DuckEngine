@@ -1,111 +1,66 @@
-#include "de/world/world.h"
+#include "World/World.h"
 
-#include "de/ecs/components/gameplay_components.h"
-#include "de/ecs/systems/render_systems.h"
+#include <fstream>
 
-#include "de/entity/entity.h"
-
-#include <stdio.h>
-#include <stdlib.h>
-
-namespace de
+namespace DE
 {
-	void World::begin_play()
+	void World::BeginPlay()
 	{
-	}
-
-	void World::end_play()
-	{
-	}
-
-	void World::update(f32 dt)
-	{
-		for(auto entity_pair : m_entities)
-			entity_pair.second->update(dt);
-
-		delete_entities();
-	}
-
-	void World::draw()
-	{
-		for(const auto& entity_pair : m_entities)
-			entity_pair.second->draw();
-
-		render_systems(m_registry);
-	}
-
-	void World::load_from_data(const char* data)
-	{
-		m_save_document.Parse(data);
-		rapidjson::Value& entities = m_save_document["entities"];
-		rapidjson::GenericArray entities_array = entities.GetArray();
-
-		for(auto& entity_value : entities_array)
+		for (u_size i = 0; i < m_entities.Size(); i++)
 		{
-			Entity* entity = this->create_entity<Entity>();
-			entity->load_from_value(entity_value);
+			m_entities[i]->BeginPlay();
 		}
 	}
 
-	void World::load_from_file(const std::string& file_name)
+	void World::EndPlay()
 	{
-		//Open file
-		FILE* file;
-		if(fopen_s(&file, file_name.c_str(), "rb") != 0 || file == nullptr)
+		for (u_size i = 0; i < m_entities.Size(); i++)
 		{
-			log(LogType::error, "Error opening file");
-			return;
+			m_entities[i]->EndPlay();
 		}
-		//Determine file size
-		fseek(file, 0, SEEK_END);
-		i32 file_size = ftell(file);
-		rewind(file);
-		//Create buffer
-		char* buffer = static_cast<char*>(malloc(sizeof(char) * file_size));
-		if(buffer == nullptr)
+	}
+
+	void World::Update(f64 dt)
+	{
+		for (u_size i = 0; i < m_entities.Size(); i++)
 		{
-			log(LogType::error, "Error creating buffer");
-			return;
+			m_entities[i]->Update(dt);
 		}
-		//Read file to buffer
-		u_size result = static_cast<u_size>(fread(buffer, 1, file_size, file));
-		if(result != file_size)
+	}
+
+	void World::Draw()
+	{
+		for (u_size i = 0; i < m_entities.Size(); i++)
 		{
-			log(LogType::error, "Error reading file to buffer");
-			return;
+			m_entities[i]->Draw();
 		}
-		//Load data from buffer
-		load_from_data(buffer);
-		//Cleanup
-		fclose(file);
-		free(buffer);
 	}
 
-	const char* World::save_to_data()
+	void World::LoadFromFile(const std::string& filePath)
 	{
-		return nullptr;
-	}
+		std::ifstream file(filePath);
+		nlohmann::json json;
+		file >> json;
 
-	void World::save_to_file(const std::string& file_name)
-	{
-		(void)file_name;
-	}
-
-	void World::add_entity(Entity* entity)
-	{
-		entity->m_entity_id = m_registry.create();
-		entity->m_world = this;
-		m_entities[entity->m_entity_id] = entity;
-	}
-
-	void World::delete_entities()
-	{
-		auto view = m_registry.view<DeathComponent>();
-
-		view.each([&](const entt::entity entity)
+		m_name = json["Worlds"]["Name"];
+		for (u_size i = 0; i < json["Worlds"][m_name]["Entities"].size(); i++)
 		{
-			delete m_entities[entity];
-			m_entities.erase(entity);
-		});
+			Entity* entity = new Entity;
+			entity->SetJSONVariables(json["Worlds"][m_name]["Entities"][std::to_string(i)]);
+			m_entities.Add(entity);
+		}
+	}
+
+	void World::SaveToFile(const std::string& filePath)
+	{
+		nlohmann::json json;
+		json["Worlds"]["Name"] = m_name;
+		for (u_size i = 0; i < m_entities.Size(); i++)
+		{
+			json["Worlds"][m_name]["Entities"][std::to_string(i)] = m_entities[i]->GetJSONVariables();
+		}
+
+		std::ofstream file(filePath);
+		file << json;
 	}
 }

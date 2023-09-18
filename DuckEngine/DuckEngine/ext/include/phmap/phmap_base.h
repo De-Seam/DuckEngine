@@ -223,29 +223,6 @@ struct disjunction<> : std::false_type {};
 template <typename T>
 struct negation : std::integral_constant<bool, !T::value> {};
 
-template <typename T>
-struct is_trivially_destructible
-    : std::integral_constant<bool, __has_trivial_destructor(T) &&
-      std::is_destructible<T>::value> {};
-
-template <typename T>
-struct is_trivially_default_constructible
-    : std::integral_constant<bool, __has_trivial_constructor(T) &&
-                                   std::is_default_constructible<T>::value &&
-      is_trivially_destructible<T>::value> {};
-
-template <typename T>
-struct is_trivially_copy_constructible
-    : std::integral_constant<bool, __has_trivial_copy(T) &&
-                                   std::is_copy_constructible<T>::value &&
-      is_trivially_destructible<T>::value> {};
-
-template <typename T>
-struct is_trivially_copy_assignable
-    : std::integral_constant<
-          bool, __has_trivial_assign(typename std::remove_reference<T>::type) &&
-      phmap::is_copy_assignable<T>::value> {};
-
 // -----------------------------------------------------------------------------
 // C++14 "_t" trait aliases
 // -----------------------------------------------------------------------------
@@ -645,83 +622,85 @@ namespace phmap {
 namespace base_internal {
 
 namespace {
-template <typename T>
+
 #ifdef PHMAP_HAVE_EXCEPTIONS
-[[noreturn]] void Throw(const T& error) {
-    throw error;
-}
+  #define PHMAP_THROW_IMPL(e) throw e
 #else
-[[noreturn]] void Throw(const T&) {
-    std::abort();
-}
+  #define PHMAP_THROW_IMPL(e) std::abort()
 #endif
 }  // namespace
 
 static inline void ThrowStdLogicError(const std::string& what_arg) {
-  Throw(std::logic_error(what_arg));
+  PHMAP_THROW_IMPL(std::logic_error(what_arg));
 }
 static inline void ThrowStdLogicError(const char* what_arg) {
-  Throw(std::logic_error(what_arg));
+  PHMAP_THROW_IMPL(std::logic_error(what_arg));
 }
 static inline void ThrowStdInvalidArgument(const std::string& what_arg) {
-  Throw(std::invalid_argument(what_arg));
+  PHMAP_THROW_IMPL(std::invalid_argument(what_arg));
 }
 static inline void ThrowStdInvalidArgument(const char* what_arg) {
-  Throw(std::invalid_argument(what_arg));
+  PHMAP_THROW_IMPL(std::invalid_argument(what_arg));
 }
 
 static inline void ThrowStdDomainError(const std::string& what_arg) {
-  Throw(std::domain_error(what_arg));
+  PHMAP_THROW_IMPL(std::domain_error(what_arg));
 }
 static inline void ThrowStdDomainError(const char* what_arg) {
-  Throw(std::domain_error(what_arg));
+  PHMAP_THROW_IMPL(std::domain_error(what_arg));
 }
 
 static inline void ThrowStdLengthError(const std::string& what_arg) {
-  Throw(std::length_error(what_arg));
+  PHMAP_THROW_IMPL(std::length_error(what_arg));
 }
 static inline void ThrowStdLengthError(const char* what_arg) {
-  Throw(std::length_error(what_arg));
+  PHMAP_THROW_IMPL(std::length_error(what_arg));
 }
 
 static inline void ThrowStdOutOfRange(const std::string& what_arg) {
-  Throw(std::out_of_range(what_arg));
+  PHMAP_THROW_IMPL(std::out_of_range(what_arg));
 }
 static inline void ThrowStdOutOfRange(const char* what_arg) {
-  Throw(std::out_of_range(what_arg));
+  PHMAP_THROW_IMPL(std::out_of_range(what_arg));
 }
 
 static inline void ThrowStdRuntimeError(const std::string& what_arg) {
-  Throw(std::runtime_error(what_arg));
+  PHMAP_THROW_IMPL(std::runtime_error(what_arg));
 }
 static inline void ThrowStdRuntimeError(const char* what_arg) {
-  Throw(std::runtime_error(what_arg));
+  PHMAP_THROW_IMPL(std::runtime_error(what_arg));
 }
 
 static inline void ThrowStdRangeError(const std::string& what_arg) {
-  Throw(std::range_error(what_arg));
+  PHMAP_THROW_IMPL(std::range_error(what_arg));
 }
 static inline void ThrowStdRangeError(const char* what_arg) {
-  Throw(std::range_error(what_arg));
+  PHMAP_THROW_IMPL(std::range_error(what_arg));
 }
 
 static inline void ThrowStdOverflowError(const std::string& what_arg) {
-  Throw(std::overflow_error(what_arg));
+  PHMAP_THROW_IMPL(std::overflow_error(what_arg));
 }
+    
 static inline void ThrowStdOverflowError(const char* what_arg) {
-  Throw(std::overflow_error(what_arg));
+  PHMAP_THROW_IMPL(std::overflow_error(what_arg));
 }
 
 static inline void ThrowStdUnderflowError(const std::string& what_arg) {
-  Throw(std::underflow_error(what_arg));
+  PHMAP_THROW_IMPL(std::underflow_error(what_arg));
 }
+    
 static inline void ThrowStdUnderflowError(const char* what_arg) {
-  Throw(std::underflow_error(what_arg));
+  PHMAP_THROW_IMPL(std::underflow_error(what_arg));
 }
-
-static inline void ThrowStdBadFunctionCall() { Throw(std::bad_function_call()); }
-
-static inline void ThrowStdBadAlloc() { Throw(std::bad_alloc()); }
+    
+static inline void ThrowStdBadFunctionCall() {
+  PHMAP_THROW_IMPL(std::bad_function_call());
+}
+    
+static inline void ThrowStdBadAlloc() {
+  PHMAP_THROW_IMPL(std::bad_alloc());
+}
 
 }  // namespace base_internal
 }  // namespace phmap
@@ -1808,9 +1787,10 @@ protected:
 // Also, we should be checking is_trivially_copyable here, which is not
 // supported now, so we use is_trivially_* traits instead.
 template <typename T,
-          bool unused = phmap::is_trivially_copy_constructible<T>::value&&
-              phmap::is_trivially_copy_assignable<typename std::remove_cv<
-                  T>::type>::value&& std::is_trivially_destructible<T>::value>
+          bool unused =
+          std::is_trivially_copy_constructible<T>::value &&
+          std::is_trivially_copy_assignable<typename std::remove_cv<T>::type>::value &&
+          std::is_trivially_destructible<T>::value>
 class optional_data;
 
 // Trivially copyable types
@@ -2067,7 +2047,7 @@ public:
     optional(const optional& src) = default;
 
     // Move constructor, standard semantics
-    optional(optional&& src) = default;
+    optional(optional&& src) noexcept = default;
 
     // Constructs a non-empty `optional` direct-initialized value of type `T` from
     // the arguments `std::forward<Args>(args)...`  within the `optional`.
@@ -2207,7 +2187,7 @@ public:
     optional& operator=(const optional& src) = default;
 
     // Move assignment operator, standard semantics
-    optional& operator=(optional&& src) = default;
+    optional& operator=(optional&& src) noexcept = default;
 
     // Value assignment operators
     template <
@@ -4785,7 +4765,7 @@ public:
         DoNothing(mutex_type&, phmap::try_to_lock_t) {}
         template<class T> explicit DoNothing(T&&) {}
         DoNothing& operator=(const DoNothing&) { return *this; }
-        DoNothing& operator=(DoNothing&&) { return *this; }
+        DoNothing& operator=(DoNothing&&) noexcept { return *this; }
         void swap(DoNothing &) {}
         bool owns_lock() const noexcept { return true; }
     };
@@ -4816,13 +4796,13 @@ public:
             m_->try_lock(); 
         }
 
-        WriteLock(WriteLock &&o) :
+        WriteLock(WriteLock &&o) noexcept :
             m_(std::move(o.m_)), locked_(std::move(o.locked_)) {
             o.locked_ = false;
             o.m_      = nullptr;
         }
 
-        WriteLock& operator=(WriteLock&& other) {
+        WriteLock& operator=(WriteLock&& other) noexcept {
             WriteLock temp(std::move(other));
             swap(temp);
             return *this;
@@ -4894,13 +4874,13 @@ public:
             m_->try_lock_shared(); 
         }
 
-        ReadLock(ReadLock &&o) :
+        ReadLock(ReadLock &&o) noexcept :
             m_(std::move(o.m_)), locked_(std::move(o.locked_)) {
             o.locked_ = false;
             o.m_      = nullptr;
         }
 
-        ReadLock& operator=(ReadLock&& other) {
+        ReadLock& operator=(ReadLock&& other) noexcept {
             ReadLock temp(std::move(other));
             swap(temp);
             return *this;

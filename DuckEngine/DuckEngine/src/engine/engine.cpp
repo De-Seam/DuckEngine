@@ -1,92 +1,117 @@
-#include "de/engine/engine.h"
-#include "de/renderer/renderer.h"
-#include "de/entity/entity.h"
-#include "de/world/world.h"
-#include "de/events/sdl_event_manager.h"
+#include "Engine/Engine.h"
+#include "Renderer/Renderer.h"
+#include "Events/SDLEventManager.h"
+#include "Events/InputManager.h"
 
-namespace de
+namespace DE
 {
-	GameState Engine::m_game_state = GameState::NotPlaying;
+	f64 Engine::m_deltaTime = 0.f;
+	bool Engine::m_ShouldShutdown = false;
+	World* Engine::m_currentWorld = nullptr;
+	phmap::flat_hash_map<u64, Object*>* Engine::m_objects = nullptr;
 
-	bool Engine::m_is_running = false;
-	f32 Engine::m_delta_time = F32_EPSILON;
-
-	phmap::flat_hash_map<UID, Object*> Engine::m_objects = {};
-
-	GameInstance* Engine::m_game_instance = nullptr;
-
-	void Engine::init()
+	void Engine::Init()
 	{
-		Renderer::init();
+		Log(LogType::Message, "Initializing Engine");
 
-		SDLEventFunction shutdown_event;
-		shutdown_event.event_type = SDL_EventType::SDL_QUIT;
-		shutdown_event.function_ptr = 
-		{ [](SDL_Event& event)
+		m_objects = new phmap::flat_hash_map<u64, Object*>();
+
+		Renderer::Init();
+		InputManager::Init();
+
+		DE::SDLEventFunction shutdownFunc;
+		shutdownFunc.event_type = SDL_QUIT;
+		shutdownFunc.function_ptr =
+			[](const SDL_Event& event)
 		{
-			Engine::shutdown();
-		}};
-		SDLEventManager::add_event_function(shutdown_event);
-		
-		m_is_running = true;
+			if (event.type == SDL_QUIT)
+			{
+				Engine::Shutdown();
+			}
+		};
+		SDLEventManager::AddEventFunction(shutdownFunc, false);
 	}
 
-	void Engine::shutdown()
+	void Engine::Shutdown()
 	{
-		m_is_running = false;
+		Log(LogType::Message, "Engine Shutdown called");
+		m_ShouldShutdown = true;
 	}
 
-	void Engine::internal_begin_play()
+	void Engine::BeginPlay()
 	{
-		m_game_state = GameState::Playing;
-
-		m_game_instance->begin_play();
+		if (m_currentWorld)
+		{
+			m_currentWorld->BeginPlay();
+		}
 	}
 
-	void Engine::set_game_instance(GameInstance* game_instance)
+	void Engine::EndPlay()
 	{
-		delete m_game_instance;
-		m_game_instance = game_instance;
+		if (m_currentWorld)
+		{
+			m_currentWorld->EndPlay();
+		}
 	}
 
-	void Engine::begin_frame()
+	void Engine::BeginFrame()
 	{
-		Renderer::begin_frame();
+		Renderer::BeginFrame();
 	}
 
-	void Engine::update(f32 dt)
+	void Engine::Update(f64 dt)
 	{
-		m_delta_time = dt;
-		SDLEventManager::update();
+		m_deltaTime = dt;
 
-		if(m_game_state == GameState::Playing)
-			m_game_instance->update(dt);
+		SDLEventManager::Update();
+
+		if (m_currentWorld)
+		{
+			m_currentWorld->Update(dt);
+		}
 	}
 
-	void Engine::end_frame()
+	void Engine::Draw()
 	{
-		Renderer::end_frame();
+		if (m_currentWorld)
+		{
+			m_currentWorld->Draw();
+		}
 	}
 
-	Object* Engine::get_object(UID uid)
+	void Engine::EndFrame()
 	{
-		return m_objects[uid];
+		Renderer::EndFrame();
 	}
 
-	void Engine::shutdown_internal()
+	Object* Engine::GetObject(UID uid)
 	{
-		Renderer::shutdown();
-
-		exit(EXIT_SUCCESS);
+		return (*m_objects)[uid];
 	}
 
-	void Engine::add_object(Object* object)
+	void Engine::Cleanup()
 	{
-		m_objects[object->uid] = object;
+		Log(LogType::Message, "Cleanup Engine");
+
+		Renderer::Shutdown();
+		InputManager::Cleanup();
+
+		delete m_objects;
+		m_objects = nullptr;
 	}
 
-	void Engine::remove_object(Object* object)
+	void Engine::AddObject(Object* object)
 	{
-		m_objects.erase(object->uid);
+		Log(LogType::Message, "Adding Object %s", object->GetClassName());
+		(*m_objects)[object->GetUID()] = object;
+	}
+
+	void Engine::RemoveObject(Object* object)
+	{
+		//If m_objects is nullptr the engine has already shut down
+		if (!m_objects)
+			return;
+		Log(LogType::Message, "Removing Object %s", object->GetClassName());
+		m_objects->erase(object->GetUID());
 	}
 }
