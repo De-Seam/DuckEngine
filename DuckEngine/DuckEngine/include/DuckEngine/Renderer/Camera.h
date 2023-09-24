@@ -5,7 +5,7 @@
 
 namespace DE //DuckEngine
 {
-	class DUCK_API Camera : public Object
+	class Camera : public Object
 	{
 	public:
 		Camera(fm::vec2 position = { 0.f, 0.f }, fm::vec2 size = { 1920.f, 1080.f }, f32 zoom = 1.f);

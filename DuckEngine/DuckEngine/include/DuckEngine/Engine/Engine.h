@@ -8,7 +8,7 @@
 
 namespace DE
 {
-	class DUCK_API Engine
+	class Engine
 	{
 	public:
 		static void Init(); //Initialize engine
@@ -21,6 +21,9 @@ namespace DE
 		static void Update(f64 dt); //Update game
 		static void Draw();
 		static void EndFrame(); //End frame
+
+		static World* CreateNewWorld();
+		static World* LoadWorldFromFile(const char* fileName);
 
 		static f64 GetDeltaTime() { return m_deltaTime; }
 		static bool ShouldShutdown() { return m_ShouldShutdown; }
@@ -37,8 +40,6 @@ namespace DE
 		static bool m_ShouldShutdown;
 
 		static World* m_currentWorld;
-
-		static phmap::flat_hash_map<u64, Object*>* m_objects;
 
 		friend class Object;
 		friend class App;

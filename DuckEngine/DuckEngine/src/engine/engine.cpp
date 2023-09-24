@@ -8,13 +8,12 @@ namespace DE
 	f64 Engine::m_deltaTime = 0.f;
 	bool Engine::m_ShouldShutdown = false;
 	World* Engine::m_currentWorld = nullptr;
-	phmap::flat_hash_map<u64, Object*>* Engine::m_objects = nullptr;
+
+	static phmap::flat_hash_map<u64, Object*> g_objects = {};
 
 	void Engine::Init()
 	{
 		Log(LogType::Message, "Initializing Engine");
-
-		m_objects = new phmap::flat_hash_map<u64, Object*>();
 
 		Renderer::Init();
 		InputManager::Init();
@@ -84,9 +83,27 @@ namespace DE
 		Renderer::EndFrame();
 	}
 
+	World* Engine::CreateNewWorld()
+	{
+		m_currentWorld = new World();
+		return m_currentWorld;
+	}
+
+	World* Engine::LoadWorldFromFile(const char* fileName)
+	{
+		if (m_currentWorld)
+		{
+			m_currentWorld->EndPlay();
+			delete m_currentWorld;
+		}
+		m_currentWorld = new World();
+		m_currentWorld->LoadFromFile(fileName);
+		return m_currentWorld;
+	}
+
 	Object* Engine::GetObject(UID uid)
 	{
-		return (*m_objects)[uid];
+		return g_objects[uid];
 	}
 
 	void Engine::Cleanup()
@@ -95,23 +112,17 @@ namespace DE
 
 		Renderer::Shutdown();
 		InputManager::Cleanup();
-
-		delete m_objects;
-		m_objects = nullptr;
 	}
 
 	void Engine::AddObject(Object* object)
 	{
 		Log(LogType::Message, "Adding Object %s", object->GetClassName());
-		(*m_objects)[object->GetUID()] = object;
+		g_objects[object->GetUID()] = object;
 	}
 
 	void Engine::RemoveObject(Object* object)
 	{
-		//If m_objects is nullptr the engine has already shut down
-		if (!m_objects)
-			return;
 		Log(LogType::Message, "Removing Object %s", object->GetClassName());
-		m_objects->erase(object->GetUID());
+		g_objects.erase(object->GetUID());
 	}
 }

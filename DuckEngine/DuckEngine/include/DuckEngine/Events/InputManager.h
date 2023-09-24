@@ -74,7 +74,7 @@ namespace DE //DuckEngine
 		LAST //Last item
 	};
 
-	class DUCK_API InputManager
+	class InputManager
 	{
 	public:
 		static void Init(); //Called by Engine

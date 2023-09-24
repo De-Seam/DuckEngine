@@ -8,7 +8,7 @@
 namespace DE
 {
 	template<typename T>
-	struct DUCK_API Array
+	struct Array
 	{
 	public:
 		using value_type = T;
@@ -41,9 +41,15 @@ namespace DE
 		Array(const Array& other) : m_size(other.m_size), m_capacity(other.m_capacity), m_data(Alloc(m_capacity))
 		{
 			for (size_type i = 0; i < m_size; ++i) {
-				new (&m_data[i]) T(other.m_data[i]);
+				if constexpr (std::is_move_constructible_v<T> && !std::is_copy_constructible_v<T>) {
+					new (&m_data[i]) T(std::move(other.m_data[i]));  // Note: This will modify other!
+				}
+				else {
+					new (&m_data[i]) T(other.m_data[i]);
+				}
 			}
 		}
+
 
 		Array(Array&& other) noexcept
 			: m_data(other.m_data), m_size(other.m_size), m_capacity(other.m_capacity)
@@ -85,11 +91,17 @@ namespace DE
 			m_data = Alloc(m_capacity);
 
 			for (size_type i = 0; i < m_size; ++i) {
-				new (&m_data[i]) T(other.m_data[i]);
+				if constexpr (std::is_move_constructible_v<T> && !std::is_copy_constructible_v<T>) {
+					new (&m_data[i]) T(std::move(other.m_data[i]));  // Note: This will modify other!
+				}
+				else {
+					new (&m_data[i]) T(other.m_data[i]);
+				}
 			}
 
 			return *this;
 		}
+
 
 		T& operator[](size_type index)
 		{
@@ -111,7 +123,8 @@ namespace DE
 		const_iterator end() const { return m_data + m_size; }
 		const_iterator cend() const { return m_data + m_size; }
 
-		template<typename T, typename std::enable_if<std::is_copy_constructible<T>::value>::type* = nullptr>
+		// For copy-constructible types
+		template<typename U = T, typename std::enable_if<std::is_copy_constructible<U>::value>::type* = nullptr>
 		void Add(const T& item)
 		{
 			if (m_size >= m_capacity)
@@ -122,7 +135,8 @@ namespace DE
 			++m_size;
 		}
 
-		template<typename T, typename std::enable_if<!std::is_copy_constructible<T>::value&& std::is_move_constructible<T>::value>::type* = nullptr>
+		// For move-constructible types
+		template<typename U = T, typename std::enable_if<std::is_move_constructible<U>::value>::type* = nullptr>
 		void Add(T&& item)
 		{
 			if (m_size >= m_capacity)
@@ -136,10 +150,7 @@ namespace DE
 		void Remove(size_type index)
 		{
 			m_data[index].~T();
-			for (size_type i = index + 1; i < m_size; ++i) {
-				new (&m_data[i - 1]) T(std::move(m_data[i]));
-				m_data[i].~T();
-			}
+			std::move(m_data + index + 1, m_data + m_size, m_data + index);
 			--m_size;
 		}
 
@@ -254,10 +265,7 @@ namespace DE
 		void Expand(size_type newSize)
 		{
 			T* newData = Alloc(newSize);
-			for (size_type i = 0; i < m_size; ++i) {
-				new (&newData[i]) T(std::move(m_data[i]));
-				m_data[i].~T();
-			}
+			std::move(m_data, m_data + m_size, newData);
 			operator delete[](m_data);
 			m_data = newData;
 			m_capacity = newSize;
@@ -265,14 +273,8 @@ namespace DE
 
 		void Shrink(size_type newSize)
 		{
-			for (size_type i = newSize; i < m_size; ++i) {
-				m_data[i].~T();
-			}
 			T* newData = Alloc(newSize);
-			for (size_type i = 0; i < newSize; ++i) {
-				new (&newData[i]) T(std::move(m_data[i]));
-				m_data[i].~T();
-			}
+			std::move(m_data, m_data + newSize, newData);
 			operator delete[](m_data);
 			m_data = newData;
 			m_size = newSize;

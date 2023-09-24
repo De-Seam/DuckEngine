@@ -22,6 +22,7 @@
     <ClInclude Include="include\DuckEngine\Renderer\Renderer.h" />
     <ClInclude Include="include\DuckEngine\Utils\Array.h" />
     <ClInclude Include="include\DuckEngine\Utils\FMath.h" />
+    <ClInclude Include="include\DuckEngine\Utils\UniquePtr.h" />
     <ClInclude Include="include\DuckEngine\Utils\UID.h" />
     <ClInclude Include="include\DuckEngine\Utils\Variables.h" />
     <ClInclude Include="include\DuckEngine\World\World.h" />
@@ -48,13 +49,13 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>

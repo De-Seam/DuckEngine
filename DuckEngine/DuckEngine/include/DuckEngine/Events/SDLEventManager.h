@@ -20,7 +20,7 @@ namespace DE //DuckEngine
 		std::function<void(SDL_Event&)> function_ptr = nullptr;
 	};
 
-	class DUCK_API SDLEventManager
+	class SDLEventManager
 	{
 	public:
 		static void RemoveEventFunction(UID uid);

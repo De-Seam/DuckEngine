@@ -36,3 +36,8 @@ build/
 .vs/
 *.pdb
 *.exp
+
+*.exp
+*.pdb
+DuckEngine/Run/DuckEngine.exp
+DuckEngine/Run/DuckEngine.pdb

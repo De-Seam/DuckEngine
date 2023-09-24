@@ -12,6 +12,24 @@ void App::Init()
 {
 	DE::Engine::Init();
 	Editor::Init();
+
+	//DE::World* world = DE::Engine::LoadWorldFromFile("Assets/World.json");
+
+	DE::World* world = DE::Engine::CreateNewWorld();
+	DE::Entity* entity = world->CreateEntity<DE::Entity>();
+	entity->name = "Test";
+	entity->position = fm::vec2(10, 10);
+	entity->size = fm::vec2(1, 1);
+	entity->rotation = 0;
+
+	entity = world->CreateEntity<DE::Entity>();
+	entity->name = "Test2";
+	entity->position = fm::vec2(10, 10);
+	entity->size = fm::vec2(1, 1);
+	entity->rotation = 0;
+	
+	world->SaveToFile("Assets/World.json");
+
 	MainLoop();
 }
 

@@ -1,0 +1,23 @@
+{
+   "Entities": [
+      {
+         "name": "Test",
+         "position": [
+            10.0,
+            10.0
+         ],
+         "rotation": 0.0,
+         "scriptPath": ""
+      },
+      {
+         "name": "Test2",
+         "position": [
+            10.0,
+            10.0
+         ],
+         "rotation": 0.0,
+         "scriptPath": ""
+      }
+   ],
+   "Name": "World"
+}

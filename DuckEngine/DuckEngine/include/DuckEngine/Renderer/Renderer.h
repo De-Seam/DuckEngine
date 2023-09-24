@@ -6,7 +6,7 @@
 
 namespace DE
 {
-	class DUCK_API Renderer
+	class Renderer
 	{
 	public:
 		static void Init();

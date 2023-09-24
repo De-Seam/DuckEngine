@@ -48,7 +48,7 @@ namespace fm //Fast Math
 		b = temp;
 	}
 
-	struct DUCK_API ivec2
+	struct ivec2
 	{
 		int x, y;
 
@@ -82,7 +82,7 @@ namespace fm //Fast Math
 		const ivec2& operator /= (const int i) { return *this = *this / i; }
 	};
 
-	struct DUCK_API vec2
+	struct vec2
 	{
 		double x, y;
 
@@ -116,7 +116,7 @@ namespace fm //Fast Math
 		const vec2& operator /= (const double i) { return *this = *this / i; }
 	};
 
-	struct DUCK_API vec3
+	struct vec3
 	{
 		double x, y, z;
 
@@ -181,7 +181,7 @@ namespace fm //Fast Math
 		}
 	};
 
-	struct alignas(4 * sizeof(double)) DUCK_API vec4
+	struct alignas(4 * sizeof(double)) vec4
 	{
 		double x, y, z, w;
 
@@ -241,7 +241,7 @@ namespace fm //Fast Math
 		}
 	};
 
-	struct DUCK_API mat3
+	struct mat3
 	{
 		vec3 x, y, z;
 
@@ -275,7 +275,7 @@ namespace fm //Fast Math
 		}
 	};
 
-	struct DUCK_API mat4
+	struct mat4
 	{
 		vec4 x, y, z, w;
 
@@ -377,7 +377,7 @@ namespace fm //Fast Math
 		}
 	};
 
-	struct DUCK_API quat
+	struct quat
 	{
 		double x, y, z, w;
 

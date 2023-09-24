@@ -7,11 +7,11 @@
 
 namespace DE
 {
-	class DUCK_API Entity : public Object
+	class Entity : public Object
 	{
 	public:
 		Entity()
-			: OBJECT{}
+			: Object("Entity") {}
 
 		virtual void BeginPlay();
 		virtual void EndPlay();
@@ -22,6 +22,7 @@ namespace DE
 		std::string name;
 
 		fm::vec2 position;
+		fm::vec2 size;
 		double rotation;
 
 		SDL_Texture* texture;

@@ -1,15 +1,9 @@
 #pragma once
 #include "Variables.h"
 
-#ifdef DUCK_EXPORTS
-#define DUCK_API __declspec(dllexport)
-#else
-#define DUCK_API __declspec(dllimport)
-#endif
-
 namespace DE
 {
-	class DUCK_API UID
+	class UID
 	{
 	public:
 		UID();

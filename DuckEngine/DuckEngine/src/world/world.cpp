@@ -1,12 +1,13 @@
 #include "World/World.h"
 
 #include <fstream>
+#include <ostream>
 
 namespace DE
 {
 	void World::BeginPlay()
 	{
-		for (u_size i = 0; i < m_entities.Size(); i++)
+		for (u_size i = 0; i < m_entities.size(); i++)
 		{
 			m_entities[i]->BeginPlay();
 		}
@@ -14,7 +15,7 @@ namespace DE
 
 	void World::EndPlay()
 	{
-		for (u_size i = 0; i < m_entities.Size(); i++)
+		for (u_size i = 0; i < m_entities.size(); i++)
 		{
 			m_entities[i]->EndPlay();
 		}
@@ -22,7 +23,7 @@ namespace DE
 
 	void World::Update(f64 dt)
 	{
-		for (u_size i = 0; i < m_entities.Size(); i++)
+		for (u_size i = 0; i < m_entities.size(); i++)
 		{
 			m_entities[i]->Update(dt);
 		}
@@ -30,10 +31,21 @@ namespace DE
 
 	void World::Draw()
 	{
-		for (u_size i = 0; i < m_entities.Size(); i++)
+		for (u_size i = 0; i < m_entities.size(); i++)
 		{
 			m_entities[i]->Draw();
 		}
+	}
+
+	void World::SaveToFile()
+	{
+		SaveToFile(m_filePath);
+	}
+
+	void World::SaveToFile(const std::string& filePath)
+	{
+		std::ofstream file(filePath);
+		file << std::setw(3) << SaveToJson();
 	}
 
 	void World::LoadFromFile(const std::string& filePath)
@@ -42,25 +54,27 @@ namespace DE
 		nlohmann::json json;
 		file >> json;
 
-		m_name = json["Worlds"]["Name"];
-		for (u_size i = 0; i < json["Worlds"][m_name]["Entities"].size(); i++)
-		{
-			Entity* entity = new Entity;
-			entity->SetJSONVariables(json["Worlds"][m_name]["Entities"][std::to_string(i)]);
-			m_entities.Add(entity);
-		}
+		LoadFromJson(json);
 	}
 
-	void World::SaveToFile(const std::string& filePath)
+	nlohmann::json World::SaveToJson()
 	{
 		nlohmann::json json;
-		json["Worlds"]["Name"] = m_name;
-		for (u_size i = 0; i < m_entities.Size(); i++)
+		json["Name"] = m_name;
+		for (u_size i = 0; i < m_entities.size(); i++)
 		{
-			json["Worlds"][m_name]["Entities"][std::to_string(i)] = m_entities[i]->GetJSONVariables();
+			json["Entities"] += m_entities[i]->GetJSONVariables();
 		}
+		return json;
+	}
 
-		std::ofstream file(filePath);
-		file << json;
+	void World::LoadFromJson(const nlohmann::json& json)
+	{
+		m_name = json["Name"];
+		for (u_size i = 0; i < json["Worlds"][m_name]["Entities"].size(); i++)
+		{
+			Entity* entity = CreateEntity<Entity>();
+			entity->SetJSONVariables(json["Entities"][std::to_string(i)]);
+		}
 	}
 }

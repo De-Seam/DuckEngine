@@ -6,7 +6,7 @@
 
 namespace DE
 {
-	class DUCK_API Object
+	class Object
 	{
 	public:
 		Object(const char* className);
