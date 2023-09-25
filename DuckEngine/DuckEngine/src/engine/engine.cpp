@@ -7,6 +7,7 @@ namespace DE
 {
 	f64 Engine::m_deltaTime = 0.f;
 	bool Engine::m_ShouldShutdown = false;
+	bool Engine::m_playing = false;
 	World* Engine::m_currentWorld = nullptr;
 
 	static phmap::flat_hash_map<u64, Object*> g_objects = {};
@@ -39,6 +40,8 @@ namespace DE
 
 	void Engine::BeginPlay()
 	{
+		m_playing = true;
+
 		if (m_currentWorld)
 		{
 			m_currentWorld->BeginPlay();
@@ -51,6 +54,8 @@ namespace DE
 		{
 			m_currentWorld->EndPlay();
 		}
+
+		m_playing = false;
 	}
 
 	void Engine::BeginFrame()
@@ -64,7 +69,7 @@ namespace DE
 
 		SDLEventManager::Update();
 
-		if (m_currentWorld)
+		if (m_currentWorld && m_playing)
 		{
 			m_currentWorld->Update(dt);
 		}
@@ -98,6 +103,8 @@ namespace DE
 		}
 		m_currentWorld = new World();
 		m_currentWorld->LoadFromFile(fileName);
+		if (m_playing)
+			m_currentWorld->BeginPlay();
 		return m_currentWorld;
 	}
 

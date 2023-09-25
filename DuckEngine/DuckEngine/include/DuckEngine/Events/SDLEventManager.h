@@ -28,6 +28,6 @@ namespace DE //DuckEngine
 		static void Update();
 
 	private:
-		static Array<SDLEventFunction> m_eventsFunctionAll;
+		static std::vector<SDLEventFunction> m_eventsFunctionAll;
 	};
 }

@@ -11,17 +11,17 @@
 
 ViewportLayer::ViewportLayer()
 {
-	m_type = LayerType::Viewport;
 }
 
-void ViewportLayer::update(f32)
+void ViewportLayer::Update(f32)
 {
 	ImGui::Begin("ViewportWindow");
 	{
-		//if (ImGui::Button("Play##ViewportPlayButton"))
-		//	de::Engine::internal_begin_play();
-
 		m_context = ImGui::GetCurrentContext();
+
+		if (ImGui::Button("Play##ViewportPlayButton"))
+			DE::Engine::BeginPlay();
+
 		ImGui::BeginChild("ViewportGame", { 0,0 }, false, ImGuiWindowFlags_NoMove);
 		{
 			m_position = IMToFM(ImGui::GetWindowPos());
@@ -67,4 +67,10 @@ void ViewportLayer::update(f32)
 	ImGui::End();
 
 	m_mouse_position = IMToFM(ImGui::GetMousePos());
+}
+
+void ViewportLayer::SetSelectedEntity(DE::Entity* entity)
+{
+	DE::Log(DE::LogType::Info, "Selected entity %s", entity->GetName().c_str());
+	m_selectedEntity = entity;
 }

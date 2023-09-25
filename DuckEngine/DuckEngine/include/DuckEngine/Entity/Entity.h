@@ -19,6 +19,8 @@ namespace DE
 		virtual void Update(f64 dt);
 		virtual void Draw();
 
+		const std::string& GetName() { return name;  }
+
 		std::string name;
 
 		fm::vec2 position;

@@ -12,7 +12,12 @@ namespace DE
 
 		SDL_SetMainReady();
 		if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
+		{
 			Log("Error initializing SDL: %s\n", SDL_GetError());
+			exit(1);
+		}
+
+		std::atexit(SDL_Quit);
 
 		m_window = SDL_CreateWindow("DuckEngine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, 0);
 
@@ -36,6 +41,5 @@ namespace DE
 	void Renderer::Shutdown()
 	{
 		Log(LogType::Message, "Renderer Shuting down");
-		SDL_Quit();
 	}
 }

@@ -1,5 +1,6 @@
 #include "Editor/Editor.h"
 #include "Editor/Layers/ViewportLayer.h"
+#include "Editor/Layers/OutlinerLayer.h"
 
 #include "DuckEngine/Engine/Engine.h"
 #include "DuckEngine/Renderer/Renderer.h"
@@ -13,7 +14,7 @@
 
 #include <chrono>
 
-phmap::flat_hash_map<LayerType, Layer*> Editor::m_layers = {};
+phmap::flat_hash_map<LayerType, std::unique_ptr<Layer>> Editor::m_layers = {};
 SDL_Texture* Editor::m_viewportTexture = nullptr;
 
 void Editor::Init()
@@ -44,7 +45,8 @@ void Editor::Init()
 	} };
 	DE::SDLEventManager::AddEventFunction(sdl_imgui_event_function, true);
 
-	new ViewportLayer;
+	CreateLayer<ViewportLayer>();
+	CreateLayer<OutlinerLayer>();
 }
 
 SDL_Texture*& Editor::GetViewportTexture()
@@ -70,7 +72,7 @@ void Editor::Update(f64 dt)
 	DE::Engine::Draw();
 
 	for (auto& layer : m_layers)
-		layer.second->update(dt);
+		layer.second->Update(dt);
 
 	//ImGui::ShowDemoWindow();
 
@@ -84,21 +86,14 @@ void Editor::Update(f64 dt)
 	DE::Engine::EndFrame();
 }
 
-int Editor::AddLayer(Layer* layer)
+void Editor::DestroyLayer(LayerType layerType)
 {
-	auto it = m_layers.find(layer->get_type());
-	if (it != m_layers.end())
+	if (m_layers.find(layerType) != m_layers.end())
 	{
-		DE::Log(DE::LogType::Error, "Editor tried to add layer that already exists!");
-		return 1; //Failure
+		m_layers.erase(layerType);
 	}
-	m_layers[layer->get_type()] = layer;
-	return 0; //Success
-}
-
-int Editor::DeleteLayer(Layer* layer)
-{
-	if (m_layers.erase(layer->get_type()) == 0)
-		return 1; //Failure
-	return 0; //Success
+	else
+	{
+		DE::Log(DE::LogType::Error, "LayerType not found");
+	}
 }

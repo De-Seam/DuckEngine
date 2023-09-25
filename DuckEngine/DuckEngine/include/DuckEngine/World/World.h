@@ -27,6 +27,10 @@ namespace DE
 
 		template<typename T>
 		T* CreateEntity();
+	
+	public:
+		const std::vector<std::unique_ptr<Entity>>& GetEntities() { return m_entities; }
+
 	private:
 
 		std::vector<std::unique_ptr<Entity>> m_entities;

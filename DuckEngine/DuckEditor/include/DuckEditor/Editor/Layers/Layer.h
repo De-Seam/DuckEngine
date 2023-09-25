@@ -8,20 +8,26 @@ enum class LayerType : uint32_t
 {
 	Invalid,
 	Viewport,
+	Inspector,
 };
 
 //Layer base class
 class Layer
 {
 public:
-	Layer();
-	~Layer();
+	Layer() = default;
+	~Layer() = default;
 
-	virtual void update([[maybe_unused]] f32 dt) {}
+	virtual void Update([[maybe_unused]] f32 dt) {}
 
-	LayerType get_type() { return m_type; }
-	ImGuiContext* get_context() { return m_context; }
+	//Overwrite this!
+	static LayerType GetType() { return LayerType::Invalid; }
+	virtual LayerType GetTypeDynamic() { return GetType(); }
+
+	virtual void DestroyLayer();
+
+	ImGuiContext* GetContext() { return m_context; }
+
 protected:
-	LayerType m_type = LayerType::Viewport;
 	ImGuiContext* m_context = nullptr;
 };

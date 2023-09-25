@@ -38,6 +38,7 @@ namespace DE
 	private:
 		static f64 m_deltaTime;
 		static bool m_ShouldShutdown;
+		static bool m_playing;
 
 		static World* m_currentWorld;
 

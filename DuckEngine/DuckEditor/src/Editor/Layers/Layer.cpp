@@ -1,13 +1,7 @@
 #include "Editor/Layers/Layer.h"
 #include "Editor/Editor.h"
 
-Layer::Layer()
+void Layer::DestroyLayer()
 {
-	if (Editor::AddLayer(this) != 0)
-		delete this;
-}
-
-Layer::~Layer()
-{
-	Editor::DeleteLayer(this);
+	Editor::DestroyLayer(GetTypeDynamic());
 }

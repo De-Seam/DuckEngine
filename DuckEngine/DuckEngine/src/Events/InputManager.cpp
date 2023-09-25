@@ -3,7 +3,7 @@
 
 namespace DE //DuckEngine
 {
-	std::map<SDL_Keycode, Key>* InputManager::m_sdlKeycodeToKey = nullptr;
+	phmap::flat_hash_map<SDL_Keycode, Key> InputManager::m_sdlKeycodeToKey = {};
 	Array<bool> InputManager::m_keyDown = {};
 	Array<bool> InputManager::m_mouseDown = {};
 	//phmap::flat_hash_map<UID, std::function<void(void)>>* InputManager::m_onKeyDownFunctions = nullptr;
@@ -12,56 +12,54 @@ namespace DE //DuckEngine
 	{
 		Log(LogType::Message, "Initializing InputManager");
 
-		m_sdlKeycodeToKey = new std::map<SDL_Keycode, Key>();
-
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_a] = Key::A;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_b] = Key::B;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_c] = Key::C;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_d] = Key::D;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_e] = Key::E;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_f] = Key::F;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_g] = Key::G;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_h] = Key::H;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_i] = Key::I;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_j] = Key::J;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_k] = Key::K;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_l] = Key::L;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_m] = Key::M;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_n] = Key::N;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_o] = Key::O;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_p] = Key::P;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_q] = Key::Q;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_r] = Key::R;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_s] = Key::S;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_t] = Key::T;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_u] = Key::U;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_v] = Key::V;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_w] = Key::W;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_x] = Key::X;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_y] = Key::Y;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_z] = Key::Z;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_1] = Key::ONE;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_2] = Key::TWO;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_3] = Key::THREE;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_4] = Key::FOUR;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_5] = Key::FIVE;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_6] = Key::SIX;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_7] = Key::SEVEN;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_8] = Key::EIGHT;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_9] = Key::NINE;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_0] = Key::ZERO;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_SLASH] = Key::FORWARDSLASH;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_BACKSLASH] = Key::BACKSLASH;
-		(*m_sdlKeycodeToKey)['<'] = Key::SMALLER;
-		(*m_sdlKeycodeToKey)['>'] = Key::BIGGER;
-		(*m_sdlKeycodeToKey)['.'] = Key::DOT;
-		(*m_sdlKeycodeToKey)[','] = Key::COMMA;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_LSHIFT] = Key::SHIFT;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_LCTRL] = Key::CONTROL;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_CAPSLOCK] = Key::CAPSLOCK;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_TAB] = Key::TAB;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_LALT] = Key::LEFTALT;
-		(*m_sdlKeycodeToKey)[SDL_KeyCode::SDLK_RALT] = Key::RIGHTALT;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_a] = Key::A;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_b] = Key::B;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_c] = Key::C;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_d] = Key::D;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_e] = Key::E;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_f] = Key::F;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_g] = Key::G;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_h] = Key::H;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_i] = Key::I;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_j] = Key::J;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_k] = Key::K;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_l] = Key::L;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_m] = Key::M;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_n] = Key::N;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_o] = Key::O;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_p] = Key::P;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_q] = Key::Q;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_r] = Key::R;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_s] = Key::S;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_t] = Key::T;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_u] = Key::U;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_v] = Key::V;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_w] = Key::W;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_x] = Key::X;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_y] = Key::Y;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_z] = Key::Z;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_1] = Key::ONE;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_2] = Key::TWO;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_3] = Key::THREE;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_4] = Key::FOUR;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_5] = Key::FIVE;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_6] = Key::SIX;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_7] = Key::SEVEN;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_8] = Key::EIGHT;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_9] = Key::NINE;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_0] = Key::ZERO;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_SLASH] = Key::FORWARDSLASH;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_BACKSLASH] = Key::BACKSLASH;
+		m_sdlKeycodeToKey['<'] = Key::SMALLER;
+		m_sdlKeycodeToKey['>'] = Key::BIGGER;
+		m_sdlKeycodeToKey['.'] = Key::DOT;
+		m_sdlKeycodeToKey[','] = Key::COMMA;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_LSHIFT] = Key::SHIFT;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_LCTRL] = Key::CONTROL;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_CAPSLOCK] = Key::CAPSLOCK;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_TAB] = Key::TAB;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_LALT] = Key::LEFTALT;
+		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_RALT] = Key::RIGHTALT;
 
 		//m_onKeyDownFunctions = new phmap::flat_hash_map<UID, std::function<void(void)>>[static_cast<u_size>(Key::LAST)];
 		m_keyDown.Resize(static_cast<u_size>(Key::LAST), false);
@@ -77,8 +75,6 @@ namespace DE //DuckEngine
 	void InputManager::Cleanup()
 	{
 		Log(LogType::Message, "Cleanup InputManager");
-
-		delete m_sdlKeycodeToKey;
 	}
 
 	bool InputManager::IsKeyDown(Key key)
@@ -95,12 +91,12 @@ namespace DE //DuckEngine
 
 	void InputManager::SDLKeyDown(SDL_Event& event)
 	{
-		Key key = (*m_sdlKeycodeToKey)[event.key.keysym.sym];
+		Key key = m_sdlKeycodeToKey[event.key.keysym.sym];
 		m_keyDown[static_cast<u_size>(key)] = true;
 	}
 	void InputManager::SDLKeyUp(SDL_Event& event)
 	{
-		Key key = (*m_sdlKeycodeToKey)[event.key.keysym.sym];
+		Key key = m_sdlKeycodeToKey[event.key.keysym.sym];
 		m_keyDown[static_cast<u_size>(key)] = false;
 	}
 

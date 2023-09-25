@@ -93,7 +93,7 @@ namespace DE //DuckEngine
 	private:
 		static MouseButton SDLToMouseButton(u8 button);
 
-		static std::map<SDL_Keycode, Key>* m_sdlKeycodeToKey;
+		static phmap::flat_hash_map<SDL_Keycode, Key> m_sdlKeycodeToKey;
 		static Array<bool> m_keyDown;
 		static Array<bool> m_mouseDown;
 

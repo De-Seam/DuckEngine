@@ -54,6 +54,9 @@
     <ClCompile Include="src\HelperFunctions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Editor\Layers\OutlinerLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\DuckEditor\App\App.h">
@@ -96,6 +99,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\DuckEditor\dll_loader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DuckEditor\Editor\Layers\OutlinerLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
