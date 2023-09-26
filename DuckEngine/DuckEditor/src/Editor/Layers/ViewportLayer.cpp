@@ -1,5 +1,6 @@
 #include "Editor/Layers/ViewportLayer.h"
 #include "Editor/Editor.h"
+#include "Editor/Layers/InspectorLayer.h"
 
 #include "Engine/Engine.h"
 #include "Renderer/Renderer.h"
@@ -73,4 +74,7 @@ void ViewportLayer::SetSelectedEntity(DE::Entity* entity)
 {
 	DE::Log(DE::LogType::Info, "Selected entity %s", entity->GetName().c_str());
 	m_selectedEntity = entity;
+
+	if(!Editor::LayerExists<InspectorLayer>())
+		Editor::CreateLayer<InspectorLayer>();
 }

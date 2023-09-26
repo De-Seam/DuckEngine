@@ -7,6 +7,8 @@
 #include "DuckEngine/Renderer/Renderer.h"
 #include "DuckEngine/Events/SDLEventManager.h"
 #include "DuckEngine/World/World.h"
+#include "DuckEngine/Resources/ResourceManager.h"
+#include "DuckEngine/Resources/ResourceTypes/TextureResource.h"
 
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_sdl.h"

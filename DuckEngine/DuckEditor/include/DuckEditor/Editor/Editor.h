@@ -2,12 +2,12 @@
 #include "Layers/Layer.h"
 #include "HelperFunctions.h"
 
-#include "Core.h"
+#include "DuckEngine/Core.h"
 
 #include "phmap/phmap.h"
 #include "SDL/SDL.h"
 
-#define IMGUI_VAR(func, label, code) ImGui::TextUnformatted(label); ImGui::NextColumn(); ImGui::SetNextItemWidth(-1); if(func) { code } ImGui::NextColumn();
+//#define IMGUI_VAR(func, label, code) ImGui::TextUnformatted(label); ImGui::NextColumn(); ImGui::SetNextItemWidth(-1); if(func) { code } ImGui::NextColumn();
 
 enum class GameState
 {
@@ -30,6 +30,9 @@ public:
 	static void CreateLayer();
 	template<typename T>
 	static void DestroyLayer();
+
+	template<typename T>
+	static bool LayerExists();
 
 	static void DestroyLayer(LayerType layerType);
 
@@ -72,4 +75,12 @@ inline void Editor::DestroyLayer()
 
 	DE::Log(DE::LogType::Info, "Destroying Layer %s", typeid(T).name());
 	DestroyLayer(T::GetType());
+}
+
+template<typename T>
+inline bool Editor::LayerExists()
+{
+	static_assert(std::is_base_of<Layer, T>::value, "T must derive from Layer");
+
+	return m_layers.find(T::GetType()) != m_layers.end();
 }

@@ -110,5 +110,8 @@
     <ClInclude Include="include\DuckEditor\Editor\Layers\InspectorLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\DuckEditor\Editor\ImGuiWrappers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

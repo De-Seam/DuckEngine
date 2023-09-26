@@ -63,6 +63,15 @@
     <ClInclude Include="include\DuckEngine\Utils\UniquePtr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\DuckEngine\Resources\ResourceManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DuckEngine\Resources\Resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DuckEngine\Resources\ResourceTypes\TextureResource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Events\InputManager.cpp">
@@ -93,6 +102,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\World\World.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Resources\ResourceManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Resources\Resource.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Resources\ResourceTypes\TextureResource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

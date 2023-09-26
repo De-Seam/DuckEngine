@@ -20,6 +20,9 @@
     <ClInclude Include="include\DuckEngine\Object\Object.h" />
     <ClInclude Include="include\DuckEngine\Renderer\Camera.h" />
     <ClInclude Include="include\DuckEngine\Renderer\Renderer.h" />
+    <ClInclude Include="include\DuckEngine\Resources\Resource.h" />
+    <ClInclude Include="include\DuckEngine\Resources\ResourceManager.h" />
+    <ClInclude Include="include\DuckEngine\Resources\ResourceTypes\TextureResource.h" />
     <ClInclude Include="include\DuckEngine\Utils\Array.h" />
     <ClInclude Include="include\DuckEngine\Utils\FMath.h" />
     <ClInclude Include="include\DuckEngine\Utils\UniquePtr.h" />
@@ -37,6 +40,9 @@
     <ClCompile Include="src\Object\Object.cpp" />
     <ClCompile Include="src\Renderer\Camera.cpp" />
     <ClCompile Include="src\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Resources\Resource.cpp" />
+    <ClCompile Include="src\Resources\ResourceManager.cpp" />
+    <ClCompile Include="src\Resources\ResourceTypes\TextureResource.cpp" />
     <ClCompile Include="src\Utils\UID.cpp" />
     <ClCompile Include="src\World\World.cpp" />
   </ItemGroup>
@@ -108,6 +114,10 @@
     <PostBuildEvent>
       <Message>Copy files to Run dir</Message>
     </PostBuildEvent>
+    <Lib>
+      <AdditionalLibraryDirectories>$(SolutionDir)DuckEngine/ext/lib/$(Configuration)/</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttfd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -140,6 +150,10 @@
     <PostBuildEvent>
       <Message>Copy files to Run dir</Message>
     </PostBuildEvent>
+    <Lib>
+      <AdditionalLibraryDirectories>$(SolutionDir)DuckEngine/ext/lib/$(Configuration)/</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttfd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

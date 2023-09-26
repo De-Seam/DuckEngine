@@ -67,7 +67,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;DuckEngine.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DuckEngine.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Run/;$(SolutionDir)DuckEngine/ext/lib/$(Configuration)/</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
@@ -95,7 +95,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;DuckEngine.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DuckEngine.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Run/;$(SolutionDir)DuckEngine/ext/lib/$(Configuration)/</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
@@ -138,6 +138,7 @@
     <ClInclude Include="include\DuckEditor\Editor\Layers\OutlinerLayer.h" />
     <ClInclude Include="include\DuckEditor\Editor\Layers\Layer.h" />
     <ClInclude Include="include\DuckEditor\Editor\Layers\ViewportLayer.h" />
+    <ClInclude Include="include\DuckEditor\Editor\ImGuiWrappers.h" />
     <ClInclude Include="include\DuckEditor\HelperFunctions.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
