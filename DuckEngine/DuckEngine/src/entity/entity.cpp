@@ -20,20 +20,20 @@ namespace DE
 
 	void Entity::SetJSONVariables(nlohmann::json json)
 	{
-		name = json["name"];
+		SetName(json["name"]);
 		double positions[2] = { json["position"][0], json["position"][1] };
-		position = { positions[0], positions[1] };
-		rotation = json["rotation"];
-		scriptPath = json["scriptPath"];
+		m_position = { positions[0], positions[1] };
+		m_rotation = json["rotation"];
+		m_scriptPath = json["scriptPath"];
 	}
 
 	nlohmann::json Entity::GetJSONVariables() const
 	{
 		nlohmann::json json;
-		json["name"] = name;
-		json["position"] = { position.x, position.y };
-		json["rotation"] = rotation;
-		json["scriptPath"] = scriptPath;
+		json["name"] = m_name;
+		json["position"] = { m_position.x, m_position.y };
+		json["rotation"] = m_rotation;
+		json["scriptPath"] = m_scriptPath;
 
 		return json;
 	}

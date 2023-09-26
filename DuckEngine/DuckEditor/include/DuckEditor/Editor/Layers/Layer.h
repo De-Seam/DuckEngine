@@ -8,6 +8,7 @@ enum class LayerType : uint32_t
 {
 	Invalid,
 	Viewport,
+	Outliner,
 	Inspector,
 };
 

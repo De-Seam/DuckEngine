@@ -17,16 +17,16 @@ void App::Init()
 
 	DE::World* world = DE::Engine::CreateNewWorld();
 	DE::Entity* entity = world->CreateEntity<DE::Entity>();
-	entity->name = "Test";
-	entity->position = fm::vec2(10, 10);
-	entity->size = fm::vec2(1, 1);
-	entity->rotation = 0;
+	entity->SetName("Test");
+	entity->SetPosition(fm::vec2(10, 10));
+	entity->SetSize(fm::vec2(1, 1));
+	entity->SetRotation(0);
 
 	entity = world->CreateEntity<DE::Entity>();
-	entity->name = "Test2";
-	entity->position = fm::vec2(10, 10);
-	entity->size = fm::vec2(1, 1);
-	entity->rotation = 0;
+	entity->SetName("Test2");
+	entity->SetPosition(fm::vec2(10, 10));
+	entity->SetSize(fm::vec2(1, 1));
+	entity->SetRotation(0);
 	
 	world->SaveToFile("Assets/World.json");
 

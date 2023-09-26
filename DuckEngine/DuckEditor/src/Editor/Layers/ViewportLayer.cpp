@@ -15,7 +15,7 @@ ViewportLayer::ViewportLayer()
 
 void ViewportLayer::Update(f32)
 {
-	ImGui::Begin("ViewportWindow");
+	ImGui::Begin("Viewport##LayerWindow");
 	{
 		m_context = ImGui::GetCurrentContext();
 

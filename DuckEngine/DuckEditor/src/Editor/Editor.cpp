@@ -1,6 +1,7 @@
 #include "Editor/Editor.h"
 #include "Editor/Layers/ViewportLayer.h"
 #include "Editor/Layers/OutlinerLayer.h"
+#include "Editor/Layers/InspectorLayer.h"
 
 #include "DuckEngine/Engine/Engine.h"
 #include "DuckEngine/Renderer/Renderer.h"
@@ -47,6 +48,7 @@ void Editor::Init()
 
 	CreateLayer<ViewportLayer>();
 	CreateLayer<OutlinerLayer>();
+	CreateLayer<InspectorLayer>();
 }
 
 SDL_Texture*& Editor::GetViewportTexture()

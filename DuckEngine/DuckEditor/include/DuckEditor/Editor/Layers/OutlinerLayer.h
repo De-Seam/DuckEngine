@@ -11,7 +11,7 @@ public:
 	OutlinerLayer();
 	virtual void Update(f32 dt) override;
 
-	static LayerType GetType() { return LayerType::Inspector; }
+	static LayerType GetType() { return LayerType::Outliner; }
 	virtual LayerType GetTypeDynamic() override { return GetType(); }
 
 private:

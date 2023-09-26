@@ -7,6 +7,8 @@
 #include "phmap/phmap.h"
 #include "SDL/SDL.h"
 
+#define IMGUI_VAR(func, label, code) ImGui::TextUnformatted(label); ImGui::NextColumn(); ImGui::SetNextItemWidth(-1); if(func) { code } ImGui::NextColumn();
+
 enum class GameState
 {
 	NotPlaying,

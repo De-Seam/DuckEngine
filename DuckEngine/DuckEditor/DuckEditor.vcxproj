@@ -113,6 +113,7 @@
     <ClCompile Include="ext\include\imgui\imgui_impl_sdlrenderer.cpp" />
     <ClCompile Include="ext\include\imgui\imgui_tables.cpp" />
     <ClCompile Include="ext\include\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="src\Editor\Layers\InspectorLayer.cpp" />
     <ClCompile Include="src\Editor\Layers\OutlinerLayer.cpp" />
     <ClCompile Include="src\App\App.cpp" />
     <ClCompile Include="src\Editor\Editor.cpp" />
@@ -133,6 +134,7 @@
     <ClInclude Include="include\DuckEditor\App\App.h" />
     <ClInclude Include="include\DuckEditor\dll_loader.h" />
     <ClInclude Include="include\DuckEditor\Editor\Editor.h" />
+    <ClInclude Include="include\DuckEditor\Editor\Layers\InspectorLayer.h" />
     <ClInclude Include="include\DuckEditor\Editor\Layers\OutlinerLayer.h" />
     <ClInclude Include="include\DuckEditor\Editor\Layers\Layer.h" />
     <ClInclude Include="include\DuckEditor\Editor\Layers\ViewportLayer.h" />
