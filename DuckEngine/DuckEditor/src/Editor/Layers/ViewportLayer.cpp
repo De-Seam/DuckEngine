@@ -14,7 +14,7 @@ ViewportLayer::ViewportLayer()
 {
 }
 
-void ViewportLayer::Update(f32)
+void ViewportLayer::Update(f64)
 {
 	ImGui::Begin("Viewport##LayerWindow");
 	{

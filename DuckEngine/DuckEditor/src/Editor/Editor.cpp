@@ -19,6 +19,7 @@
 
 phmap::flat_hash_map<LayerType, std::unique_ptr<Layer>> Editor::m_layers = {};
 SDL_Texture* Editor::m_viewportTexture = nullptr;
+ImGuiID Editor::m_dockID = 0;
 
 void Editor::Init()
 {
@@ -65,7 +66,7 @@ void Editor::Update(f64 dt)
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
 
-	ImGuiID m_dock_id = ImGui::DockSpaceOverViewport();
+	m_dockID = ImGui::DockSpaceOverViewport();
 
 	SDL_SetRenderTarget(DE::Renderer::GetRenderer(), m_viewportTexture);
 

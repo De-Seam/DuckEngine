@@ -9,7 +9,7 @@ OutlinerLayer::OutlinerLayer()
 {
 }
 
-void OutlinerLayer::Update(f32 dt)
+void OutlinerLayer::Update(f64)
 {
     bool open = true;
     ImGui::Begin("Outliner##LayerWindow", &open);

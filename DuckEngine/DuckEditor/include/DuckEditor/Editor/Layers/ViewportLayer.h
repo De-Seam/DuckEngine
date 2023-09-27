@@ -10,7 +10,7 @@ class ViewportLayer : public Layer
 {
 public:
 	ViewportLayer();
-	virtual void Update(f32 dt) override;
+	virtual void Update(f64 dt) override;
 
 	static LayerType GetType() { return LayerType::Viewport; }
 	virtual LayerType GetTypeDynamic() override { return GetType(); }

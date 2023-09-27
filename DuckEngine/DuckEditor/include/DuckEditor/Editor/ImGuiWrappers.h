@@ -15,9 +15,9 @@ struct ColumnDragScalar
 		std::shared_ptr<DE::TextureResource> texture;
 	};
 
-	void Update(void* data)
+	void Update(void* data[])
 	{
-		ImGui::TextUnformatted("Size");
+		ImGui::TextUnformatted(text.c_str());
 		ImGui::NextColumn();
 
 		const float availableWidth = ImGui::GetContentRegionAvail().x;
@@ -30,11 +30,11 @@ struct ColumnDragScalar
 			PerScalarData& currentScalarData = perScalarData[i];
 			if (currentScalarData.texture)
 			{
-				ImGui::Image(ImTextureID(currentScalarData.texture.get()), ImVec2(19, 19), ImVec2(0, 0), ImVec2(1, 1));
+				ImGui::Image(ImTextureID(currentScalarData.texture->GetTexture()), ImVec2(19, 19), ImVec2(0, 0), ImVec2(1, 1));
 				ImGui::SameLine(0.f, 0.f);
 			}
 			ImGui::SetNextItemWidth(dragWidth);
-			ImGui::DragScalar(currentScalarData.label, dataType, data, speed, min, max, format);
+			ImGui::DragScalar(currentScalarData.label, dataType, data[i], speed, min, max, format);
 		}
 
 		ImGui::NextColumn();

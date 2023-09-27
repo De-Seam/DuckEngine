@@ -12,12 +12,33 @@
 
 InspectorLayer::InspectorLayer()
 {
+	std::shared_ptr<DE::TextureResource> resourceTextureXButton = DE::ResourceManager::GetResource<DE::TextureResource>("Assets/Editor/Textures/XButtonIcon.png");
+	std::shared_ptr<DE::TextureResource> resourceTextureYButton = DE::ResourceManager::GetResource<DE::TextureResource>("Assets/Editor/Textures/YButtonIcon.png");
+
+	m_positionColum.text = "Position";
+	m_positionColum.perScalarData = 
+	{ 
+		ColumnDragScalar::PerScalarData{"##PositionX", resourceTextureXButton},
+		ColumnDragScalar::PerScalarData{"##PositionY", resourceTextureYButton}
+	};
+
+	m_sizeColum.text = "Size";
+	m_sizeColum.perScalarData =
+	{
+		ColumnDragScalar::PerScalarData{"##SizeX", resourceTextureXButton},
+		ColumnDragScalar::PerScalarData{"##SizeY", resourceTextureYButton}
+	};
+
+	m_rotationColum.text = "Rotation";
+	m_rotationColum.perScalarData =
+	{
+		ColumnDragScalar::PerScalarData{"##Rotation", nullptr}
+	};
 }
 
 #define IMGUI_VAR(func, label, code) ImGui::TextUnformatted(label); ImGui::NextColumn(); ImGui::SetNextItemWidth(-1); if(func) { code } ImGui::NextColumn();
-#define IMGUI_VAR_IMG(func, label, code, img) ImGui::TextUnformatted(label); ImGui::NextColumn(); ImGui::SetNextItemWidth(-1); if(func) { code } ImGui::SameLine(); ImGui::NextColumn();
 
-void InspectorLayer::Update(f32 dt)
+void InspectorLayer::Update(f64)
 {
 	bool open = true;
 	ImGui::Begin("Inspector##LayerWindow", &open);
@@ -48,69 +69,17 @@ void InspectorLayer::Update(f32 dt)
 					char entityNameBuffer[256];
 					strcpy_s(entityNameBuffer, selectedEntity->GetName().c_str());
 
-					static std::shared_ptr<DE::TextureResource> resourceTextureXButton = DE::ResourceManager::GetResource<DE::TextureResource>("Assets/Editor/Textures/XButtonIcon.png");
-					static std::shared_ptr<DE::TextureResource> resourceTextureXYutton = DE::ResourceManager::GetResource<DE::TextureResource>("Assets/Editor/Textures/YButtonIcon.png");
-					SDL_Texture* textureXButton = resourceTextureXButton->GetTexture();
-					SDL_Texture* textureYButton = resourceTextureXYutton->GetTexture();
-					
 					IMGUI_VAR(ImGui::InputText("##NameInputText", entityNameBuffer, 256, ImGuiInputTextFlags_AlwaysInsertMode),
 						"Name",
 						selectedEntity->SetName(entityNameBuffer);
 						);
 
-
-					// Set a default item width for DragScalar
-					const float defaultItemWidth = 100.0f;
-
-					// Set a minimum width for DragScalar
-					const float minDragWidth = 40.0f;
-
-
-					ImGui::TextUnformatted("Position");
-					ImGui::NextColumn();
-					ImGui::Image(ImTextureID(textureXButton), ImVec2(19, 19), ImVec2(0, 0), ImVec2(1, 1));
-					ImGui::SameLine(0.f, 0.f);
-
-					// Calculate the available width for DragScalar
-					const float availableWidth = ImGui::GetContentRegionAvail().x;
-					const float dragWidth = std::max(minDragWidth, availableWidth * 0.5f); // Adjust the multiplier as needed
-					
-					ImGui::SetNextItemWidth(dragWidth);
-					if (ImGui::DragScalar("##PositionInputX", ImGuiDataType_Double, &selectedEntity->m_position.x, 1, 0, 0, "%.3f"))
-					{}
-					ImGui::SameLine(0.f, 2.f);
-
-					ImGui::Image(ImTextureID(textureYButton), ImVec2(19, 19), ImVec2(0, 0), ImVec2(1, 1));
-					ImGui::SameLine(0.f, 0.f);
-
-					ImGui::SetNextItemWidth(dragWidth);
-					if (ImGui::DragScalar("##PositionInputY", ImGuiDataType_Double, &selectedEntity->m_position.y, 1, 0, 0, "%.3f"))
-					{}
-
-					ImGui::NextColumn();
-
-
-					ImGui::TextUnformatted("Size");
-					ImGui::NextColumn();
-					ImGui::Image(ImTextureID(textureXButton), ImVec2(19, 19), ImVec2(0, 0), ImVec2(1, 1));
-					ImGui::SameLine(0.f, 0.f);
-
-					ImGui::SetNextItemWidth(dragWidth);
-					if (ImGui::DragScalar("##SizeInputX", ImGuiDataType_Double, &selectedEntity->m_size.x, 1, 0, 0, "%.3f"))
-					{}
-					ImGui::SameLine(0.f, 2.f);
-
-					ImGui::Image(ImTextureID(textureYButton), ImVec2(19, 19), ImVec2(0, 0), ImVec2(1, 1));
-					ImGui::SameLine(0.f, 0.f);
-
-					ImGui::SetNextItemWidth(dragWidth);
-					if (ImGui::DragScalar("##SizeInputY", ImGuiDataType_Double, &selectedEntity->m_size.y, 1, 0, 0, "%.3f"))
-					{}
-
-					ImGui::NextColumn();
-
-					IMGUI_VAR(ImGui::DragScalar("##RotationInput", ImGuiDataType_Double, &selectedEntity->m_rotation), "Rotation",
-						{};);
+					void* positionData[2] = { &selectedEntity->m_position.x, &selectedEntity->m_position.y };
+					m_positionColum.Update(positionData);
+					void* sizeData[2] = { &selectedEntity->m_size.x, &selectedEntity->m_size.y };
+					m_sizeColum.Update(sizeData);
+					void* rotationData[1] = { &selectedEntity->m_rotation };
+					m_rotationColum.Update(rotationData);
 				}
 			}
 			ImGui::EndTabItem();

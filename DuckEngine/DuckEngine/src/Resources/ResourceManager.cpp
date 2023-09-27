@@ -8,6 +8,7 @@ namespace DE
 	
 	void ResourceManager::UnloadResource(const std::string& filePath)
 	{
+		Log(LogType::Info, "Unloaded resource %s ", filePath.c_str());
 		m_resources.erase(filePath);
 	}
 }

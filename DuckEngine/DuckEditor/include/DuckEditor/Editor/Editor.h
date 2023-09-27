@@ -45,6 +45,7 @@ private:
 	static phmap::flat_hash_map<LayerType, std::unique_ptr<Layer>> m_layers;
 
 	static SDL_Texture* m_viewportTexture;
+	static ImGuiID m_dockID;
 
 	friend class Layer;
 	friend class App;

@@ -19,7 +19,7 @@ public:
 	Layer() = default;
 	~Layer() = default;
 
-	virtual void Update([[maybe_unused]] f32 dt) {}
+	virtual void Update([[maybe_unused]] f64 dt) {}
 
 	//Overwrite this!
 	static LayerType GetType() { return LayerType::Invalid; }
