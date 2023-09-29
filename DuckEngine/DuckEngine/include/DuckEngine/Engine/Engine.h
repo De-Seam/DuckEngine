@@ -8,41 +8,44 @@
 
 namespace DE
 {
-	class Engine
-	{
-	public:
-		static void Init(); //Initialize engine
-		static void Shutdown(); //Clean Shutdown
+class Engine
+{
+public:
+	static void Init(); //Initialize engine
+	static void Shutdown(); //Clean Shutdown
 
-		static void BeginPlay();
-		static void EndPlay();
+	static void BeginPlay();
+	static void EndPlay();
 
-		static void BeginFrame(); //Begin frame
-		static void Update(f64 dt); //Update game
-		static void Draw();
-		static void EndFrame(); //End frame
+	static void BeginFrame(); //Begin frame
+	static void Update(f64 dt); //Update game
+	static void Draw();
+	static void EndFrame(); //End frame
 
-		static World* CreateNewWorld();
-		static World* LoadWorldFromFile(const char* fileName);
+	static World* CreateNewWorld();
+	static World* LoadWorldFromFile(const char* fileName);
 
-		static f64 GetDeltaTime() { return m_deltaTime; }
-		static bool ShouldShutdown() { return m_ShouldShutdown; }
-		static Object* GetObject(UID uid);
-		static World* GetWorld() { return m_currentWorld; }
-	private:
-		static void Cleanup(); //Actual shutdown logic
+	static f64 GetDeltaTime() { return m_deltaTime; }
+	static bool ShouldShutdown() { return m_ShouldShutdown; }
+	static Object* GetObject(UID uid);
+	static World* GetWorld() { return m_currentWorld.get(); }
 
-		static void AddObject(Object* object); //For objects to add themselves
-		static void RemoveObject(Object* object); //For objects to remove themselves
+private:
+	static void Cleanup(); //Actual shutdown logic
 
-	private:
-		static f64 m_deltaTime;
-		static bool m_ShouldShutdown;
-		static bool m_playing;
+	static void AddObject(Object* object); //For objects to add themselves
+	static void RemoveObject(Object* object); //For objects to remove themselves
 
-		static World* m_currentWorld;
+private:
+	static f64 m_deltaTime;
+	static bool m_ShouldShutdown;
+	static bool m_playing;
 
-		friend class Object;
-		friend class App;
-	};
+	static std::unique_ptr<World> m_currentWorld;
+
+	static phmap::flat_hash_map<u64, Object*> m_objects;
+
+	friend class Object;
+	friend class App;
+};
 }

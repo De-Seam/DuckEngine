@@ -2,6 +2,7 @@
 #include "Editor/Editor.h"
 
 #include "DuckEngine/Engine/Engine.h"
+#include "DuckEngine/Resources/ResourceManager.h""
 
 #include <chrono>
 
@@ -19,15 +20,17 @@ void App::Init()
 	DE::Entity* entity = world->CreateEntity<DE::Entity>();
 	entity->SetName("Test");
 	entity->SetPosition(fm::vec2(10, 10));
-	entity->SetSize(fm::vec2(1, 1));
-	entity->SetRotation(0);
+	entity->SetSize(fm::vec2(100, 100));
+	entity->SetRotation(30);
+	const auto textureResource = DE::ResourceManager::GetResource<DE::TextureResource>("Assets/Textures/Player.png");
+	entity->SetTexture(textureResource);
 
 	entity = world->CreateEntity<DE::Entity>();
 	entity->SetName("Test2");
-	entity->SetPosition(fm::vec2(10, 10));
-	entity->SetSize(fm::vec2(1, 1));
+	entity->SetPosition(fm::vec2(100, 100));
+	entity->SetSize(fm::vec2(100, 100));
 	entity->SetRotation(0);
-	
+
 	world->SaveToFile("Assets/World.json");
 
 	MainLoop();
@@ -36,7 +39,6 @@ void App::Init()
 void App::MainLoop()
 {
 	m_running = true;
-	auto current_time = std::chrono::steady_clock::now();
 
 	while (m_running)
 	{
@@ -45,8 +47,8 @@ void App::MainLoop()
 		Update(m_deltaTime);
 
 		auto end = std::chrono::steady_clock::now();
-		std::chrono::duration<f64> elapsed_chrono_time = end - start;
-		m_deltaTime = elapsed_chrono_time.count();
+		std::chrono::duration<f64> elapsedChronoTime = end - start;
+		m_deltaTime = elapsedChronoTime.count();
 	}
 
 	DE::Engine::Cleanup();
