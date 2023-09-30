@@ -24,6 +24,8 @@ public:
 private:
 	static void Shutdown();
 
+	static SDL_Rect GetSDLRect(const fm::vec2& position, const fm::vec2& size);
+
 private:
 	static SDL_Window* m_window;
 	static SDL_Renderer* m_renderer;
