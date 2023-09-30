@@ -6,6 +6,8 @@
 
 namespace DE
 {
+class Entity;
+
 class Renderer
 {
 public:
@@ -20,6 +22,8 @@ public:
 	static SDL_Window* GetWindow() { return m_window; }
 	static SDL_Renderer* GetRenderer() { return m_renderer; }
 	static Camera* GetCamera() { return m_camera; }
+
+	static Entity* GetEntityAtPointSlow(fm::vec2 point);
 
 private:
 	static void Shutdown();

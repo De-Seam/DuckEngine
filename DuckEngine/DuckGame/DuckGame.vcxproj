@@ -26,113 +26,50 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="ext\include\imgui\imconfig.h" />
-    <ClInclude Include="ext\include\imgui\imgui.h" />
-    <ClInclude Include="ext\include\imgui\imgui_impl_sdl.h" />
-    <ClInclude Include="ext\include\imgui\imgui_impl_sdlrenderer.h" />
-    <ClInclude Include="ext\include\imgui\imgui_internal.h" />
-    <ClInclude Include="ext\include\imgui\imstb_rectpack.h" />
-    <ClInclude Include="ext\include\imgui\imstb_textedit.h" />
-    <ClInclude Include="ext\include\imgui\imstb_truetype.h" />
-    <ClInclude Include="ext\include\nlohmann\json.hpp" />
-    <ClInclude Include="include\DuckEditor\Editor.h" />
-    <ClInclude Include="include\DuckEditor\HelperFunctions.h" />
-    <ClInclude Include="include\DuckEditor\ImGuiWrappers.h" />
-    <ClInclude Include="include\DuckEditor\Layers\InspectorLayer.h" />
-    <ClInclude Include="include\DuckEditor\Layers\Layer.h" />
-    <ClInclude Include="include\DuckEditor\Layers\OutlinerLayer.h" />
-    <ClInclude Include="include\DuckEditor\Layers\ViewportLayer.h" />
-    <ClInclude Include="include\DuckEngine\Core.h" />
-    <ClInclude Include="include\DuckEngine\CoreLight.h" />
-    <ClInclude Include="include\DuckEngine\Entity\Entity.h" />
-    <ClInclude Include="include\DuckEngine\Events\InputManager.h" />
-    <ClInclude Include="include\DuckEngine\Events\SDLEventManager.h" />
-    <ClInclude Include="include\DuckEngine\Object\Object.h" />
-    <ClInclude Include="include\DuckEngine\Renderer\Camera.h" />
-    <ClInclude Include="include\DuckEngine\Renderer\Renderer.h" />
-    <ClInclude Include="include\DuckEngine\Resources\Resource.h" />
-    <ClInclude Include="include\DuckEngine\Resources\ResourceManager.h" />
-    <ClInclude Include="include\DuckEngine\Resources\ResourceTypes\TextureResource.h" />
-    <ClInclude Include="include\DuckEngine\Utils\Array.h" />
-    <ClInclude Include="include\DuckEngine\Utils\FMath.h" />
-    <ClInclude Include="include\DuckEngine\Utils\UniquePtr.h" />
-    <ClInclude Include="include\DuckEngine\Utils\UID.h" />
-    <ClInclude Include="include\DuckEngine\Utils\Variables.h" />
-    <ClInclude Include="include\DuckEngine\World\World.h" />
-    <ClInclude Include="include\DuckEngine\Engine\Engine.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="ext\include\imgui\imgui.cpp" />
-    <ClCompile Include="ext\include\imgui\imgui_demo.cpp" />
-    <ClCompile Include="ext\include\imgui\imgui_draw.cpp" />
-    <ClCompile Include="ext\include\imgui\imgui_impl_sdl.cpp" />
-    <ClCompile Include="ext\include\imgui\imgui_impl_sdlrenderer.cpp" />
-    <ClCompile Include="ext\include\imgui\imgui_tables.cpp" />
-    <ClCompile Include="ext\include\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="src\DuckEditor\Editor.cpp" />
-    <ClCompile Include="src\DuckEditor\HelperFunctions.cpp" />
-    <ClCompile Include="src\DuckEditor\Layers\InspectorLayer.cpp" />
-    <ClCompile Include="src\DuckEditor\Layers\Layer.cpp" />
-    <ClCompile Include="src\DuckEditor\Layers\OutlinerLayer.cpp" />
-    <ClCompile Include="src\DuckEditor\Layers\ViewportLayer.cpp" />
-    <ClCompile Include="src\DuckEngine\Entity\Entity.cpp" />
-    <ClCompile Include="src\DuckEngine\Core.cpp" />
-    <ClCompile Include="src\DuckEngine\Engine\Engine.cpp" />
-    <ClCompile Include="src\DuckEngine\Events\InputManager.cpp" />
-    <ClCompile Include="src\DuckEngine\Events\SDLEventManager.cpp" />
-    <ClCompile Include="src\DuckEngine\Object\Object.cpp" />
-    <ClCompile Include="src\DuckEngine\Renderer\Camera.cpp" />
-    <ClCompile Include="src\DuckEngine\Renderer\Renderer.cpp" />
-    <ClCompile Include="src\DuckEngine\Resources\Resource.cpp" />
-    <ClCompile Include="src\DuckEngine\Resources\ResourceManager.cpp" />
-    <ClCompile Include="src\DuckEngine\Resources\ResourceTypes\TextureResource.cpp" />
-    <ClCompile Include="src\DuckEngine\Utils\UID.cpp" />
-    <ClCompile Include="src\DuckEngine\World\World.cpp" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{ebe84329-992a-4f92-92fa-7771ad3cc74e}</ProjectGuid>
-    <RootNamespace>DuckEngine</RootNamespace>
+    <ProjectGuid>{68a3a132-1ce7-4630-840c-234af863c2fb}</ProjectGuid>
+    <RootNamespace>DuckGame</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>DuckGame</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Editor|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Game|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Editor|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Game|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development_Editor|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development_Game|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -163,26 +100,32 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Editor|x64'">
+    <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)build/out/$(ProjectName)/$(Platform)_$(Configuration)/</OutDir>
     <IntDir>$(SolutionDir)build/int/$(ProjectName)/$(Platform)_$(Configuration)/</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Game|x64'">
+    <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)build/out/$(ProjectName)/$(Platform)_$(Configuration)/</OutDir>
     <IntDir>$(SolutionDir)build/int/$(ProjectName)/$(Platform)_$(Configuration)/</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Editor|x64'">
+    <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)build/out/$(ProjectName)/$(Platform)_$(Configuration)/</OutDir>
     <IntDir>$(SolutionDir)build/int/$(ProjectName)/$(Platform)_$(Configuration)/</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Game|x64'">
+    <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)build/out/$(ProjectName)/$(Platform)_$(Configuration)/</OutDir>
     <IntDir>$(SolutionDir)build/int/$(ProjectName)/$(Platform)_$(Configuration)/</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development_Editor|x64'">
+    <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)build/out/$(ProjectName)/$(Platform)_$(Configuration)/</OutDir>
     <IntDir>$(SolutionDir)build/int/$(ProjectName)/$(Platform)_$(Configuration)/</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development_Game|x64'">
+    <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)build/out/$(ProjectName)/$(Platform)_$(Configuration)/</OutDir>
     <IntDir>$(SolutionDir)build/int/$(ProjectName)/$(Platform)_$(Configuration)/</IntDir>
   </PropertyGroup>
@@ -190,22 +133,18 @@
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>DUCK_EXPORTS;DUCK_EDITOR;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DUCK_EDITOR;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PrecompiledHeaderFile>
-      </PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(ProjectDir)include/;$(ProjectDir)include/DuckEngine/;$(ProjectDir)ext/include;</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)include/DuckGame/;$(SolutionDir)DuckEngine/include/DuckEngine;$(SolutionDir)DuckEngine/include;$(SolutionDir)DuckEngine/ext/include;$(ProjectDir)ext/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>
-      </SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)ext/lib/$(Configuration)/</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DuckEngine.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Run/;$(SolutionDir)DuckEngine/ext/lib/$(Configuration)/;$(SolutionDir)build/out/DuckEngine/$(Platform)_$(Configuration)/</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -214,31 +153,23 @@
     <PostBuildEvent>
       <Message>xcopy "$(OutDirFullPath.TrimEnd('\'))" "$(SolutionDir)Run" /i /e /r /y </Message>
     </PostBuildEvent>
-    <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)DuckEngine/ext/lib/Debug/</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttfd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Game|x64'">
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>DUCK_EXPORTS;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PrecompiledHeaderFile>
-      </PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(ProjectDir)include/;$(ProjectDir)include/DuckEngine/;$(ProjectDir)ext/include;</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)include/DuckGame/;$(SolutionDir)DuckEngine/include/DuckEngine;$(SolutionDir)DuckEngine/include;$(SolutionDir)DuckEngine/ext/include;$(ProjectDir)ext/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>
-      </SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)ext/lib/$(Configuration)/</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DuckEngine.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Run/;$(SolutionDir)DuckEngine/ext/lib/$(Configuration)/;$(SolutionDir)build/out/DuckEngine/$(Platform)_$(Configuration)/</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -247,10 +178,6 @@
     <PostBuildEvent>
       <Message>xcopy "$(OutDirFullPath.TrimEnd('\'))" "$(SolutionDir)Run" /i /e /r /y </Message>
     </PostBuildEvent>
-    <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)DuckEngine/ext/lib/Debug/</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttfd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_Editor|x64'">
     <ClCompile>
@@ -258,24 +185,20 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>DUCK_EDITOR;DUCK_EXPORTS;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DUCK_EDITOR;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PrecompiledHeaderFile>
-      </PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(ProjectDir)include/;$(ProjectDir)include/DuckEngine/;$(ProjectDir)ext/include;</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)include/DuckGame/;$(SolutionDir)DuckEngine/include/DuckEngine;$(SolutionDir)DuckEngine/include;$(SolutionDir)DuckEngine/ext/include;$(ProjectDir)ext/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>
-      </SubSystem>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)ext/lib/$(Configuration)/</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DuckEngine.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Run/;$(SolutionDir)DuckEngine/ext/lib/$(Configuration)/;$(SolutionDir)build/out/DuckEngine/$(Platform)_$(Configuration)/</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -284,10 +207,6 @@
     <PostBuildEvent>
       <Message>xcopy "$(OutDirFullPath.TrimEnd('\'))" "$(SolutionDir)Run" /i /e /r /y </Message>
     </PostBuildEvent>
-    <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)DuckEngine/ext/lib/Release/</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttfd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_Game|x64'">
     <ClCompile>
@@ -295,24 +214,20 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>DUCK_EXPORTS;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PrecompiledHeaderFile>
-      </PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(ProjectDir)include/;$(ProjectDir)include/DuckEngine/;$(ProjectDir)ext/include;</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)include/DuckGame/;$(SolutionDir)DuckEngine/include/DuckEngine;$(SolutionDir)DuckEngine/include;$(SolutionDir)DuckEngine/ext/include;$(ProjectDir)ext/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>
-      </SubSystem>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)ext/lib/$(Configuration)/</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DuckEngine.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Run/;$(SolutionDir)DuckEngine/ext/lib/$(Configuration)/;$(SolutionDir)build/out/DuckEngine/$(Platform)_$(Configuration)/</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -321,10 +236,6 @@
     <PostBuildEvent>
       <Message>xcopy "$(OutDirFullPath.TrimEnd('\'))" "$(SolutionDir)Run" /i /e /r /y </Message>
     </PostBuildEvent>
-    <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)DuckEngine/ext/lib/Release/</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttfd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development_Editor|x64'">
     <ClCompile>
@@ -332,25 +243,21 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>DUCK_EDITOR;DUCK_EXPORTS;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DUCK_EDITOR;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PrecompiledHeaderFile>
-      </PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(ProjectDir)include/;$(ProjectDir)include/DuckEngine/;$(ProjectDir)ext/include;</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)include/DuckGame/;$(SolutionDir)DuckEngine/include/DuckEngine;$(SolutionDir)DuckEngine/include;$(SolutionDir)DuckEngine/ext/include;$(ProjectDir)ext/include</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <SubSystem>
-      </SubSystem>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)ext/lib/$(Configuration)/</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DuckEngine.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Run/;$(SolutionDir)DuckEngine/ext/lib/$(Configuration)/;$(SolutionDir)build/out/DuckEngine/$(Platform)_$(Configuration)/</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -359,10 +266,6 @@
     <PostBuildEvent>
       <Message>xcopy "$(OutDirFullPath.TrimEnd('\'))" "$(SolutionDir)Run" /i /e /r /y </Message>
     </PostBuildEvent>
-    <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)DuckEngine/ext/lib/$(Configuration)/</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttfd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development_Game|x64'">
     <ClCompile>
@@ -370,25 +273,21 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>DUCK_EXPORTS;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PrecompiledHeaderFile>
-      </PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(ProjectDir)include/;$(ProjectDir)include/DuckEngine/;$(ProjectDir)ext/include;</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)include/DuckGame/;$(SolutionDir)DuckEngine/include/DuckEngine;$(SolutionDir)DuckEngine/include;$(SolutionDir)DuckEngine/ext/include;$(ProjectDir)ext/include</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <SubSystem>
-      </SubSystem>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)ext/lib/$(Configuration)/</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DuckEngine.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Run/;$(SolutionDir)DuckEngine/ext/lib/$(Configuration)/;$(SolutionDir)build/out/DuckEngine/$(Platform)_$(Configuration)/</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -397,11 +296,14 @@
     <PostBuildEvent>
       <Message>xcopy "$(OutDirFullPath.TrimEnd('\'))" "$(SolutionDir)Run" /i /e /r /y </Message>
     </PostBuildEvent>
-    <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)DuckEngine/ext/lib/$(Configuration)/</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttfd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Lib>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\App\App.cpp" />
+    <ClCompile Include="src\Source.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\DuckGame\App\App.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
