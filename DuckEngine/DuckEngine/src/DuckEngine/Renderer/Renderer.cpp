@@ -113,14 +113,23 @@ Entity* Renderer::GetEntityAtPointSlow(fm::vec2 point)
 
 		// Calculate the screen position of the entity center
 		fm::vec2 entityCenter = (position - cameraPosition) * cameraZoom;
-		entityCenter.x += m_windowSize.x / 2; // Adjust for screen center
-		entityCenter.y += m_windowSize.y / 2;
+		entityCenter.x += m_windowSize.x / 2.; // Adjust for screen center
+		entityCenter.y += m_windowSize.y / 2.;
 
-		// Check if the point is within the entity's bounds
-		if (point.x >= entityCenter.x - size.x / 2 &&
-			point.x <= entityCenter.x + size.x / 2 &&
-			point.y >= entityCenter.y - size.y / 2 &&
-			point.y <= entityCenter.y + size.y / 2)
+		// Calculate the half size of the object in screen space
+		fm::vec2 halfSize = size * 0.5 * cameraZoom;
+
+		// Apply the inverse rotation transformation to the point
+		fm::vec2 rotatedPoint = point - entityCenter;
+		f64 sinRotation = std::sin(-rotation);
+		f64 cosRotation = std::cos(-rotation);
+		fm::vec2 rotatedLocalPoint;
+		rotatedLocalPoint.x = cosRotation * rotatedPoint.x - sinRotation * rotatedPoint.y;
+		rotatedLocalPoint.y = sinRotation * rotatedPoint.x + cosRotation * rotatedPoint.y;
+
+		// Check if the rotated local point is within the entity's bounds
+		if (rotatedLocalPoint.x >= -halfSize.x && rotatedLocalPoint.x <= halfSize.x &&
+			rotatedLocalPoint.y >= -halfSize.y && rotatedLocalPoint.y <= halfSize.y)
 		{
 			return entity.get(); // Entity found at the given point
 		}
