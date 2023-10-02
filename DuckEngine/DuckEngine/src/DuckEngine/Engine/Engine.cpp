@@ -64,6 +64,7 @@ void Engine::Update(f64 dt)
 	m_deltaTime = dt;
 
 	SDLEventManager::Update();
+	Renderer::Update(dt);
 
 	if (m_currentWorld && m_playing)
 	{

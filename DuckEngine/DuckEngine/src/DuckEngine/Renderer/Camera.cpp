@@ -13,14 +13,13 @@ Camera::Camera(fm::vec2 position, fm::vec2 size, f32 zoom)
 	m_scale = fm::vec2{1.f, 1.f} * m_zoom;
 }
 
-void Camera::Update()
+void Camera::Update(f64 dt)
 {
-	SDL_Window* window = Renderer::GetWindow();
-	int width_int, height_int;
-	SDL_GetWindowSize(window, &width_int, &height_int);
-	fm::vec2 window_size = {static_cast<f32>(width_int), static_cast<f32>(height_int)};
+	fm::vec2 windowSize = Renderer::GetWindowSize();
 
-	m_scale = window_size / m_size * m_zoom;
+	m_scale = windowSize / m_size * m_zoom;
+
+	m_zoom = fm::lerp(m_zoom, m_targetZoom, dt * m_zoomSpeed);
 }
 
 void Camera::SetPosition(fm::vec2 position)
@@ -36,6 +35,17 @@ void Camera::SetSize(fm::vec2 size)
 
 void Camera::SetZoom(f64 zoom)
 {
-	m_zoom = zoom;
+	m_targetZoom = fm::max(zoom, MIN_ZOOM);
+}
+
+void Camera::SnapZoom(f64 zoom)
+{
+	m_targetZoom = fm::max(zoom, MIN_ZOOM);
+	m_zoom = m_targetZoom;
+}
+
+void Camera::SetZoomSpeed(f64 zoomSpeed)
+{
+	m_zoomSpeed = zoomSpeed;
 }
 }

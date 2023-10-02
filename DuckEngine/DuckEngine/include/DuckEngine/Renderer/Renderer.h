@@ -16,12 +16,17 @@ public:
 	static void BeginFrame();
 	static void EndFrame();
 
-	static void DrawTexture(SDL_Texture* texture, fm::vec2 position, fm::vec2 size, double rotation);
-	static void DrawRectangleOutline(fm::vec2 position, fm::vec2 size, fm::vec4 color);
+	static void Update(f64 dt);
+
+	static void DrawTexture(SDL_Texture* texture, const fm::vec2& position, const fm::vec2& size, double rotation);
+	static void DrawTextureTinted(SDL_Texture* texture, const fm::vec2& position, const fm::vec2& size, double rotation,
+								const fm::vec4& color);
+	static void DrawRectangleOutline(const fm::vec2& position, const fm::vec2& size, const fm::vec4& color);
 
 	static SDL_Window* GetWindow() { return m_window; }
 	static SDL_Renderer* GetRenderer() { return m_renderer; }
 	static Camera* GetCamera() { return m_camera; }
+	static fm::ivec2 GetWindowSize() { return m_windowSize; }
 
 	static Entity* GetEntityAtPointSlow(fm::vec2 point);
 
@@ -35,6 +40,9 @@ private:
 	static SDL_Renderer* m_renderer;
 	static Camera* m_camera;
 
+	static fm::ivec2 m_windowSize;
+
 	friend class Engine; //Engine needs to do things like shutdown
+	friend class Editor; //For editing window size
 };
 }

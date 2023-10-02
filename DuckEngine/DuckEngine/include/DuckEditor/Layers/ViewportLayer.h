@@ -1,6 +1,8 @@
 #pragma once
 #ifdef DUCK_EDITOR
 
+#define FRAMETIME_COUNT 256
+
 #include "layer.h"
 
 #include "DuckEngine/Core.h"
@@ -8,12 +10,20 @@
 
 #include "entt/entt.hpp"
 
+namespace DE
+{
+class TextureResource;
+}
+
 class ViewportLayer : public Layer
 {
 public:
 	ViewportLayer();
 	virtual ~ViewportLayer() override = default;
 	virtual void Update(f64 dt) override;
+	void FPSCounter(f64 dt);
+	bool CameraController();
+	void EntitySelector();
 
 	static LayerType GetType() { return LayerType::Viewport; }
 	virtual LayerType GetTypeDynamic() override { return GetType(); }
@@ -22,10 +32,17 @@ public:
 	void SetSelectedEntity(DE::Entity* entity);
 
 private:
-	fm::vec2 m_mouse_position = {0.f, 0.f};
+	fm::vec2 m_lastFrameMousePosition = {0.f, 0.f};
 	fm::vec2 m_position = {0.f, 0.f};
-	fm::vec2 m_size = {0.f, 0.f};
+	fm::vec2 m_size = {0, 0};
 	DE::Entity* m_selectedEntity = nullptr;
+
+	f64 m_frameTimes[FRAMETIME_COUNT] = {};
+	u_size m_currentFrameTimeIndex = 0;
+
+	fm::vec2 m_lastFrameMousePos = {0, 0};
+
+	std::shared_ptr<DE::TextureResource> m_selectedOutlineTexture = nullptr;
 };
 
 #endif

@@ -30,10 +30,9 @@ void Entity::Draw()
 void Entity::SetJSONVariables(nlohmann::json json)
 {
 	SetName(json["name"]);
-	double positions[2] = {json["position"][0], json["position"][1]};
-	m_position = {positions[0], positions[1]};
-	m_rotation = json["rotation"];
-	m_scriptPath = json["scriptPath"];
+	SetPosition({json["position"][0], json["position"][1]});
+	SetRotation(json["rotation"]);
+	SetScriptPath(json["scriptPath"]);
 }
 
 nlohmann::json Entity::GetJSONVariables() const

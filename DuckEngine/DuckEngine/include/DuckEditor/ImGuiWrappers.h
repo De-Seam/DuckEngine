@@ -8,6 +8,7 @@
 
 #include <vector>
 #include <algorithm>
+#include <functional>
 
 struct ColumnDragScalar
 {
@@ -15,6 +16,7 @@ struct ColumnDragScalar
 	{
 		const char* label;
 		std::shared_ptr<DE::TextureResource> texture;
+		std::function<void(void* currentData)> ifEditedFunction = nullptr;
 	};
 
 	void Update(void* data[])
@@ -33,12 +35,16 @@ struct ColumnDragScalar
 			PerScalarData& currentScalarData = perScalarData[i];
 			if (currentScalarData.texture)
 			{
-				ImGui::Image(static_cast<ImTextureID>(currentScalarData.texture->GetTexture()), ImVec2(19, 19),
+				ImGui::Image(currentScalarData.texture->GetTexture(), ImVec2(19, 19),
 							ImVec2(0, 0), ImVec2(1, 1));
 				ImGui::SameLine(0.f, 0.f);
 			}
 			ImGui::SetNextItemWidth(dragWidth);
-			ImGui::DragScalar(currentScalarData.label, dataType, data[i], speed, min, max, format);
+			if (ImGui::DragScalar(currentScalarData.label, dataType, data[i], speed, min, max, format))
+			{
+				if (currentScalarData.ifEditedFunction)
+					currentScalarData.ifEditedFunction(data[i]);
+			}
 		}
 
 		ImGui::NextColumn();

@@ -59,7 +59,16 @@ void Editor::Init()
 	CreateLayer<InspectorLayer>();
 }
 
-SDL_Texture*& Editor::GetViewportTexture()
+void Editor::ResizeViewport(fm::ivec2 newSize)
+{
+	SDL_DestroyTexture(m_viewportTexture);
+	m_viewportTexture = SDL_CreateTexture(DE::Renderer::GetRenderer(), SDL_PIXELFORMAT_RGBA8888,
+										SDL_TEXTUREACCESS_TARGET, newSize.x, newSize.y);
+
+	DE::Renderer::m_windowSize = newSize;
+}
+
+SDL_Texture* Editor::GetViewportTexture()
 {
 	return m_viewportTexture;
 }

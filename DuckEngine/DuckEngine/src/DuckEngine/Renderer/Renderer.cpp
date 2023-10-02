@@ -9,6 +9,7 @@ namespace DE
 SDL_Window* Renderer::m_window = nullptr;
 SDL_Renderer* Renderer::m_renderer = nullptr;
 Camera* Renderer::m_camera = nullptr;
+fm::ivec2 Renderer::m_windowSize = {1280, 720};
 
 void Renderer::Init()
 {
@@ -23,7 +24,8 @@ void Renderer::Init()
 
 	std::atexit(SDL_Quit);
 
-	m_window = SDL_CreateWindow("DuckEngine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, 0);
+	m_window = SDL_CreateWindow("DuckEngine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, m_windowSize.x,
+								m_windowSize.y, 0);
 
 	u32 render_flags = SDL_RENDERER_ACCELERATED;
 	m_renderer = SDL_CreateRenderer(m_window, -1, render_flags);
@@ -42,13 +44,40 @@ void Renderer::EndFrame()
 	SDL_RenderPresent(m_renderer);
 }
 
-void Renderer::DrawTexture(SDL_Texture* texture, fm::vec2 position, fm::vec2 size, double rotation)
+void Renderer::Update(f64 dt)
+{
+	m_camera->Update(dt);
+}
+
+void Renderer::DrawTexture(SDL_Texture* texture, const fm::vec2& position, const fm::vec2& size, double rotation)
 {
 	const SDL_Rect dstRect = GetSDLRect(position, size);
 	SDL_RenderCopyEx(m_renderer, texture, nullptr, &dstRect, rotation, nullptr, SDL_FLIP_NONE);
 }
 
-void Renderer::DrawRectangleOutline(fm::vec2 position, fm::vec2 size, fm::vec4 color)
+void Renderer::DrawTextureTinted(SDL_Texture* texture, const fm::vec2& position, const fm::vec2& size, double rotation,
+								const fm::vec4& color)
+{
+	// Calculate color components
+	const u32 argb = color.get_argb();
+	const u8 a = (argb >> 24) & 0xFF;
+	const u8 r = (argb >> 16) & 0xFF;
+	const u8 g = (argb >> 8) & 0xFF;
+	const u8 b = (argb >> 0) & 0xFF;
+
+	// Set SDL render color
+	SDL_SetTextureColorMod(texture, r, g, b);
+	SDL_SetTextureAlphaMod(texture, a);
+
+	const SDL_Rect dstRect = GetSDLRect(position, size);
+	SDL_RenderCopyEx(m_renderer, texture, nullptr, &dstRect, rotation, nullptr, SDL_FLIP_NONE);
+
+	// Reset SDL render color
+	SDL_SetTextureColorMod(texture, 255, 255, 255);
+	SDL_SetTextureAlphaMod(texture, 255);
+}
+
+void Renderer::DrawRectangleOutline(const fm::vec2& position, const fm::vec2& size, const fm::vec4& color)
 {
 	// Calculate color components
 	const u32 argb = color.get_argb();
@@ -64,7 +93,6 @@ void Renderer::DrawRectangleOutline(fm::vec2 position, fm::vec2 size, fm::vec4 c
 	// Draw rectangle outline
 	SDL_RenderDrawRect(m_renderer, &rect);
 }
-
 
 Entity* Renderer::GetEntityAtPointSlow(fm::vec2 point)
 {
@@ -83,25 +111,22 @@ Entity* Renderer::GetEntityAtPointSlow(fm::vec2 point)
 		fm::vec2 cameraPosition = m_camera->GetPosition();
 		f64 cameraZoom = m_camera->GetZoom();
 
-		// Translate and scale the position and size based on the camera
-		fm::vec2 translatedPosition = (position - cameraPosition) * cameraZoom;
-		fm::vec2 scaledSize = size * cameraZoom;
+		// Calculate the screen position of the entity center
+		fm::vec2 entityCenter = (position - cameraPosition) * cameraZoom;
+		entityCenter.x += m_windowSize.x / 2; // Adjust for screen center
+		entityCenter.y += m_windowSize.y / 2;
 
-		// Translate point to origin-based coordinate system centered at the entity
-		fm::vec2 translatedPoint = point - translatedPosition;
-
-		// Rotate the point in the opposite direction of the entity rotation
-		fm::vec2 rotatedPoint;
-		rotatedPoint.x = std::cos(-rotation) * translatedPoint.x - std::sin(-rotation) * translatedPoint.y;
-		rotatedPoint.y = std::sin(-rotation) * translatedPoint.x + std::cos(-rotation) * translatedPoint.y;
-
-		// Perform axis-aligned bounding-box check
-		if (std::abs(rotatedPoint.x) <= scaledSize.x && std::abs(rotatedPoint.y) <= scaledSize.y)
+		// Check if the point is within the entity's bounds
+		if (point.x >= entityCenter.x - size.x / 2 &&
+			point.x <= entityCenter.x + size.x / 2 &&
+			point.y >= entityCenter.y - size.y / 2 &&
+			point.y <= entityCenter.y + size.y / 2)
 		{
-			return entity.get();
+			return entity.get(); // Entity found at the given point
 		}
 	}
-	return nullptr; // Return nullptr if no entity contains the point
+
+	return nullptr; // No entity found at the point
 }
 
 void Renderer::Shutdown()
@@ -116,23 +141,19 @@ SDL_Rect Renderer::GetSDLRect(const fm::vec2& position, const fm::vec2& size)
 	const fm::vec2 cameraPosition = m_camera->GetPosition();
 	const double cameraZoom = m_camera->GetZoom();
 
-	// Translate the position based on the camera's position
-	fm::vec2 translatedPosition;
-	translatedPosition.x = (position.x - cameraPosition.x) * cameraZoom;
-	translatedPosition.y = (position.y - cameraPosition.y) * cameraZoom;
+	// Calculate the screen position of the center of the object
+	const fm::vec2 screenCenter = (position - cameraPosition) * cameraZoom;
 
-	// Scale the size based on the camera's zoom
-	fm::vec2 scaledSize;
-	scaledSize.x = size.x * cameraZoom;
-	scaledSize.y = size.y * cameraZoom;
+	// Calculate the half size of the object in screen space
+	const fm::vec2 halfSize = size * 0.5 * cameraZoom;
 
-	// Create SDL_Rect based on translated and scaled values
-	SDL_Rect rect;
-	rect.x = static_cast<i32>(translatedPosition.x - scaledSize.x); // Top-left x
-	rect.y = static_cast<i32>(translatedPosition.y - scaledSize.y); // Top-left y
-	rect.w = static_cast<i32>(scaledSize.x * 2); // Full width
-	rect.h = static_cast<i32>(scaledSize.y * 2); // Full height
+	// Calculate the screen rectangle
+	SDL_Rect sdlRect;
+	sdlRect.x = static_cast<int>(screenCenter.x - halfSize.x) + (m_windowSize.x / 2);
+	sdlRect.y = static_cast<int>(screenCenter.y - halfSize.y) + (m_windowSize.y / 2);
+	sdlRect.w = static_cast<int>(size.x * cameraZoom);
+	sdlRect.h = static_cast<int>(size.y * cameraZoom);
 
-	return rect;
+	return sdlRect;
 }
 }

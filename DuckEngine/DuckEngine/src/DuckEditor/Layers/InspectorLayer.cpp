@@ -36,7 +36,13 @@ InspectorLayer::InspectorLayer()
 	m_rotationColum.text = "Rotation";
 	m_rotationColum.perScalarData =
 	{
-		ColumnDragScalar::PerScalarData{"##Rotation", nullptr}
+		ColumnDragScalar::PerScalarData{
+			"##Rotation", nullptr, [&](void* currentData)
+			{
+				Editor::GetLayer<ViewportLayer>()->GetSelectedEntity()->SetRotation(
+					*static_cast<double*>(currentData));
+			}
+		}
 	};
 }
 
