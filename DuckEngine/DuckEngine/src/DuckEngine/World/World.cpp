@@ -5,76 +5,76 @@
 
 namespace DE
 {
-	void World::BeginPlay()
+void World::BeginPlay()
+{
+	for (u_size i = 0; i < m_entities.size(); i++)
 	{
-		for (u_size i = 0; i < m_entities.size(); i++)
-		{
-			m_entities[i]->BeginPlay();
-		}
+		m_entities[i]->BeginPlay();
 	}
+}
 
-	void World::EndPlay()
+void World::EndPlay()
+{
+	for (u_size i = 0; i < m_entities.size(); i++)
 	{
-		for (u_size i = 0; i < m_entities.size(); i++)
-		{
-			m_entities[i]->EndPlay();
-		}
+		m_entities[i]->EndPlay();
 	}
+}
 
-	void World::Update(f64 dt)
+void World::Update(f64 dt)
+{
+	for (u_size i = 0; i < m_entities.size(); i++)
 	{
-		for (u_size i = 0; i < m_entities.size(); i++)
-		{
-			m_entities[i]->Update(dt);
-		}
+		m_entities[i]->Update(dt);
 	}
+}
 
-	void World::Draw()
+void World::Draw()
+{
+	for (u_size i = 0; i < m_entities.size(); i++)
 	{
-		for (u_size i = 0; i < m_entities.size(); i++)
-		{
-			m_entities[i]->Draw();
-		}
+		m_entities[i]->Draw();
 	}
+}
 
-	void World::SaveToFile()
+void World::SaveToFile()
+{
+	SaveToFile(m_filePath);
+}
+
+void World::SaveToFile(const std::string& filePath)
+{
+	std::ofstream file(filePath);
+	file << std::setw(3) << SaveToJson();
+}
+
+void World::LoadFromFile(const std::string& filePath)
+{
+	std::ifstream file(filePath);
+	nlohmann::json json;
+	file >> json;
+
+	LoadFromJson(json);
+}
+
+nlohmann::json World::SaveToJson()
+{
+	nlohmann::json json;
+	json["Name"] = m_name;
+	for (u_size i = 0; i < m_entities.size(); i++)
 	{
-		SaveToFile(m_filePath);
+		json["Entities"] += m_entities[i]->GetJSONVariables();
 	}
+	return json;
+}
 
-	void World::SaveToFile(const std::string& filePath)
+void World::LoadFromJson(const nlohmann::json& json)
+{
+	m_name = json["Name"];
+	for (u_size i = 0; i < json["Entities"].size(); i++)
 	{
-		std::ofstream file(filePath);
-		file << std::setw(3) << SaveToJson();
+		Entity* entity = CreateEntity<Entity>();
+		entity->SetJSONVariables(json["Entities"][i]);
 	}
-
-	void World::LoadFromFile(const std::string& filePath)
-	{
-		std::ifstream file(filePath);
-		nlohmann::json json;
-		file >> json;
-
-		LoadFromJson(json);
-	}
-
-	nlohmann::json World::SaveToJson()
-	{
-		nlohmann::json json;
-		json["Name"] = m_name;
-		for (u_size i = 0; i < m_entities.size(); i++)
-		{
-			json["Entities"] += m_entities[i]->GetJSONVariables();
-		}
-		return json;
-	}
-
-	void World::LoadFromJson(const nlohmann::json& json)
-	{
-		m_name = json["Name"];
-		for (u_size i = 0; i < json["Worlds"][m_name]["Entities"].size(); i++)
-		{
-			Entity* entity = CreateEntity<Entity>();
-			entity->SetJSONVariables(json["Entities"][std::to_string(i)]);
-		}
-	}
+}
 }

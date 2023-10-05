@@ -1,6 +1,7 @@
 #ifdef DUCK_EDITOR
 
 #include "DuckEditor/Editor.h"
+#include "DuckEditor/Layers/MainMenuBarLayer.h"
 #include "DuckEditor/Layers/ViewportLayer.h"
 #include "DuckEditor/Layers/OutlinerLayer.h"
 #include "DuckEditor/Layers/InspectorLayer.h"
@@ -54,6 +55,7 @@ void Editor::Init()
 	};
 	DE::SDLEventManager::AddEventFunction(sdl_imgui_event_function, true);
 
+	CreateLayer<MainMenuBarLayer>();
 	CreateLayer<ViewportLayer>();
 	CreateLayer<OutlinerLayer>();
 	CreateLayer<InspectorLayer>();

@@ -1,0 +1,41 @@
+{
+   "Entities": [
+      {
+         "name": "Test",
+         "position": [
+            66.84704121224792,
+            -88.98876021687441
+         ],
+         "rotation": 30.0,
+         "scriptPath": ""
+      },
+      {
+         "name": "Test2",
+         "position": [
+            340.0,
+            -40.0
+         ],
+         "rotation": 0.0,
+         "scriptPath": ""
+      },
+      {
+         "name": "Test",
+         "position": [
+            10.0,
+            10.0
+         ],
+         "rotation": 30.0,
+         "scriptPath": ""
+      },
+      {
+         "name": "Test2",
+         "position": [
+            100.0,
+            100.0
+         ],
+         "rotation": 0.0,
+         "scriptPath": ""
+      }
+   ],
+   "Name": "World"
+}

@@ -30,7 +30,7 @@ void OutlinerLayer::Update(f64)
 			if (ImGui::BeginTabItem("Outliner"))
 			{
 				DE::World* world = DE::Engine::GetWorld();
-				const std::vector<std::unique_ptr<DE::Entity>>& entities = world->GetEntities();
+				const std::vector<std::shared_ptr<DE::Entity>>& entities = world->GetEntities();
 
 				// Create a scrollable region for the Inspector tab
 				ImGui::BeginChild("OutlinerScroll", ImVec2(0, -ImGui::GetFrameHeightWithSpacing()), false,
@@ -38,12 +38,12 @@ void OutlinerLayer::Update(f64)
 				{
 					for (u_size i = 0; i < entities.size(); i++)
 					{
-						const std::unique_ptr<DE::Entity>& entity = entities[i];
+						const std::shared_ptr<DE::Entity>& entity = entities[i];
 
 						if (ImGui::Button((entity.get()->GetName() + "##" + std::to_string(i)).c_str(),
 										ImVec2(ImGui::GetContentRegionAvail().x, 0)))
 						{
-							viewportLayer->SetSelectedEntity(entity.get());
+							viewportLayer->SetSelectedEntity(entity);
 						}
 					}
 				}

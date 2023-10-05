@@ -18,11 +18,14 @@ void Renderer::Init()
 	SDL_SetMainReady();
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
 	{
-		Log("Error initializing SDL: %s\n", SDL_GetError());
+		Log(LogType::Error, "Error initializing SDL: %s\n", SDL_GetError());
 		exit(1);
 	}
 
-	std::atexit(SDL_Quit);
+	if (std::atexit(SDL_Quit) != 0)
+	{
+		Log(LogType::Error, "Error assigning SDL_Quit to atexit.");
+	}
 
 	m_window = SDL_CreateWindow("DuckEngine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, m_windowSize.x,
 								m_windowSize.y, 0);
@@ -94,14 +97,14 @@ void Renderer::DrawRectangleOutline(const fm::vec2& position, const fm::vec2& si
 	SDL_RenderDrawRect(m_renderer, &rect);
 }
 
-Entity* Renderer::GetEntityAtPointSlow(fm::vec2 point)
+std::shared_ptr<Entity> Renderer::GetEntityAtPointSlow(fm::vec2 point)
 {
 	World* world = Engine::GetWorld();
 	if (!world)
 		return nullptr;
 
-	const std::vector<std::unique_ptr<Entity>>& entities = world->GetEntities();
-	for (const std::unique_ptr<Entity>& entity : entities)
+	const std::vector<std::shared_ptr<Entity>>& entities = world->GetEntities();
+	for (const std::shared_ptr<Entity>& entity : entities)
 	{
 		fm::vec2 position = entity->GetPosition();
 		fm::vec2 size = entity->GetSize();
@@ -131,7 +134,7 @@ Entity* Renderer::GetEntityAtPointSlow(fm::vec2 point)
 		if (rotatedLocalPoint.x >= -halfSize.x && rotatedLocalPoint.x <= halfSize.x &&
 			rotatedLocalPoint.y >= -halfSize.y && rotatedLocalPoint.y <= halfSize.y)
 		{
-			return entity.get(); // Entity found at the given point
+			return entity; // Entity found at the given point
 		}
 	}
 

@@ -28,14 +28,14 @@ public:
 	static LayerType GetType() { return LayerType::Viewport; }
 	virtual LayerType GetTypeDynamic() override { return GetType(); }
 
-	DE::Entity* GetSelectedEntity() const { return m_selectedEntity; }
-	void SetSelectedEntity(DE::Entity* entity);
+	std::weak_ptr<DE::Entity> GetSelectedEntity() const { return m_selectedEntity; }
+	void SetSelectedEntity(std::shared_ptr<DE::Entity> entity);
 
 private:
 	fm::vec2 m_lastFrameMousePosition = {0.f, 0.f};
 	fm::vec2 m_position = {0.f, 0.f};
 	fm::vec2 m_size = {0, 0};
-	DE::Entity* m_selectedEntity = nullptr;
+	std::weak_ptr<DE::Entity> m_selectedEntity;
 
 	f64 m_frameTimes[FRAMETIME_COUNT] = {};
 	u_size m_currentFrameTimeIndex = 0;

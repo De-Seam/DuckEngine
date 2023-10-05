@@ -9,40 +9,41 @@
 
 namespace DE
 {
-	class World
-	{
-	public:
+class World
+{
+public:
+	virtual void BeginPlay();
+	virtual void EndPlay();
 
-		virtual void BeginPlay();
-		virtual void EndPlay();
+	virtual void Update(f64 dt);
+	virtual void Draw();
 
-		virtual void Update(f64 dt);
-		virtual void Draw();
-
-		virtual void SaveToFile();
-		virtual void SaveToFile(const std::string& filePath);
-		virtual void LoadFromFile(const std::string& filePath);
-		virtual nlohmann::json SaveToJson();
-		virtual void LoadFromJson(const nlohmann::json& json);
-
-		template<typename T>
-		T* CreateEntity();
-	
-	public:
-		const std::vector<std::unique_ptr<Entity>>& GetEntities() { return m_entities; }
-
-	private:
-
-		std::vector<std::unique_ptr<Entity>> m_entities;
-
-		std::string m_name = "World";
-		std::string m_filePath = "Assets/Worlds/World.json";
-	};
+	virtual void SaveToFile();
+	virtual void SaveToFile(const std::string& filePath);
+	virtual void LoadFromFile(const std::string& filePath);
+	virtual nlohmann::json SaveToJson();
+	virtual void LoadFromJson(const nlohmann::json& json);
 
 	template<typename T>
-	inline T* World::CreateEntity()
-	{
-		std::unique_ptr<T>&  entity = m_entities.emplace_back(std::move(std::make_unique<T>()));
-		return entity.get();
-	}
+	T* CreateEntity();
+
+	const std::string& GetName() { return m_name; }
+	const std::string& GetFilePath() { return m_filePath; }
+
+public:
+	const std::vector<std::shared_ptr<Entity>>& GetEntities() { return m_entities; }
+
+private:
+	std::vector<std::shared_ptr<Entity>> m_entities;
+
+	std::string m_name = "World";
+	std::string m_filePath = "Assets/Worlds/World.json";
+};
+
+template<typename T>
+T* World::CreateEntity()
+{
+	std::shared_ptr<T>& entity = m_entities.emplace_back(std::move(std::make_unique<T>()));
+	return entity.get();
+}
 }

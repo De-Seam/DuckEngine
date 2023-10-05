@@ -41,6 +41,7 @@
     <ClInclude Include="include\DuckEditor\ImGuiWrappers.h" />
     <ClInclude Include="include\DuckEditor\Layers\InspectorLayer.h" />
     <ClInclude Include="include\DuckEditor\Layers\Layer.h" />
+    <ClInclude Include="include\DuckEditor\Layers\MainMenuBarLayer.h" />
     <ClInclude Include="include\DuckEditor\Layers\OutlinerLayer.h" />
     <ClInclude Include="include\DuckEditor\Layers\ViewportLayer.h" />
     <ClInclude Include="include\DuckEngine\Core.h" />
@@ -74,6 +75,7 @@
     <ClCompile Include="src\DuckEditor\HelperFunctions.cpp" />
     <ClCompile Include="src\DuckEditor\Layers\InspectorLayer.cpp" />
     <ClCompile Include="src\DuckEditor\Layers\Layer.cpp" />
+    <ClCompile Include="src\DuckEditor\Layers\MainMenuBarLayer.cpp" />
     <ClCompile Include="src\DuckEditor\Layers\OutlinerLayer.cpp" />
     <ClCompile Include="src\DuckEditor\Layers\ViewportLayer.cpp" />
     <ClCompile Include="src\DuckEngine\Entity\Entity.cpp" />

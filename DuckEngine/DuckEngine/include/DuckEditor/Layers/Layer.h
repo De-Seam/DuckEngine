@@ -13,6 +13,7 @@ enum class LayerType : uint32_t
 	Viewport,
 	Outliner,
 	Inspector,
+	MainMenuBar,
 };
 
 //Layer base class

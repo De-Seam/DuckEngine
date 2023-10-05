@@ -39,8 +39,10 @@ InspectorLayer::InspectorLayer()
 		ColumnDragScalar::PerScalarData{
 			"##Rotation", nullptr, [&](void* currentData)
 			{
-				Editor::GetLayer<ViewportLayer>()->GetSelectedEntity()->SetRotation(
-					*static_cast<double*>(currentData));
+				std::shared_ptr<DE::Entity> selectedEntity = Editor::GetLayer<ViewportLayer>()->GetSelectedEntity().
+					lock();
+				if (selectedEntity)
+					selectedEntity->SetRotation(*static_cast<double*>(currentData));
 			}
 		}
 	};
@@ -67,7 +69,8 @@ void InspectorLayer::Update(f64)
 		{
 			if (ImGui::BeginTabItem("Inspector"))
 			{
-				DE::Entity* selectedEntity = viewportLayer->GetSelectedEntity();
+				std::weak_ptr<DE::Entity> weakSelectedEntity = viewportLayer->GetSelectedEntity();
+				std::shared_ptr<DE::Entity> selectedEntity = weakSelectedEntity.lock();
 				if (selectedEntity)
 				{
 					ImGui::Columns(2);

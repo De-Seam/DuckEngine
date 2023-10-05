@@ -49,12 +49,14 @@ void ViewportLayer::Update(f64 dt)
 			if (!CameraController())
 				EntitySelector();
 
-			if (m_selectedEntity)
+			if (!m_selectedEntity.expired())
 			{
-				fm::vec2 outlineScale = m_selectedEntity->GetSize() / fm::vec2(512, 512);
-				DE::Renderer::DrawTextureTinted(m_selectedOutlineTexture->GetTexture(), m_selectedEntity->GetPosition(),
-												m_selectedEntity->GetSize() + (fm::vec2(6, 6) * outlineScale),
-												m_selectedEntity->GetRotation(), fm::vec4(1, 1, 0, 1));
+				std::shared_ptr<DE::Entity> sharedEntity = m_selectedEntity.lock();
+
+				fm::vec2 outlineScale = sharedEntity->GetSize() / fm::vec2(512, 512);
+				DE::Renderer::DrawTextureTinted(m_selectedOutlineTexture->GetTexture(), sharedEntity->GetPosition(),
+												sharedEntity->GetSize() + (fm::vec2(6, 6) * outlineScale),
+												sharedEntity->GetRotation(), fm::vec4(1, 1, 0, 1));
 			}
 		}
 		ImGui::EndChild();
@@ -117,31 +119,33 @@ void ViewportLayer::EntitySelector()
 		if (DE::Engine::GetWorld())
 		{
 			const fm::vec2 mousePosition = IMToFM(ImGui::GetMousePos());
-			DE::Entity* selectedEntity = DE::Renderer::GetEntityAtPointSlow(mousePosition - m_position);
+			std::shared_ptr<DE::Entity> selectedEntity = DE::Renderer::GetEntityAtPointSlow(mousePosition - m_position);
 
 			SetSelectedEntity(selectedEntity);
 		}
 	}
 
-	if (m_selectedEntity != nullptr)
+	if (!m_selectedEntity.expired())
 	{
 		if (ImGui::IsMouseDragging(ImGuiMouseButton_Left))
 		{
+			std::shared_ptr<DE::Entity> sharedEntity = m_selectedEntity.lock();
+
 			const fm::vec2 mousePosition = IMToFM(ImGui::GetMousePos());
 			DE::Camera* camera = DE::Renderer::GetCamera();
 			fm::vec2 mouseDelta = m_lastFrameMousePosition - mousePosition;
 			mouseDelta /= camera->GetZoom();
-			m_selectedEntity->SetPosition(
-				m_selectedEntity->GetPosition() - mouseDelta);
+			sharedEntity->SetPosition(
+				sharedEntity->GetPosition() - mouseDelta);
 		}
 	}
 }
 
-void ViewportLayer::SetSelectedEntity(DE::Entity* entity)
+void ViewportLayer::SetSelectedEntity(std::shared_ptr<DE::Entity> entity)
 {
 	if (entity)
 	{
-		if (entity != m_selectedEntity)
+		if (entity != m_selectedEntity.lock())
 			Log(DE::LogType::Info, "Selected entity %s", entity->GetName().c_str());
 
 		if (!Editor::LayerExists<InspectorLayer>())
