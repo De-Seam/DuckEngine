@@ -13,7 +13,7 @@ fm::ivec2 Renderer::m_windowSize = {1280, 720};
 
 void Renderer::Init()
 {
-	Log(LogType::Message, "Initializing Renderer");
+	Log(LogType::Info, "Initializing Renderer");
 
 	SDL_SetMainReady();
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
@@ -143,7 +143,7 @@ std::shared_ptr<Entity> Renderer::GetEntityAtPointSlow(fm::vec2 point)
 
 void Renderer::Shutdown()
 {
-	Log(LogType::Message, "Renderer Shutting down");
+	Log(LogType::Info, "Renderer Shutting down");
 
 	delete m_camera;
 }

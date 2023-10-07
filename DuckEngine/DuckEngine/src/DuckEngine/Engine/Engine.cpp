@@ -1,4 +1,6 @@
 #include "Engine/Engine.h"
+
+#include "Engine/LogManager.h"
 #include "Renderer/Renderer.h"
 #include "Events/SDLEventManager.h"
 #include "Events/InputManager.h"
@@ -13,7 +15,9 @@ phmap::flat_hash_map<u64, Object*> Engine::m_objects = {};
 
 void Engine::Init()
 {
-	Log(LogType::Message, "Initializing Engine");
+	LogManager::Init();
+
+	Log(LogType::Info, "Initializing Engine");
 
 	Renderer::Init();
 	InputManager::Init();
@@ -30,7 +34,7 @@ void Engine::Init()
 
 void Engine::Shutdown()
 {
-	Log(LogType::Message, "Engine Shutdown called");
+	Log(LogType::Info, "Engine Shutdown called");
 	m_ShouldShutdown = true;
 }
 
@@ -111,21 +115,23 @@ Object* Engine::GetObject(UID uid)
 
 void Engine::Cleanup()
 {
-	Log(LogType::Message, "Cleanup Engine");
+	Log(LogType::Info, "Cleanup Engine");
 
 	Renderer::Shutdown();
 	InputManager::Cleanup();
+
+	LogManager::Cleanup();
 }
 
 void Engine::AddObject(Object* object)
 {
-	Log(LogType::Message, "Adding Object %s", object->GetClassName());
+	Log(LogType::Info, "Adding Object %s", object->GetClassName());
 	m_objects[object->GetUID()] = object;
 }
 
 void Engine::RemoveObject(Object* object)
 {
-	Log(LogType::Message, "Removing Object %s", object->GetClassName());
+	Log(LogType::Info, "Removing Object %s", object->GetClassName());
 	m_objects.erase(object->GetUID());
 }
 }

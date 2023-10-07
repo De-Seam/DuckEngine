@@ -1,4 +1,5 @@
 #include "World/World.h"
+#include "DuckEngine/Entity/Entity.h"
 
 #include <fstream>
 #include <ostream>

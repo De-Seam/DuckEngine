@@ -10,7 +10,7 @@ namespace DE //DuckEngine
 
 	void InputManager::Init()
 	{
-		Log(LogType::Message, "Initializing InputManager");
+		Log(LogType::Info, "Initializing InputManager");
 
 		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_a] = Key::A;
 		m_sdlKeycodeToKey[SDL_KeyCode::SDLK_b] = Key::B;
@@ -74,7 +74,7 @@ namespace DE //DuckEngine
 
 	void InputManager::Cleanup()
 	{
-		Log(LogType::Message, "Cleanup InputManager");
+		Log(LogType::Info, "Cleanup InputManager");
 	}
 
 	bool InputManager::IsKeyDown(Key key)

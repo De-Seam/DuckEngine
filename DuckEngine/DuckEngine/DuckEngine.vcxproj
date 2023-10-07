@@ -46,6 +46,9 @@
     <ClInclude Include="include\DuckEditor\Layers\ViewportLayer.h" />
     <ClInclude Include="include\DuckEngine\Core.h" />
     <ClInclude Include="include\DuckEngine\CoreLight.h" />
+    <ClInclude Include="include\DuckEngine\Engine\LogManager.h" />
+    <ClInclude Include="include\DuckEngine\Entity\Components\Helpers.h" />
+    <ClInclude Include="include\DuckEngine\Entity\Components\RenderComponents.h" />
     <ClInclude Include="include\DuckEngine\Entity\Entity.h" />
     <ClInclude Include="include\DuckEngine\Events\InputManager.h" />
     <ClInclude Include="include\DuckEngine\Events\SDLEventManager.h" />
@@ -57,6 +60,7 @@
     <ClInclude Include="include\DuckEngine\Resources\ResourceTypes\TextureResource.h" />
     <ClInclude Include="include\DuckEngine\Utils\Array.h" />
     <ClInclude Include="include\DuckEngine\Utils\FMath.h" />
+    <ClInclude Include="include\DuckEngine\Utils\SafeQueue.h" />
     <ClInclude Include="include\DuckEngine\Utils\UniquePtr.h" />
     <ClInclude Include="include\DuckEngine\Utils\UID.h" />
     <ClInclude Include="include\DuckEngine\Utils\Variables.h" />
@@ -78,6 +82,7 @@
     <ClCompile Include="src\DuckEditor\Layers\MainMenuBarLayer.cpp" />
     <ClCompile Include="src\DuckEditor\Layers\OutlinerLayer.cpp" />
     <ClCompile Include="src\DuckEditor\Layers\ViewportLayer.cpp" />
+    <ClCompile Include="src\DuckEngine\Engine\LogManager.cpp" />
     <ClCompile Include="src\DuckEngine\Entity\Entity.cpp" />
     <ClCompile Include="src\DuckEngine\Core.cpp" />
     <ClCompile Include="src\DuckEngine\Engine\Engine.cpp" />
