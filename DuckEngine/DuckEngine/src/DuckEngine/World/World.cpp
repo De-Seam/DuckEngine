@@ -32,6 +32,8 @@ void World::Update(f64 dt)
 	{
 		m_entities[i]->Update(dt);
 	}
+
+	m_physicsWorld->Step(dt, 6, 2);
 }
 
 void World::Draw()

@@ -5,6 +5,8 @@
 
 #include "nlohmann/json.hpp"
 
+#include <box2d/box2d.h>
+
 #include <vector>
 
 namespace DE
@@ -30,6 +32,8 @@ public:
 	const std::string& GetName() { return m_name; }
 	const std::string& GetFilePath() { return m_filePath; }
 
+	b2World* GetPhysicsWorld() const { return m_physicsWorld.get(); }
+
 public:
 	const std::vector<std::shared_ptr<Entity>>& GetEntities() { return m_entities; }
 
@@ -38,6 +42,8 @@ private:
 
 	std::string m_name = "World";
 	std::string m_filePath = "Assets/Worlds/World.json";
+
+	std::unique_ptr<b2World> m_physicsWorld = std::make_unique<b2World>(b2Vec2{0.f, -9.8f});
 };
 
 template<typename T>
