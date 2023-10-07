@@ -8,6 +8,8 @@ namespace DE
 {
 void World::BeginPlay()
 {
+	Log(LogType::Info, "World BeginPlay called");
+
 	for (u_size i = 0; i < m_entities.size(); i++)
 	{
 		m_entities[i]->BeginPlay();
@@ -16,6 +18,8 @@ void World::BeginPlay()
 
 void World::EndPlay()
 {
+	Log(LogType::Info, "World EndPlay called");
+
 	for (u_size i = 0; i < m_entities.size(); i++)
 	{
 		m_entities[i]->EndPlay();
@@ -45,12 +49,16 @@ void World::SaveToFile()
 
 void World::SaveToFile(const std::string& filePath)
 {
+	Log(LogType::Info, "Saving world to %s", filePath.c_str());
+
 	std::ofstream file(filePath);
 	file << std::setw(3) << SaveToJson();
 }
 
 void World::LoadFromFile(const std::string& filePath)
 {
+	Log(LogType::Info, "Loading world from %s", filePath.c_str());
+
 	std::ifstream file(filePath);
 	nlohmann::json json;
 	file >> json;

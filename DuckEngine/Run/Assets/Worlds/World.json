@@ -3,29 +3,16 @@
       {
          "name": "Test",
          "position": [
-            66.84704121224792,
-            -88.98876021687441
-         ],
-         "rotation": 30.0,
-         "scriptPath": ""
-      },
-      {
-         "name": "Test2",
-         "position": [
-            340.0,
-            -40.0
-         ],
-         "rotation": 0.0,
-         "scriptPath": ""
-      },
-      {
-         "name": "Test",
-         "position": [
             10.0,
             10.0
          ],
          "rotation": 30.0,
-         "scriptPath": ""
+         "scriptPath": "",
+         "size": [
+            100.0,
+            100.0
+         ],
+         "texturePath": "Assets/Textures/Player.png"
       },
       {
          "name": "Test2",
@@ -34,7 +21,11 @@
             100.0
          ],
          "rotation": 0.0,
-         "scriptPath": ""
+         "scriptPath": "",
+         "size": [
+            100.0,
+            100.0
+         ]
       }
    ],
    "Name": "World"

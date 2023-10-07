@@ -107,8 +107,12 @@ void Editor::Update(f64 dt)
 	DE::Engine::EndFrame();
 }
 
+#define ENUM_TO_STRING(x) #x
+
 void Editor::DestroyLayer(LayerType layerType)
 {
+	Log(DE::LogType::Info, "Destroying Layer %s", ENUM_TO_STRING(layerType));
+
 	if (m_layers.find(layerType) != m_layers.end())
 	{
 		m_layers.erase(layerType);
