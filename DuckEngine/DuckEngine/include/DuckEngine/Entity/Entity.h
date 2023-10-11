@@ -42,7 +42,7 @@ private:
 	fm::vec2 m_size;
 	double m_rotation;
 
-	std::shared_ptr<TextureResource> m_texture;
+	SharedPtr<TextureResource> m_texture;
 	std::string m_scriptPath;
 
 	friend class InspectorLayer;

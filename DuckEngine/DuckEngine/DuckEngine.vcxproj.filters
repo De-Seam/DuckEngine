@@ -252,6 +252,9 @@
     <ClInclude Include="ext\include\box2d\box2d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\DuckEngine\Entity\Components\Components.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DuckEngine\Events\InputManager.cpp">

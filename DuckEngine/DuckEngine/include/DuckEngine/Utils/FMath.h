@@ -260,6 +260,41 @@ struct alignas(4 * sizeof(double)) vec4
 	}
 };
 
+struct Transform2D
+{
+	vec2 position;
+	vec2 size;
+	double rotation;
+
+	Transform2D() :
+		position(0.f),
+		size(1.f),
+		rotation(0.f)
+	{}
+
+	Transform2D(const vec2& position, const vec2& size, double rotation) :
+		position(position),
+		size(size),
+		rotation(rotation)
+	{}
+
+	Transform2D(const Transform2D& i) :
+		position(i.position),
+		size(i.size),
+		rotation(i.rotation)
+	{}
+
+	Transform2D& operator=(const Transform2D& i)
+	{
+		position = i.position;
+		size = i.size;
+		rotation = i.rotation;
+		return *this;
+	}
+};
+
+using Transform = Transform2D;
+
 struct mat3
 {
 	vec3 x, y, z;
