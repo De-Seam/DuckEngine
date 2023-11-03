@@ -19,6 +19,9 @@ std::wstring ExePath()
 
 std::optional<std::string> SaveFileExplorer()
 {
+	TCHAR currentDir[MAX_PATH];
+	GetCurrentDirectory(MAX_PATH, currentDir);
+
 	OPENFILENAME ofn;
 
 	TCHAR NPath[MAX_PATH];
@@ -45,11 +48,11 @@ std::optional<std::string> SaveFileExplorer()
 
 	ofn.lStructSize = sizeof(ofn);
 	ofn.hwndOwner = nullptr;
-	ofn.lpstrFilter = static_cast<LPCWSTR>(L"DuckMap Files (*.DuckMap)\0*.DuckMap\0All Files (*.*)\0*.*\0");
+	ofn.lpstrFilter = static_cast<LPCWSTR>(L"DuckWorld Files (*.DuckWorld)\0*.DuckWorld\0All Files (*.*)\0*.*\0");
 	ofn.lpstrFile = static_cast<LPWSTR>(NPath);
 	ofn.nMaxFile = MAX_PATH;
 	ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
-	ofn.lpstrDefExt = static_cast<LPCWSTR>(L".DuckMap");
+	ofn.lpstrDefExt = static_cast<LPCWSTR>(L".DuckWorld");
 
 	if (GetSaveFileName(&ofn))
 	{
@@ -64,6 +67,7 @@ std::optional<std::string> SaveFileExplorer()
 		else
 		{
 			Log(DE::LogType::Error, "Error opening file");
+			SetCurrentDirectory(currentDir);
 			return std::nullopt;
 		}
 		//*/
@@ -71,13 +75,18 @@ std::optional<std::string> SaveFileExplorer()
 #else
 		std::string savedPath = NPath;
 #endif
+		SetCurrentDirectory(currentDir);
 		return savedPath;
 	}
+	SetCurrentDirectory(currentDir);
 	return std::nullopt;
 }
 
 std::optional<std::string> OpenFileExplorer()
 {
+	TCHAR currentDir[MAX_PATH];
+	GetCurrentDirectory(MAX_PATH, currentDir);
+
 	OPENFILENAME ofn;
 	TCHAR NPath[MAX_PATH];
 	ZeroMemory(&NPath, sizeof(NPath));
@@ -85,11 +94,11 @@ std::optional<std::string> OpenFileExplorer()
 
 	ofn.lStructSize = sizeof(ofn);
 	ofn.hwndOwner = nullptr;
-	ofn.lpstrFilter = static_cast<LPCWSTR>(L"DuckMap Files (*.DuckMap)\0*.DuckMap\0All Files (*.*)\0*.*\0");
+	ofn.lpstrFilter = static_cast<LPCWSTR>(L"DuckWorld Files (*.DuckWorld)\0*.DuckWorld\0All Files (*.*)\0*.*\0");
 	ofn.lpstrFile = static_cast<LPWSTR>(NPath);
 	ofn.nMaxFile = MAX_PATH;
 	ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
-	ofn.lpstrDefExt = static_cast<LPCWSTR>(L".DuckMap");
+	ofn.lpstrDefExt = static_cast<LPCWSTR>(L".DuckWorld");
 
 	if (GetOpenFileName(&ofn))
 	{
@@ -104,6 +113,7 @@ std::optional<std::string> OpenFileExplorer()
 		else
 		{
 			Log(DE::LogType::Error, "Error opening file");
+			SetCurrentDirectory(currentDir);
 			return std::nullopt;
 		}
 		//*/
@@ -111,8 +121,10 @@ std::optional<std::string> OpenFileExplorer()
 #else
 		std::string openedPath = NPath;
 #endif
+		SetCurrentDirectory(currentDir);
 		return openedPath;
 	}
+	SetCurrentDirectory(currentDir);
 	return std::nullopt;
 }
 

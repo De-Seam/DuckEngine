@@ -18,8 +18,6 @@ void App::Init()
 
 	EDITOR_ONLY(Editor::Init());
 
-	//DE::World* world = DE::Engine::LoadWorldFromFile("Assets/World.json");
-
 	DE::World* world = DE::Engine::CreateNewWorld();
 	DE::Entity* entity = world->CreateEntity<DE::Entity>();
 	entity->SetName("Test");
@@ -35,7 +33,6 @@ void App::Init()
 	entity->SetSize(fm::vec2(100, 100));
 	entity->SetRotation(0);
 
-	world->SaveToFile("Assets/World.json");
 
 #ifndef DUCK_EDITOR
 	DE::Engine::BeginPlay();

@@ -41,7 +41,7 @@ private:
 	std::vector<std::shared_ptr<Entity>> m_entities;
 
 	std::string m_name = "World";
-	std::string m_filePath = "Assets/Worlds/World.json";
+	std::string m_filePath = "Assets/Worlds/World.DuckWorld";
 
 	std::unique_ptr<b2World> m_physicsWorld = std::make_unique<b2World>(b2Vec2{0.f, -9.8f});
 };
