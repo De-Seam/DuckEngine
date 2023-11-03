@@ -12,6 +12,8 @@
 #include <imgui/imgui_internal.h>
 #include <imgui/imstb_textedit.h>
 
+#include <windows.h>
+
 InspectorLayer::InspectorLayer()
 {
 	const std::shared_ptr<DE::TextureResource> resourceTextureXButton =
@@ -95,6 +97,29 @@ void InspectorLayer::Update(f32)
 					m_sizeColum.Update(sizeData);
 					void* rotationData[1] = {&selectedEntity->m_rotation};
 					m_rotationColum.Update(rotationData);
+
+					ImGui::TextUnformatted("Texture##SelectedEntityTextureButton");
+					ImGui::NextColumn();
+
+					if (selectedEntity->GetTexture())
+					{
+						if (ImGui::ImageButton((ImTextureID)selectedEntity->GetTexture()->GetTexture(), {64, 64}))
+						{
+							std::optional<std::string> openedPath = OpenFromFileExplorer(
+								L"Image Files (*.png;*.jpg;*.jpeg;*.bmp;*.gif)\0*.png;*.jpg;*.jpeg;*.bmp;*.gif\0"
+								L"All Files (*.*)\0*.*\0",
+								"png");
+							if (openedPath)
+							{
+								std::string relativePath = relative(openedPath.value(), std::filesystem::current_path()).string();
+								std::ranges::replace(relativePath, '\\', '/');
+
+								selectedEntity->SetTexture(DE::ResourceManager::GetResource<DE::TextureResource>(relativePath));
+							}
+						}
+					}
+
+					ImGui::NextColumn();
 				}
 			}
 			ImGui::EndTabItem();

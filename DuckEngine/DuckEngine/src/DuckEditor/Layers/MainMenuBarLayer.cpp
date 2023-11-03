@@ -17,117 +17,6 @@ std::wstring ExePath()
 	return std::wstring(buffer).substr(0, pos);
 }
 
-std::optional<std::string> SaveFileExplorer()
-{
-	TCHAR currentDir[MAX_PATH];
-	GetCurrentDirectory(MAX_PATH, currentDir);
-
-	OPENFILENAME ofn;
-
-	TCHAR NPath[MAX_PATH];
-	GetCurrentDirectory(MAX_PATH, NPath);
-
-	// Append a trailing backslash to the current directory if it's not already there
-	if (NPath[lstrlen(NPath) - 1] != '\\')
-	{
-		lstrcat(NPath, L"\\");
-
-		std::string worldFilePath = DE::Engine::GetWorld()->GetFilePath();
-		std::replace(worldFilePath.begin(), worldFilePath.end(), '/', '\\');
-
-		// Initializing an object of wstring
-		std::wstring temp = std::wstring(worldFilePath.begin(), worldFilePath.end());
-
-		// Applying c_str() method on temp
-		LPCWSTR wideString = temp.c_str();
-
-		lstrcat(NPath, wideString);
-	}
-
-	ZeroMemory(&ofn, sizeof(ofn));
-
-	ofn.lStructSize = sizeof(ofn);
-	ofn.hwndOwner = nullptr;
-	ofn.lpstrFilter = static_cast<LPCWSTR>(L"DuckWorld Files (*.DuckWorld)\0*.DuckWorld\0All Files (*.*)\0*.*\0");
-	ofn.lpstrFile = static_cast<LPWSTR>(NPath);
-	ofn.nMaxFile = MAX_PATH;
-	ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
-	ofn.lpstrDefExt = static_cast<LPCWSTR>(L".DuckWorld");
-
-	if (GetSaveFileName(&ofn))
-	{
-#ifdef UNICODE
-		std::vector<char> buffer;
-		int size = WideCharToMultiByte(CP_UTF8, 0, NPath, -1, nullptr, 0, nullptr, nullptr);
-		if (size > 0)
-		{
-			buffer.resize(size);
-			WideCharToMultiByte(CP_UTF8, 0, NPath, -1, buffer.data(), static_cast<int>(buffer.size()), nullptr, nullptr);
-		}
-		else
-		{
-			Log(DE::LogType::Error, "Error opening file");
-			SetCurrentDirectory(currentDir);
-			return std::nullopt;
-		}
-		//*/
-		std::string savedPath(buffer.data());
-#else
-		std::string savedPath = NPath;
-#endif
-		SetCurrentDirectory(currentDir);
-		return savedPath;
-	}
-	SetCurrentDirectory(currentDir);
-	return std::nullopt;
-}
-
-std::optional<std::string> OpenFileExplorer()
-{
-	TCHAR currentDir[MAX_PATH];
-	GetCurrentDirectory(MAX_PATH, currentDir);
-
-	OPENFILENAME ofn;
-	TCHAR NPath[MAX_PATH];
-	ZeroMemory(&NPath, sizeof(NPath));
-	ZeroMemory(&ofn, sizeof(ofn));
-
-	ofn.lStructSize = sizeof(ofn);
-	ofn.hwndOwner = nullptr;
-	ofn.lpstrFilter = static_cast<LPCWSTR>(L"DuckWorld Files (*.DuckWorld)\0*.DuckWorld\0All Files (*.*)\0*.*\0");
-	ofn.lpstrFile = static_cast<LPWSTR>(NPath);
-	ofn.nMaxFile = MAX_PATH;
-	ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
-	ofn.lpstrDefExt = static_cast<LPCWSTR>(L".DuckWorld");
-
-	if (GetOpenFileName(&ofn))
-	{
-#ifdef UNICODE
-		std::vector<char> buffer;
-		int size = WideCharToMultiByte(CP_UTF8, 0, NPath, -1, nullptr, 0, nullptr, nullptr);
-		if (size > 0)
-		{
-			buffer.resize(size);
-			WideCharToMultiByte(CP_UTF8, 0, NPath, -1, buffer.data(), static_cast<int>(buffer.size()), nullptr, nullptr);
-		}
-		else
-		{
-			Log(DE::LogType::Error, "Error opening file");
-			SetCurrentDirectory(currentDir);
-			return std::nullopt;
-		}
-		//*/
-		std::string openedPath(buffer.data());
-#else
-		std::string openedPath = NPath;
-#endif
-		SetCurrentDirectory(currentDir);
-		return openedPath;
-	}
-	SetCurrentDirectory(currentDir);
-	return std::nullopt;
-}
-
 void MainMenuBarLayer::Update(f32)
 {
 	if (ImGui::BeginMainMenuBar())
@@ -138,7 +27,8 @@ void MainMenuBarLayer::Update(f32)
 			// Add a "Save" button inside the dropdown
 			if (ImGui::MenuItem("Save"))
 			{
-				std::optional<std::string> savedPath = SaveFileExplorer();
+				std::optional<std::string> savedPath = SaveToFileExplorer(DE::Engine::GetWorld()->GetFilePath(),
+																		L"DuckWorld Files (*.DuckWorld)\0*.DuckWorld\0All Files (*.*)\0*.*\0", "DuckWorld");
 				if (savedPath.has_value())
 				{
 					DE::Engine::GetWorld()->SaveToFile(savedPath.value());
@@ -148,7 +38,8 @@ void MainMenuBarLayer::Update(f32)
 			// Add an "Open" button inside the dropdown
 			if (ImGui::MenuItem("Open"))
 			{
-				std::optional<std::string> openedPath = OpenFileExplorer();
+				std::optional<std::string> openedPath =
+					OpenFromFileExplorer(L"DuckWorld Files (*.DuckWorld)\0*.DuckWorld\0All Files (*.*)\0*.*\0", "DuckWorld");
 				if (openedPath.has_value())
 				{
 					DE::Engine::LoadWorldFromFile(openedPath.value().c_str());

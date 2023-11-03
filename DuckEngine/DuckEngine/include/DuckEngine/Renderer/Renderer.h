@@ -28,7 +28,7 @@ public:
 	static Camera* GetCamera() { return m_camera; }
 	static fm::ivec2 GetWindowSize() { return m_windowSize; }
 
-	static std::shared_ptr<Entity> GetEntityAtPointSlow(fm::vec2 point);
+	[[nodiscard]] static std::shared_ptr<Entity> GetEntityAtPointSlow(fm::vec2 point);
 
 private:
 	static void Shutdown();
