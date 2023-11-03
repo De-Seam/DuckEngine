@@ -8,9 +8,9 @@ public:
 
 private:
 	static void MainLoop();
-	static void Update(f64 dt);
+	static void Update(f32 dt);
 
 private:
 	static bool m_running;
-	static f64 m_deltaTime;
+	static f32 m_deltaTime;
 };

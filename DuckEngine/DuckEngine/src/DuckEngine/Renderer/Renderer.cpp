@@ -47,7 +47,7 @@ void Renderer::EndFrame()
 	SDL_RenderPresent(m_renderer);
 }
 
-void Renderer::Update(f64 dt)
+void Renderer::Update(f32 dt)
 {
 	m_camera->Update(dt);
 }
@@ -108,24 +108,24 @@ std::shared_ptr<Entity> Renderer::GetEntityAtPointSlow(fm::vec2 point)
 	{
 		fm::vec2 position = entity->GetPosition();
 		fm::vec2 size = entity->GetSize();
-		f64 rotation = entity->GetRotation(); // Assuming rotation in radians
+		f32 rotation = entity->GetRotation(); // Assuming rotation in radians
 		rotation = fm::to_radians(rotation);
 
 		fm::vec2 cameraPosition = m_camera->GetPosition();
-		f64 cameraZoom = m_camera->GetZoom();
+		f32 cameraZoom = m_camera->GetZoom();
 
 		// Calculate the screen position of the entity center
 		fm::vec2 entityCenter = (position - cameraPosition) * cameraZoom;
-		entityCenter.x += m_windowSize.x / 2.; // Adjust for screen center
-		entityCenter.y += m_windowSize.y / 2.;
+		entityCenter.x += static_cast<f32>(m_windowSize.x) / 2.f; // Adjust for screen center
+		entityCenter.y += static_cast<f32>(m_windowSize.y) / 2.f;
 
 		// Calculate the half size of the object in screen space
 		fm::vec2 halfSize = size * 0.5 * cameraZoom;
 
 		// Apply the inverse rotation transformation to the point
 		fm::vec2 rotatedPoint = point - entityCenter;
-		f64 sinRotation = std::sin(-rotation);
-		f64 cosRotation = std::cos(-rotation);
+		f32 sinRotation = std::sinf(-rotation);
+		f32 cosRotation = std::cosf(-rotation);
 		fm::vec2 rotatedLocalPoint;
 		rotatedLocalPoint.x = cosRotation * rotatedPoint.x - sinRotation * rotatedPoint.y;
 		rotatedLocalPoint.y = sinRotation * rotatedPoint.x + cosRotation * rotatedPoint.y;
@@ -151,7 +151,7 @@ void Renderer::Shutdown()
 SDL_Rect Renderer::GetSDLRect(const fm::vec2& position, const fm::vec2& size)
 {
 	const fm::vec2 cameraPosition = m_camera->GetPosition();
-	const double cameraZoom = m_camera->GetZoom();
+	const f32 cameraZoom = m_camera->GetZoom();
 
 	// Calculate the screen position of the center of the object
 	const fm::vec2 screenCenter = (position - cameraPosition) * cameraZoom;

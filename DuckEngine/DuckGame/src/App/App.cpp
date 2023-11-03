@@ -10,7 +10,7 @@
 
 
 bool App::m_running = false;
-f64 App::m_deltaTime = F32_EPSILON;
+f32 App::m_deltaTime = F32_EPSILON;
 
 void App::Init()
 {
@@ -56,14 +56,14 @@ void App::MainLoop()
 		Update(m_deltaTime);
 
 		auto end = std::chrono::steady_clock::now();
-		std::chrono::duration<f64> elapsedChronoTime = end - start;
+		std::chrono::duration<f32> elapsedChronoTime = end - start;
 		m_deltaTime = elapsedChronoTime.count();
 	}
 
 	DE::Engine::Cleanup();
 }
 
-void App::Update(f64 dt)
+void App::Update(f32 dt)
 {
 	//DE::Engine::BeginFrame();
 

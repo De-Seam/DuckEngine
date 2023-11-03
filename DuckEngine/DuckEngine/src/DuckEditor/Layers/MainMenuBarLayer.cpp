@@ -128,7 +128,7 @@ std::optional<std::string> OpenFileExplorer()
 	return std::nullopt;
 }
 
-void MainMenuBarLayer::Update(f64)
+void MainMenuBarLayer::Update(f32)
 {
 	if (ImGui::BeginMainMenuBar())
 	{

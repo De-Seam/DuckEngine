@@ -10,7 +10,7 @@
 OutlinerLayer::OutlinerLayer()
 {}
 
-void OutlinerLayer::Update(f64)
+void OutlinerLayer::Update(f32)
 {
 	bool open = true;
 	ImGui::Begin("Outliner##OutlinerLayer", &open);

@@ -26,14 +26,14 @@ void World::EndPlay()
 	}
 }
 
-void World::Update(f64 dt)
+void World::Update(f32 dt)
 {
 	for (u_size i = 0; i < m_entities.size(); i++)
 	{
 		m_entities[i]->Update(dt);
 	}
 
-	m_physicsWorld->Step(static_cast<f32>(dt), 6, 2);
+	m_physicsWorld->Step(dt, 6, 2);
 }
 
 void World::Draw()

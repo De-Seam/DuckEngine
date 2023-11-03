@@ -13,7 +13,7 @@ Camera::Camera(fm::vec2 position, fm::vec2 size, f32 zoom)
 	m_scale = fm::vec2{1.f, 1.f} * m_zoom;
 }
 
-void Camera::Update(f64 dt)
+void Camera::Update(f32 dt)
 {
 	fm::vec2 windowSize = Renderer::GetWindowSize();
 
@@ -33,18 +33,18 @@ void Camera::SetSize(fm::vec2 size)
 	m_sizeInverse = fm::vec2{1.f} / m_size;
 }
 
-void Camera::SetZoom(f64 zoom)
+void Camera::SetZoom(f32 zoom)
 {
 	m_targetZoom = fm::max(zoom, MIN_ZOOM);
 }
 
-void Camera::SnapZoom(f64 zoom)
+void Camera::SnapZoom(f32 zoom)
 {
 	m_targetZoom = fm::max(zoom, MIN_ZOOM);
 	m_zoom = m_targetZoom;
 }
 
-void Camera::SetZoomSpeed(f64 zoomSpeed)
+void Camera::SetZoomSpeed(f32 zoomSpeed)
 {
 	m_zoomSpeed = zoomSpeed;
 }

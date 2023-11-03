@@ -16,7 +16,7 @@ public:
 	static void BeginFrame();
 	static void EndFrame();
 
-	static void Update(f64 dt);
+	static void Update(f32 dt);
 
 	static void DrawTexture(SDL_Texture* texture, const fm::vec2& position, const fm::vec2& size, double rotation);
 	static void DrawTextureTinted(SDL_Texture* texture, const fm::vec2& position, const fm::vec2& size, double rotation,

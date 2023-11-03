@@ -41,7 +41,7 @@ public:
 	static void DestroyLayer(LayerType layerType);
 
 private:
-	static void Update(f64 dt);
+	static void Update(f32 dt);
 
 private:
 	static GameState m_gameState;

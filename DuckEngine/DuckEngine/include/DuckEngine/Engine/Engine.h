@@ -18,14 +18,14 @@ public:
 	static void EndPlay();
 
 	static void BeginFrame(); //Begin frame
-	static void Update(f64 dt); //Update game
+	static void Update(f32 dt); //Update game
 	static void Draw();
 	static void EndFrame(); //End frame
 
 	static World* CreateNewWorld();
 	static World* LoadWorldFromFile(const char* fileName);
 
-	static f64 GetDeltaTime() { return m_deltaTime; }
+	static f32 GetDeltaTime() { return m_deltaTime; }
 	static bool ShouldShutdown() { return m_ShouldShutdown; }
 	static Object* GetObject(UID uid);
 	static World* GetWorld() { return m_currentWorld.get(); }
@@ -37,7 +37,7 @@ private:
 	static void RemoveObject(Object* object); //For objects to remove themselves
 
 private:
-	static f64 m_deltaTime;
+	static f32 m_deltaTime;
 	static bool m_ShouldShutdown;
 	static bool m_playing;
 

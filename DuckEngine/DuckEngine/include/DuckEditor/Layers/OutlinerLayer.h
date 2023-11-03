@@ -11,7 +11,7 @@ class OutlinerLayer : public Layer
 {
 public:
 	OutlinerLayer();
-	virtual void Update(f64 dt) override;
+	virtual void Update(f32 dt) override;
 
 	static LayerType GetType() { return LayerType::Outliner; }
 	virtual LayerType GetTypeDynamic() override { return GetType(); }

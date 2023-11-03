@@ -75,7 +75,7 @@ SDL_Texture* Editor::GetViewportTexture()
 	return m_viewportTexture;
 }
 
-void Editor::Update(f64 dt)
+void Editor::Update(f32 dt)
 {
 	DE::Engine::BeginFrame();
 	ImGui_ImplSDLRenderer_NewFrame();

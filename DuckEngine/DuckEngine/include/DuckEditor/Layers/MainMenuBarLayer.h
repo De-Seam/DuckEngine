@@ -10,7 +10,7 @@ class MainMenuBarLayer : public Layer
 {
 public:
 	MainMenuBarLayer();
-	virtual void Update(f64 dt) override;
+	virtual void Update(f32 dt) override;
 
 	static LayerType GetType() { return LayerType::MainMenuBar; }
 	virtual LayerType GetTypeDynamic() override { return GetType(); }

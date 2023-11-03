@@ -17,7 +17,7 @@ public:
 	virtual void BeginPlay();
 	virtual void EndPlay();
 
-	virtual void Update(f64 dt);
+	virtual void Update(f32 dt);
 	virtual void Draw();
 
 	virtual void SaveToFile();

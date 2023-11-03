@@ -40,9 +40,9 @@ InspectorLayer::InspectorLayer()
 			"##Rotation", nullptr, [&](void* currentData)
 			{
 				std::shared_ptr<DE::Entity> selectedEntity = Editor::GetLayer<ViewportLayer>()->GetSelectedEntity().
-					lock();
+																								lock();
 				if (selectedEntity)
-					selectedEntity->SetRotation(*static_cast<double*>(currentData));
+					selectedEntity->SetRotation(*static_cast<f32*>(currentData));
 			}
 		}
 	};
@@ -50,7 +50,7 @@ InspectorLayer::InspectorLayer()
 
 #define IMGUI_VAR(func, label, code) ImGui::TextUnformatted(label); ImGui::NextColumn(); ImGui::SetNextItemWidth(-1); if(func) { code } ImGui::NextColumn();
 
-void InspectorLayer::Update(f64)
+void InspectorLayer::Update(f32)
 {
 	bool open = true;
 	ImGui::Begin("Inspector##LayerWindow", &open);

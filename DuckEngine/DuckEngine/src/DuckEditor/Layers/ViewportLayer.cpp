@@ -11,13 +11,13 @@
 
 ViewportLayer::ViewportLayer()
 {
-	std::fill_n(m_frameTimes, FRAMETIME_COUNT, 0.1);
+	std::fill_n(m_frameTimes, FRAMETIME_COUNT, 0.1f);
 
 	m_selectedOutlineTexture = DE::ResourceManager::GetResource<DE::TextureResource>(
 		"Assets/Editor/Textures/SelectedOutline.png");
 }
 
-void ViewportLayer::Update(f64 dt)
+void ViewportLayer::Update(f32 dt)
 {
 	ImGui::Begin("Viewport##LayerWindow");
 	{
@@ -66,11 +66,11 @@ void ViewportLayer::Update(f64 dt)
 	m_lastFrameMousePosition = IMToFM(ImGui::GetMousePos());
 }
 
-void ViewportLayer::FPSCounter(f64 dt)
+void ViewportLayer::FPSCounter(f32 dt)
 {
 	m_frameTimes[m_currentFrameTimeIndex] = dt;
 	m_currentFrameTimeIndex = (m_currentFrameTimeIndex + 1) % FRAMETIME_COUNT;
-	f64 averageFrameTime = 0;
+	f32 averageFrameTime = 0;
 	for (u_size i = 0; i < FRAMETIME_COUNT; i++)
 	{
 		averageFrameTime += m_frameTimes[i];
@@ -101,7 +101,7 @@ bool ViewportLayer::CameraController()
 
 	if (io.MouseWheel != 0.0f)
 	{
-		f64 scrollAmount = io.MouseWheel * 0.1;
+		f32 scrollAmount = io.MouseWheel * 0.1f;
 		camera->SetZoom(camera->GetZoom() + scrollAmount);
 		returnValue = true;
 	}

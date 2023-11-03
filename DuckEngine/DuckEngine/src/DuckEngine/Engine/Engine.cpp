@@ -7,7 +7,7 @@
 
 namespace DE
 {
-f64 Engine::m_deltaTime = 0.f;
+f32 Engine::m_deltaTime = 0.f;
 bool Engine::m_ShouldShutdown = false;
 bool Engine::m_playing = false;
 std::unique_ptr<World> Engine::m_currentWorld = nullptr;
@@ -63,7 +63,7 @@ void Engine::BeginFrame()
 	Renderer::BeginFrame();
 }
 
-void Engine::Update(f64 dt)
+void Engine::Update(f32 dt)
 {
 	m_deltaTime = dt;
 

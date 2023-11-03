@@ -52,7 +52,7 @@ struct ColumnDragScalar
 
 	std::string text;
 	std::vector<PerScalarData> perScalarData;
-	ImGuiDataType dataType = ImGuiDataType_Double;
+	ImGuiDataType dataType = ImGuiDataType_Float;
 
 	float speed = 1.f;
 	void* min = nullptr;

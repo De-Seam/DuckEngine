@@ -20,8 +20,8 @@ class ViewportLayer : public Layer
 public:
 	ViewportLayer();
 	virtual ~ViewportLayer() override = default;
-	virtual void Update(f64 dt) override;
-	void FPSCounter(f64 dt);
+	virtual void Update(f32 dt) override;
+	void FPSCounter(f32 dt);
 	bool CameraController();
 	void EntitySelector();
 
@@ -37,7 +37,7 @@ private:
 	fm::vec2 m_size = {0, 0};
 	std::weak_ptr<DE::Entity> m_selectedEntity;
 
-	f64 m_frameTimes[FRAMETIME_COUNT] = {};
+	f32 m_frameTimes[FRAMETIME_COUNT] = {};
 	u_size m_currentFrameTimeIndex = 0;
 
 	fm::vec2 m_lastFrameMousePos = {0, 0};

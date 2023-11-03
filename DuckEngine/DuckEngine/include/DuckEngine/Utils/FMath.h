@@ -1,6 +1,4 @@
 #pragma once
-#include "CoreLight.h"
-
 #include <cmath>
 #include <cassert>
 #include <cstdint>
@@ -12,14 +10,19 @@
 #pragma warning (disable : 4201) //to avoid nameless struct / union warning.
 namespace fm //Fast Math
 {
-constexpr double pi()
+constexpr float pi()
 {
-	return 3.14159265358979323846;
+	return 3.14159265358979323846f;
 }
 
-inline double to_radians(double degrees)
+inline float to_radians(float degrees)
 {
-	return degrees * 0.01745329251994329576923690768489;
+	return degrees * 0.01745329251994329576923690768489f;
+}
+
+inline float to_degrees(float radians)
+{
+	return radians * 57.295779513082320876798154814105f;
 }
 
 template<typename T>
@@ -87,12 +90,12 @@ struct ivec2
 
 struct vec2
 {
-	double x, y;
+	float x, y;
 
-	vec2(double x, double y)
+	vec2(float x, float y)
 		: x(x), y(y) {}
 
-	vec2(const double i)
+	vec2(const float i)
 		: vec2(i, i) {}
 
 	vec2()
@@ -101,9 +104,9 @@ struct vec2
 	vec2(const vec2& i)
 		: vec2(i.x, i.y) {}
 
-	vec2(const ivec2& i) : x(static_cast<double>(i.x)), y(static_cast<double>(i.y)) {}
+	vec2(const ivec2& i) : x(static_cast<float>(i.x)), y(static_cast<float>(i.y)) {}
 
-	double& operator[](size_t i)
+	float& operator[](size_t i)
 	{
 		assert(i < 2);
 		return *(&x + i);
@@ -113,25 +116,25 @@ struct vec2
 	vec2 operator +(const vec2& i) const { return {x + i.x, y + i.y}; }
 	vec2 operator -(const vec2& i) const { return {x - i.x, y - i.y}; }
 	vec2 operator *(const vec2& i) const { return {x * i.x, y * i.y}; }
-	vec2 operator *(const double i) const { return {x * i, y * i}; }
+	vec2 operator *(const float i) const { return {x * i, y * i}; }
 	vec2 operator /(const vec2& i) const { return {x / i.x, y / i.y}; }
-	vec2 operator /(const double i) const { return {x / i, y / i}; }
+	vec2 operator /(const float i) const { return {x / i, y / i}; }
 	const vec2& operator +=(const vec2& i) { return *this = *this + i; }
 	const vec2& operator -=(const vec2& i) { return *this = *this - i; }
 	const vec2& operator *=(const vec2& i) { return *this = *this * i; }
-	const vec2& operator *=(const double i) { return *this = *this * i; }
+	const vec2& operator *=(const float i) { return *this = *this * i; }
 	const vec2& operator /=(const vec2& i) { return *this = *this / i; }
-	const vec2& operator /=(const double i) { return *this = *this / i; }
+	const vec2& operator /=(const float i) { return *this = *this / i; }
 };
 
 struct vec3
 {
-	double x, y, z;
+	float x, y, z;
 
-	vec3(double x, double y, double z)
+	vec3(float x, float y, float z)
 		: x(x), y(y), z(z) {}
 
-	vec3(const double i)
+	vec3(const float i)
 		: vec3(i, i, i) {}
 
 	vec3()
@@ -140,7 +143,7 @@ struct vec3
 	vec3(const vec3& i)
 		: vec3(i.x, i.y, i.z) {}
 
-	double& operator[](size_t i)
+	float& operator[](size_t i)
 	{
 		assert(i < 3);
 		return *(&x + i);
@@ -150,37 +153,37 @@ struct vec3
 	vec3 operator +(const vec3& i) const { return {x + i.x, y + i.y, z + i.z}; }
 	vec3 operator -(const vec3& i) const { return {x - i.x, y - i.y, z - i.z}; }
 	vec3 operator *(const vec3& i) const { return {x * i.x, y * i.y, z * i.z}; }
-	vec3 operator *(const double i) const { return {x * i, y * i, z * i}; }
+	vec3 operator *(const float i) const { return {x * i, y * i, z * i}; }
 	vec3 operator /(const vec3& i) const { return {x / i.x, y / i.y, z / i.z}; }
-	vec3 operator /(const double i) const { return {x / i, y / i, z / i}; }
+	vec3 operator /(const float i) const { return {x / i, y / i, z / i}; }
 	const vec3& operator +=(const vec3& i) { return *this = *this + i; }
 	const vec3& operator -=(const vec3& i) { return *this = *this - i; }
 	const vec3& operator *=(const vec3& i) { return *this = *this * i; }
-	const vec3& operator *=(const double i) { return *this = *this * i; }
+	const vec3& operator *=(const float i) { return *this = *this * i; }
 	const vec3& operator /=(const vec3& i) { return *this = *this / i; }
-	const vec3& operator /=(const double i) { return *this = *this / i; }
+	const vec3& operator /=(const float i) { return *this = *this / i; }
 
 	bool operator==(const vec3& i) { return x == i.x && y == i.y && z == i.z; }
 
 	[[nodiscard]] uint32_t get_argb() const
 	{
-		const double t_r = clamp<double>(x, 0, 1);
-		const double t_g = clamp<double>(y, 0, 1);
-		const double t_b = clamp<double>(z, 0, 1);
+		const float t_r = clamp<float>(x, 0, 1);
+		const float t_g = clamp<float>(y, 0, 1);
+		const float t_b = clamp<float>(z, 0, 1);
 		return 255 | (static_cast<uint8_t>(t_r * 255) << 16) | (static_cast<uint8_t>(t_g * 255) << 8) | (static_cast<
 			uint8_t>(t_b * 255));
 	}
 
 	[[nodiscard]] uint32_t get_rgba() const
 	{
-		const double t_r = clamp<double>(x, 0, 1);
-		const double t_g = clamp<double>(y, 0, 1);
-		const double t_b = clamp<double>(z, 0, 1);
+		const float t_r = clamp<float>(x, 0, 1);
+		const float t_g = clamp<float>(y, 0, 1);
+		const float t_b = clamp<float>(z, 0, 1);
 		return static_cast<uint32_t>((static_cast<uint8_t>(t_r * 255) << 24) | (static_cast<uint8_t>(t_g * 255) << 16) |
 			(static_cast<uint8_t>(t_b * 255) << 8) | 255);
 	}
 
-	[[nodiscard]] double dot(const vec3& i) const
+	[[nodiscard]] float dot(const vec3& i) const
 	{
 		return (x * i.x + y * i.y + z * i.z);
 	}
@@ -194,14 +197,14 @@ struct vec3
 	}
 };
 
-struct alignas(4 * sizeof(double)) vec4
+struct alignas(4 * sizeof(float)) vec4
 {
-	double x, y, z, w;
+	float x, y, z, w;
 
-	vec4(double x, double y, double z, double w)
+	vec4(float x, float y, float z, float w)
 		: x(x), y(y), z(z), w(w) {}
 
-	vec4(const double i)
+	vec4(const float i)
 		: vec4(i, i, i, i) {}
 
 	vec4()
@@ -213,13 +216,13 @@ struct alignas(4 * sizeof(double)) vec4
 	vec4(const vec3& i)
 		: vec4(i.x, i.y, i.z, 0.f) {}
 
-	double& operator[](size_t i)
+	float& operator[](size_t i)
 	{
 		assert(i < 4);
 		return *(&x + i);
 	}
 
-	const double& operator[](size_t i) const
+	const float& operator[](size_t i) const
 	{
 		assert(i < 4);
 		return *(&x + i);
@@ -229,32 +232,32 @@ struct alignas(4 * sizeof(double)) vec4
 	vec4 operator +(const vec4& i) const { return {x + i.x, y + i.y, z + i.z, w + i.w}; }
 	vec4 operator -(const vec4& i) const { return {x - i.x, y - i.y, z - i.z, w - i.w}; }
 	vec4 operator *(const vec4& i) const { return {x * i.x, y * i.y, z * i.z, w * i.w}; }
-	vec4 operator *(const double i) const { return {x * i, y * i, z * i, w * i}; }
+	vec4 operator *(const float i) const { return {x * i, y * i, z * i, w * i}; }
 	vec4 operator /(const vec4& i) const { return {x / i.x, y / i.y, z / i.z, w / i.w}; }
-	vec4 operator /(const double i) const { return {x / i, y / i, z / i, w / i}; }
+	vec4 operator /(const float i) const { return {x / i, y / i, z / i, w / i}; }
 	const vec4& operator +=(const vec4& i) { return *this = *this + i; }
 	const vec4& operator -=(const vec4& i) { return *this = *this - i; }
 	const vec4& operator *=(const vec4& i) { return *this = *this * i; }
-	const vec4& operator *=(const double i) { return *this = *this * i; }
+	const vec4& operator *=(const float i) { return *this = *this * i; }
 	const vec4& operator /=(const vec4& i) { return *this = *this / i; }
-	const vec4& operator /=(const double i) { return *this = *this / i; }
+	const vec4& operator /=(const float i) { return *this = *this / i; }
 
 	[[nodiscard]] uint32_t get_argb() const
 	{
-		const double t_a = clamp<double>(w, 0, 1);
-		const double t_r = clamp<double>(x, 0, 1);
-		const double t_g = clamp<double>(y, 0, 1);
-		const double t_b = clamp<double>(z, 0, 1);
+		const float t_a = clamp<float>(w, 0, 1);
+		const float t_r = clamp<float>(x, 0, 1);
+		const float t_g = clamp<float>(y, 0, 1);
+		const float t_b = clamp<float>(z, 0, 1);
 		return static_cast<uint32_t>((static_cast<uint8_t>(t_a * 255) << 24) | (static_cast<uint8_t>(t_r * 255) << 16) |
 			(static_cast<uint8_t>(t_g * 255) << 8) | (static_cast<uint8_t>(t_b * 255)));
 	}
 
 	[[nodiscard]] uint32_t get_rgba() const
 	{
-		const double t_a = clamp<double>(w, 0, 1);
-		const double t_r = clamp<double>(x, 0, 1);
-		const double t_g = clamp<double>(y, 0, 1);
-		const double t_b = clamp<double>(z, 0, 1);
+		const float t_a = clamp<float>(w, 0, 1);
+		const float t_r = clamp<float>(x, 0, 1);
+		const float t_g = clamp<float>(y, 0, 1);
+		const float t_b = clamp<float>(z, 0, 1);
 		return static_cast<uint32_t>((static_cast<uint8_t>(t_r * 255) << 24) | (static_cast<uint8_t>(t_g * 255) << 16) |
 			(static_cast<uint8_t>(t_b * 255) << 8) | (static_cast<uint8_t>(t_a * 255)));
 	}
@@ -263,31 +266,31 @@ struct alignas(4 * sizeof(double)) vec4
 struct Transform2D
 {
 	vec2 position;
-	vec2 size;
-	double rotation;
+	vec2 halfSize;
+	float rotation;
 
 	Transform2D() :
 		position(0.f),
-		size(1.f),
+		halfSize(1.f),
 		rotation(0.f)
 	{}
 
-	Transform2D(const vec2& position, const vec2& size, double rotation) :
+	Transform2D(const vec2& position, const vec2& size, float rotation) :
 		position(position),
-		size(size),
+		halfSize(size),
 		rotation(rotation)
 	{}
 
 	Transform2D(const Transform2D& i) :
 		position(i.position),
-		size(i.size),
+		halfSize(i.halfSize),
 		rotation(i.rotation)
 	{}
 
 	Transform2D& operator=(const Transform2D& i)
 	{
 		position = i.position;
-		size = i.size;
+		halfSize = i.halfSize;
 		rotation = i.rotation;
 		return *this;
 	}
@@ -301,7 +304,7 @@ struct mat3
 
 	mat3() {}
 
-	mat3(double i) :
+	mat3(float i) :
 		x(i, 0, 0),
 		y(0, i, 0),
 		z(0, 0, i)
@@ -336,7 +339,7 @@ struct mat4
 
 	mat4() {}
 
-	mat4(double i) :
+	mat4(float i) :
 		x(i, 0, 0, 0),
 		y(0, i, 0, 0),
 		z(0, 0, i, 0),
@@ -386,7 +389,7 @@ struct mat4
 				r3 = _mm256_hadd_pd(r3, r3);
 				r4 = _mm256_hadd_pd(r4, r4);
 
-				double res1[4], res2[4], res3[4], res4[4];
+				float res1[4], res2[4], res3[4], res4[4];
 				_mm256_storeu_pd(res1, r1);
 				_mm256_storeu_pd(res2, r2);
 				_mm256_storeu_pd(res3, r3);
@@ -439,21 +442,21 @@ struct mat4
 
 struct quat
 {
-	double x, y, z, w;
+	float x, y, z, w;
 
 	quat() = default;
 
-	quat(double x, double y, double z, double w)
+	quat(float x, float y, float z, float w)
 		: x(x), y(y), z(z), w(w) {}
 
-	quat(double a_x, double a_y, double a_z)
+	quat(float a_x, float a_y, float a_z)
 	{
-		double cy = std::cos(a_z * 0.5f);
-		double sy = std::sin(a_z * 0.5f);
-		double cp = std::cos(a_y * 0.5f);
-		double sp = std::sin(a_y * 0.5f);
-		double cr = std::cos(a_x * 0.5f);
-		double sr = std::sin(a_x * 0.5f);
+		float cy = std::cos(a_z * 0.5f);
+		float sy = std::sin(a_z * 0.5f);
+		float cp = std::cos(a_y * 0.5f);
+		float sp = std::sin(a_y * 0.5f);
+		float cr = std::cos(a_x * 0.5f);
+		float sr = std::sin(a_x * 0.5f);
 
 		w = cr * cp * cy + sr * sp * sy;
 		x = sr * cp * cy - cr * sp * sy;
@@ -467,7 +470,7 @@ struct quat
 	quat operator -() const { return {-x, -y, -z, -w}; }
 	quat operator +(const quat& i) const { return {x + i.x, y + i.y, z + i.z, w + i.w}; }
 	quat operator -(const quat& i) const { return {x - i.x, y - i.y, z - i.z, w - i.w}; }
-	quat operator *(const double i) const { return {x * i, y * i, z * i, w * i}; }
+	quat operator *(const float i) const { return {x * i, y * i, z * i, w * i}; }
 
 	quat operator *(const quat& i) const
 	{
@@ -483,7 +486,7 @@ struct quat
 	const quat& operator +=(const quat& i) { return *this = *this + i; }
 	const quat& operator -=(const quat& i) { return *this = *this - i; }
 	const quat& operator *=(const quat& i) { return *this = *this * i; }
-	const quat& operator *=(const double i) { return *this = *this * i; }
+	const quat& operator *=(const float i) { return *this = *this * i; }
 
 	vec3 rotate(const vec3& v) const
 	{
@@ -500,15 +503,15 @@ struct quat
 
 		// yaw (z-axis rotation)
 		{
-			double siny_cosp = 2.f * (y * z + w * x);
-			double cosy_cosp = w * w - x * x - y * y + z * z;
+			float siny_cosp = 2.f * (y * z + w * x);
+			float cosy_cosp = w * w - x * x - y * y + z * z;
 
 			angles.x = std::atan2(siny_cosp, cosy_cosp);
 		}
 
 		// pitch (y-axis rotation)
 		{
-			double sinp = 2.f * (w * y - z * x);
+			float sinp = 2.f * (w * y - z * x);
 			if (std::abs(sinp) >= 1.f)
 				angles.y = std::copysign(pi() / 2.f, sinp); // use 90 degrees if out of range
 			else
@@ -517,8 +520,8 @@ struct quat
 
 		// roll (x-axis rotation)
 		{
-			double t_y = 2.f * (x * y + w * z);
-			double t_x = w * w + x * x - y * y - z * z;
+			float t_y = 2.f * (x * y + w * z);
+			float t_x = w * w + x * x - y * y - z * z;
 
 			angles.z = std::atan2(t_y, t_x);
 		}
@@ -529,53 +532,53 @@ struct quat
 
 inline vec2 normalize(const vec2& i)
 {
-	double mag = std::sqrt(i.x * i.x + i.y * i.y);
+	float mag = std::sqrt(i.x * i.x + i.y * i.y);
 	assert(mag != 0.f && "Try using normalize_safe instead");
-	double inv = 1.f / mag;
+	float inv = 1.f / mag;
 	return {i.x * inv, i.y * inv};
 }
 
 
 inline vec2 normalize_safe(const vec2& i)
 {
-	double mag = std::sqrt(i.x * i.x + i.y * i.y);
+	float mag = std::sqrt(i.x * i.x + i.y * i.y);
 	if (mag == 0.f)
 		mag = 1.f;
-	double inv = 1.f / mag;
+	float inv = 1.f / mag;
 	return {i.x * inv, i.y * inv};
 }
 
 inline vec3 normalize(const vec3& i)
 {
-	double mag = std::sqrt(i.x * i.x + i.y * i.y + i.z * i.z);
+	float mag = std::sqrt(i.x * i.x + i.y * i.y + i.z * i.z);
 	assert(mag != 0.f && "Try using normalize_safe instead");
-	double inv = 1.f / mag;
+	float inv = 1.f / mag;
 	return {i.x * inv, i.y * inv, i.z * inv};
 }
 
 inline vec3 normalize_safe(const vec3& i)
 {
-	double mag = std::sqrt(i.x * i.x + i.y * i.y + i.z * i.z);
+	float mag = std::sqrt(i.x * i.x + i.y * i.y + i.z * i.z);
 	if (mag == 0.f)
 		mag = 1.f;
-	double inv = 1.f / mag;
+	float inv = 1.f / mag;
 	return {i.x * inv, i.y * inv, i.z * inv};
 }
 
 inline vec4 normalize(const vec4& i)
 {
-	double mag = std::sqrt(i.x * i.x + i.y * i.y + i.z * i.z);
+	float mag = std::sqrt(i.x * i.x + i.y * i.y + i.z * i.z);
 	assert(mag != 0.f && "Try using normalize_safe instead");
-	double inv = 1.f / mag;
+	float inv = 1.f / mag;
 	return {i.x * inv, i.y * inv, i.z * inv, i.w * inv};
 }
 
 inline vec4 normalize_safe(const vec4& i)
 {
-	double mag = std::sqrt(i.x * i.x + i.y * i.y + i.z * i.z);
+	float mag = std::sqrt(i.x * i.x + i.y * i.y + i.z * i.z);
 	if (mag == 0.f)
 		mag = 1.f;
-	double inv = 1.f / mag;
+	float inv = 1.f / mag;
 	return {i.x * inv, i.y * inv, i.z * inv, i.w * inv};
 }
 
@@ -593,11 +596,11 @@ inline mat4 scale(mat4 matrix, vec3 vector)
 	return matrix;
 }
 
-inline mat4 rotate(mat4 m, double angle, vec3 v)
+inline mat4 rotate(mat4 m, float angle, vec3 v)
 {
-	const double a = angle;
-	const double c = cos(a);
-	const double s = sin(a);
+	const float a = angle;
+	const float c = cos(a);
+	const float s = sin(a);
 
 	vec3 axis(normalize(v));
 	vec3 temp(axis * (1.f - c));
@@ -623,11 +626,11 @@ inline mat4 rotate(mat4 m, double angle, vec3 v)
 	return result;
 }
 
-inline mat4 get_perspective(double fovy, double aspect, double znear, double zfar)
+inline mat4 get_perspective(float fovy, float aspect, float znear, float zfar)
 {
-	assert(abs(aspect - std::numeric_limits<double>::epsilon()) > 0.f);
+	assert(abs(aspect - std::numeric_limits<float>::epsilon()) > 0.f);
 
-	const double tanHalfFovy = tan(fovy / 2.f);
+	const float tanHalfFovy = tan(fovy / 2.f);
 
 	mat4 result(1.f);
 	result[0][0] = 1.f / (aspect * tanHalfFovy);
@@ -666,15 +669,15 @@ inline mat4 look_at(const vec3& eye, const vec3& target, const vec3& up)
 inline mat3 to_mat3(const quat& q)
 {
 	mat3 result(1.f);
-	double qxx(q.x * q.x);
-	double qyy(q.y * q.y);
-	double qzz(q.z * q.z);
-	double qxz(q.x * q.z);
-	double qxy(q.x * q.y);
-	double qyz(q.y * q.z);
-	double qwx(q.w * q.x);
-	double qwy(q.w * q.y);
-	double qwz(q.w * q.z);
+	float qxx(q.x * q.x);
+	float qyy(q.y * q.y);
+	float qzz(q.z * q.z);
+	float qxz(q.x * q.z);
+	float qxy(q.x * q.y);
+	float qyz(q.y * q.z);
+	float qwx(q.w * q.x);
+	float qwy(q.w * q.y);
+	float qwz(q.w * q.z);
 
 	result[0][0] = 1.f - 2.f * (qyy + qzz);
 	result[0][1] = 2.f * (qxy + qwz);
@@ -699,7 +702,7 @@ inline mat4 to_mat4(const quat& q)
 
 inline quat normalize(const quat& q)
 {
-	double n = sqrt(q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w);
+	float n = sqrt(q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w);
 	if (n <= 0.f)
 		return {0, 0, 0, 0};
 	n = 1.f / n;
@@ -712,10 +715,10 @@ inline quat normalize(const quat& q)
 	};
 }
 
-inline quat angle_axis(double angle, const vec3& i)
+inline quat angle_axis(float angle, const vec3& i)
 {
-	double a(angle);
-	double s = std::sin(a * 0.5f);
+	float a(angle);
+	float s = std::sin(a * 0.5f);
 
 	vec3 xyz = i * s;
 	return {xyz.x, xyz.y, xyz.z, std::cos(a * 0.5f)};
@@ -732,7 +735,7 @@ inline uint32_t wang_hash(uint32_t seed)
 	return seed;
 }
 
-inline double wang_hashf(uint32_t seed) // Return value between 0.f amd 1.f
+inline float wang_hashf(uint32_t seed) // Return value between 0.f amd 1.f
 {
 	return wang_hash(seed) * (1.0f / 4294967296.0f);
 }
@@ -747,7 +750,7 @@ inline uint32_t xorshift32(uint32_t* pstate)
 	return (*pstate) = state;
 }
 
-inline double xorshift32f(uint32_t* state) // Return value between 0.f amd 1.f
+inline float xorshift32f(uint32_t* state) // Return value between 0.f amd 1.f
 {
 	return xorshift32(state) * (1.0f / 4294967296.0f);
 }
@@ -788,17 +791,17 @@ inline vec2 min2(vec2 a, vec2 b)
 	};
 }
 
-inline double lerp(double a, double b, double t)
+inline float lerp(float a, float b, float t)
 {
 	return a + (b - a) * t;
 }
 
-inline vec2 lerp2(vec2 a, vec2 b, double t)
+inline vec2 lerp2(vec2 a, vec2 b, float t)
 {
 	return a + (b - a) * t;
 }
 
-inline vec3 lerp3(vec3 a, vec3 b, double t)
+inline vec3 lerp3(vec3 a, vec3 b, float t)
 {
 	return a + (b - a) * t;
 }
