@@ -54,8 +54,8 @@ void Renderer::Update(f32 dt)
 
 void Renderer::DrawTexture(SDL_Texture* texture, const fm::vec2& position, const fm::vec2& size, double rotation)
 {
-	const SDL_Rect dstRect = GetSDLRect(position, size);
-	SDL_RenderCopyEx(m_renderer, texture, nullptr, &dstRect, rotation, nullptr, SDL_FLIP_NONE);
+	const SDL_FRect dstRect = GetSDLFRect(position, size);
+	SDL_RenderCopyExF(m_renderer, texture, nullptr, &dstRect, rotation, nullptr, SDL_FLIP_NONE);
 }
 
 void Renderer::DrawTextureTinted(SDL_Texture* texture, const fm::vec2& position, const fm::vec2& size, double rotation,
@@ -72,8 +72,8 @@ void Renderer::DrawTextureTinted(SDL_Texture* texture, const fm::vec2& position,
 	SDL_SetTextureColorMod(texture, r, g, b);
 	SDL_SetTextureAlphaMod(texture, a);
 
-	const SDL_Rect dstRect = GetSDLRect(position, size);
-	SDL_RenderCopyEx(m_renderer, texture, nullptr, &dstRect, rotation, nullptr, SDL_FLIP_NONE);
+	const SDL_FRect dstRect = GetSDLFRect(position, size);
+	SDL_RenderCopyExF(m_renderer, texture, nullptr, &dstRect, rotation, nullptr, SDL_FLIP_NONE);
 
 	// Reset SDL render color
 	SDL_SetTextureColorMod(texture, 255, 255, 255);
@@ -107,7 +107,7 @@ std::shared_ptr<Entity> Renderer::GetEntityAtPointSlow(fm::vec2 point)
 	for (const std::shared_ptr<Entity>& entity : entities)
 	{
 		fm::vec2 position = entity->GetPosition();
-		fm::vec2 size = entity->GetSize();
+		fm::vec2 size = entity->GetHalfSize();
 		f32 rotation = entity->GetRotation(); // Assuming rotation in radians
 		rotation = fm::to_radians(rotation);
 
@@ -120,7 +120,7 @@ std::shared_ptr<Entity> Renderer::GetEntityAtPointSlow(fm::vec2 point)
 		entityCenter.y += static_cast<f32>(m_windowSize.y) / 2.f;
 
 		// Calculate the half size of the object in screen space
-		fm::vec2 halfSize = size * 0.5 * cameraZoom;
+		fm::vec2 halfSize = size * cameraZoom;
 
 		// Apply the inverse rotation transformation to the point
 		fm::vec2 rotatedPoint = point - entityCenter;
@@ -148,7 +148,7 @@ void Renderer::Shutdown()
 	delete m_camera;
 }
 
-SDL_Rect Renderer::GetSDLRect(const fm::vec2& position, const fm::vec2& size)
+SDL_Rect Renderer::GetSDLRect(const fm::vec2& position, const fm::vec2& halfSize)
 {
 	const fm::vec2 cameraPosition = m_camera->GetPosition();
 	const f32 cameraZoom = m_camera->GetZoom();
@@ -157,15 +157,35 @@ SDL_Rect Renderer::GetSDLRect(const fm::vec2& position, const fm::vec2& size)
 	const fm::vec2 screenCenter = (position - cameraPosition) * cameraZoom;
 
 	// Calculate the half size of the object in screen space
-	const fm::vec2 halfSize = size * 0.5 * cameraZoom;
+	const fm::vec2 screenHalfSize = halfSize * cameraZoom;
 
 	// Calculate the screen rectangle
 	SDL_Rect sdlRect;
 	sdlRect.x = static_cast<int>(screenCenter.x - halfSize.x) + (m_windowSize.x / 2);
 	sdlRect.y = static_cast<int>(screenCenter.y - halfSize.y) + (m_windowSize.y / 2);
-	sdlRect.w = static_cast<int>(size.x * cameraZoom);
-	sdlRect.h = static_cast<int>(size.y * cameraZoom);
+	sdlRect.w = static_cast<int>(screenHalfSize.x * 2);
+	sdlRect.h = static_cast<int>(screenHalfSize.y * 2);
 
 	return sdlRect;
+}
+
+SDL_FRect Renderer::GetSDLFRect(const fm::vec2& position, const fm::vec2& halfSize)
+{
+	const fm::vec2 cameraPosition = m_camera->GetPosition();
+	const f32 cameraZoom = m_camera->GetZoom();
+
+	// Calculate the screen position of the center of the object
+	fm::vec2 screenCenter = (position - cameraPosition) * cameraZoom;
+
+	// Calculate the screen half size
+	fm::vec2 screenHalfSize = halfSize * cameraZoom;
+
+	SDL_FRect sdlFRect;
+	sdlFRect.x = screenCenter.x - screenHalfSize.x + static_cast<f32>(m_windowSize.x) * 0.5f;
+	sdlFRect.y = screenCenter.y - screenHalfSize.y + static_cast<f32>(m_windowSize.y) * 0.5f;
+	sdlFRect.w = screenHalfSize.x * 2;
+	sdlFRect.h = screenHalfSize.y * 2;
+
+	return sdlFRect;
 }
 }

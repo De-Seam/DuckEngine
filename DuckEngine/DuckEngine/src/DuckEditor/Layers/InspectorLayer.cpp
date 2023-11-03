@@ -93,7 +93,7 @@ void InspectorLayer::Update(f32)
 
 					void* positionData[2] = {&selectedEntity->m_position.x, &selectedEntity->m_position.y};
 					m_positionColum.Update(positionData);
-					void* sizeData[2] = {&selectedEntity->m_size.x, &selectedEntity->m_size.y};
+					void* sizeData[2] = {&selectedEntity->m_halfSize.x, &selectedEntity->m_halfSize.y};
 					m_sizeColum.Update(sizeData);
 					void* rotationData[1] = {&selectedEntity->m_rotation};
 					m_rotationColum.Update(rotationData);

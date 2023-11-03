@@ -53,9 +53,9 @@ void ViewportLayer::Update(f32 dt)
 			{
 				std::shared_ptr<DE::Entity> sharedEntity = m_selectedEntity.lock();
 
-				fm::vec2 outlineScale = sharedEntity->GetSize() / fm::vec2(512, 512);
+				fm::vec2 outlineScale = sharedEntity->GetHalfSize() / fm::vec2(512, 512);
 				DE::Renderer::DrawTextureTinted(m_selectedOutlineTexture->GetTexture(), sharedEntity->GetPosition(),
-												sharedEntity->GetSize() + (fm::vec2(6, 6) * outlineScale),
+												sharedEntity->GetHalfSize() + (fm::vec2(6, 6) * outlineScale),
 												sharedEntity->GetRotation(), fm::vec4(1, 1, 0, 1));
 			}
 		}

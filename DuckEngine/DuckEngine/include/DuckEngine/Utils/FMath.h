@@ -281,19 +281,8 @@ struct Transform2D
 		rotation(rotation)
 	{}
 
-	Transform2D(const Transform2D& i) :
-		position(i.position),
-		halfSize(i.halfSize),
-		rotation(i.rotation)
-	{}
-
-	Transform2D& operator=(const Transform2D& i)
-	{
-		position = i.position;
-		halfSize = i.halfSize;
-		rotation = i.rotation;
-		return *this;
-	}
+	Transform2D(const Transform2D& i) = default;
+	Transform2D& operator=(const Transform2D& i) = default;
 };
 
 using Transform = Transform2D;

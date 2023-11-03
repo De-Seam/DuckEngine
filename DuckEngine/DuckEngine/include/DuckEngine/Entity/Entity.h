@@ -20,14 +20,14 @@ public:
 
 	const std::string& GetName() const { return m_name; }
 	fm::vec2 GetPosition() const { return m_position; }
-	fm::vec2 GetSize() const { return m_size; }
+	fm::vec2 GetHalfSize() const { return m_halfSize; }
 	f32 GetRotation() const { return m_rotation; }
 	std::shared_ptr<TextureResource> GetTexture() const { return m_texture; }
 	const std::string& GetScriptPath() const { return m_scriptPath; }
 
 	void SetName(const std::string& name) { m_name = name; }
 	void SetPosition(const fm::vec2& position) { m_position = position; }
-	void SetSize(const fm::vec2& size) { m_size = size; }
+	void SetHalfSize(const fm::vec2& halfSize) { m_halfSize = halfSize; }
 
 	void SetRotation(f32 rotation)
 	{
@@ -46,7 +46,7 @@ private:
 	std::string m_name;
 
 	fm::vec2 m_position;
-	fm::vec2 m_size;
+	fm::vec2 m_halfSize;
 	f32 m_rotation;
 
 	std::shared_ptr<TextureResource> m_texture;
