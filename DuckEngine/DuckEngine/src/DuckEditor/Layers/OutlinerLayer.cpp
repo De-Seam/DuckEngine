@@ -24,6 +24,7 @@ void OutlinerLayer::Update(f64)
 		}
 
 		ViewportLayer* viewportLayer = Editor::GetLayer<ViewportLayer>();
+		std::shared_ptr<DE::Entity> selectedEntity = viewportLayer->GetSelectedEntity().lock();
 
 		if (ImGui::BeginTabBar("OutlinerTabBar"))
 		{
@@ -40,11 +41,18 @@ void OutlinerLayer::Update(f64)
 					{
 						const std::shared_ptr<DE::Entity>& entity = entities[i];
 
-						if (ImGui::Button((entity.get()->GetName() + "##" + std::to_string(i)).c_str(),
+						if (entity == selectedEntity)
+							ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.3f, 0.3f, 0.3f, 1.0f));
+						else
+							ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.15f, 0.15f, 0.15f, 1.0f));
+
+						if (ImGui::Button((entity->GetName() + "##" + std::to_string(i)).c_str(),
 										ImVec2(ImGui::GetContentRegionAvail().x, 0)))
 						{
 							viewportLayer->SetSelectedEntity(entity);
 						}
+
+						ImGui::PopStyleColor();
 					}
 				}
 				ImGui::EndChild();

@@ -6,5 +6,3 @@
 #include "Object/Object.h"
 
 #include "CoreLight.h"
-
-using SharedPtr = std::shared_ptr;

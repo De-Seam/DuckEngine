@@ -1,7 +1,7 @@
 #pragma once
 #include "DuckEngine/Core.h"
 
-#include "DuckEngine/Resources/ResourceTypes/TextureResource.h""
+#include "DuckEngine/Resources/ResourceTypes/TextureResource.h"
 
 namespace DE
 {
@@ -12,6 +12,6 @@ struct TransformComponent
 
 struct RenderTextureComponent
 {
-	SharedPtr<TextureResource> texture;
+	std::shared_ptr<TextureResource> texture;
 };
 }

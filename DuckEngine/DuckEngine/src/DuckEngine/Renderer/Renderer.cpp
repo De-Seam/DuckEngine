@@ -28,7 +28,7 @@ void Renderer::Init()
 	}
 
 	m_window = SDL_CreateWindow("DuckEngine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, m_windowSize.x,
-								m_windowSize.y, 0);
+								m_windowSize.y, SDL_WINDOW_RESIZABLE);
 
 	u32 render_flags = SDL_RENDERER_ACCELERATED;
 	m_renderer = SDL_CreateRenderer(m_window, -1, render_flags);

@@ -3,13 +3,13 @@
       {
          "name": "Test",
          "position": [
-            10.0,
-            10.0
+            160.0,
+            -144.0
          ],
          "rotation": 30.0,
          "scriptPath": "",
          "size": [
-            100.0,
+            239.0,
             100.0
          ],
          "texturePath": "Assets/Textures/Player.png"
@@ -17,8 +17,8 @@
       {
          "name": "Test2",
          "position": [
-            100.0,
-            100.0
+            245.0,
+            107.0
          ],
          "rotation": 0.0,
          "scriptPath": "",
