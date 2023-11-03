@@ -98,12 +98,12 @@ void InspectorLayer::Update(f32)
 					void* rotationData[1] = {&selectedEntity->m_rotation};
 					m_rotationColum.Update(rotationData);
 
-					ImGui::TextUnformatted("Texture##SelectedEntityTextureButton");
+					ImGui::TextUnformatted("Texture");
 					ImGui::NextColumn();
 
 					if (selectedEntity->GetTexture())
 					{
-						if (ImGui::ImageButton((ImTextureID)selectedEntity->GetTexture()->GetTexture(), {64, 64}))
+						if (ImGui::ImageButton((ImTextureID)selectedEntity->GetTexture()->GetTexture(), {72, 72}))
 						{
 							std::optional<std::string> openedPath = OpenFromFileExplorer(
 								L"Image Files (*.png;*.jpg;*.jpeg;*.bmp;*.gif)\0*.png;*.jpg;*.jpeg;*.bmp;*.gif\0"
