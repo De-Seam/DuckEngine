@@ -3,6 +3,8 @@
 
 #include <Windows.h>
 #include <algorithm>
+#include <locale>
+#include <codecvt>
 
 MainMenuBarLayer::MainMenuBarLayer()
 {}
@@ -20,7 +22,7 @@ std::optional<std::string> SaveFileExplorer()
 	OPENFILENAME ofn;
 
 	TCHAR NPath[MAX_PATH];
-	DWORD a = GetCurrentDirectory(MAX_PATH, NPath);
+	GetCurrentDirectory(MAX_PATH, NPath);
 
 	// Append a trailing backslash to the current directory if it's not already there
 	if (NPath[lstrlen(NPath) - 1] != '\\')
@@ -51,8 +53,23 @@ std::optional<std::string> SaveFileExplorer()
 
 	if (GetSaveFileName(&ofn))
 	{
-		std::wstring wStr = NPath;
-		std::string savedPath = std::string(wStr.begin(), wStr.end());
+#ifdef UNICODE
+		std::vector<char> buffer;
+		int size = WideCharToMultiByte(CP_UTF8, 0, NPath, -1, nullptr, 0, nullptr, nullptr);
+		if (size > 0)
+		{
+			buffer.resize(size);
+			WideCharToMultiByte(CP_UTF8, 0, NPath, -1, buffer.data(), static_cast<int>(buffer.size()), nullptr, nullptr);
+		}
+		else
+		{
+			// Error handling
+		}
+		//*/
+		std::string savedPath(&buffer[0]);
+#else
+		std::string savedPath = NPath;
+#endif
 		return savedPath;
 	}
 	return std::nullopt;
@@ -75,14 +92,29 @@ std::optional<std::string> OpenFileExplorer()
 
 	if (GetOpenFileName(&ofn))
 	{
-		std::wstring wStr = NPath;
-		std::string openedPath = std::string(wStr.begin(), wStr.end());
+#ifdef UNICODE
+		std::vector<char> buffer;
+		int size = WideCharToMultiByte(CP_UTF8, 0, NPath, -1, nullptr, 0, nullptr, nullptr);
+		if (size > 0)
+		{
+			buffer.resize(size);
+			WideCharToMultiByte(CP_UTF8, 0, NPath, -1, buffer.data(), static_cast<int>(buffer.size()), nullptr, nullptr);
+		}
+		else
+		{
+			// Error handling
+		}
+		//*/
+		std::string openedPath(buffer.data());
+#else
+		std::string openedPath = NPath;
+#endif
 		return openedPath;
 	}
 	return std::nullopt;
 }
 
-void MainMenuBarLayer::Update(f64 dt)
+void MainMenuBarLayer::Update(f64)
 {
 	if (ImGui::BeginMainMenuBar())
 	{

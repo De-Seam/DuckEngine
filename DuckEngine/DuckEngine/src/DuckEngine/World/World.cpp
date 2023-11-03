@@ -33,7 +33,7 @@ void World::Update(f64 dt)
 		m_entities[i]->Update(dt);
 	}
 
-	m_physicsWorld->Step(dt, 6, 2);
+	m_physicsWorld->Step(static_cast<f32>(dt), 6, 2);
 }
 
 void World::Draw()

@@ -31,7 +31,7 @@ public:
 
 	virtual void DestroyLayer();
 
-	ImGuiContext* GetContext() { return m_context; }
+	ImGuiContext* GetContext() const { return m_context; }
 
 protected:
 	ImGuiContext* m_context = nullptr;

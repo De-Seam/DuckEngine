@@ -11,7 +11,7 @@ void Entity::BeginPlay()
 void Entity::EndPlay()
 { }
 
-void Entity::Update(f64 dt)
+void Entity::Update(f64)
 { }
 
 void Entity::Draw()

@@ -13,7 +13,7 @@ OutlinerLayer::OutlinerLayer()
 void OutlinerLayer::Update(f64)
 {
 	bool open = true;
-	ImGui::Begin("Outliner##LayerWindow", &open);
+	ImGui::Begin("Outliner##OutlinerLayer", &open);
 	{
 		m_context = ImGui::GetCurrentContext();
 
@@ -26,16 +26,15 @@ void OutlinerLayer::Update(f64)
 		ViewportLayer* viewportLayer = Editor::GetLayer<ViewportLayer>();
 		std::shared_ptr<DE::Entity> selectedEntity = viewportLayer->GetSelectedEntity().lock();
 
-		if (ImGui::BeginTabBar("OutlinerTabBar"))
+		if (ImGui::BeginTabBar("OutlinerTabBar##OutlinerLayer"))
 		{
-			if (ImGui::BeginTabItem("Outliner"))
+			if (ImGui::BeginTabItem("Outliner##TabBarItemOutlinerLayer"))
 			{
 				DE::World* world = DE::Engine::GetWorld();
 				const std::vector<std::shared_ptr<DE::Entity>>& entities = world->GetEntities();
 
 				// Create a scrollable region for the Inspector tab
-				ImGui::BeginChild("OutlinerScroll", ImVec2(0, -ImGui::GetFrameHeightWithSpacing()), false,
-								ImGuiWindowFlags_HorizontalScrollbar);
+				ImGui::BeginChild("OutlinerScroll", ImVec2(0, -ImGui::GetFrameHeightWithSpacing()), false, ImGuiWindowFlags_HorizontalScrollbar);
 				{
 					for (u_size i = 0; i < entities.size(); i++)
 					{
@@ -46,8 +45,7 @@ void OutlinerLayer::Update(f64)
 						else
 							ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.15f, 0.15f, 0.15f, 1.0f));
 
-						if (ImGui::Button((entity->GetName() + "##" + std::to_string(i)).c_str(),
-										ImVec2(ImGui::GetContentRegionAvail().x, 0)))
+						if (ImGui::Button((entity->GetName() + "##" + std::to_string(i)).c_str(), ImVec2(ImGui::GetContentRegionAvail().x, 0)))
 						{
 							viewportLayer->SetSelectedEntity(entity);
 						}

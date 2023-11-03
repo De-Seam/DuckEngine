@@ -25,7 +25,7 @@ void Engine::Init()
 	SDLEventFunction shutdownFunc;
 	shutdownFunc.event_type = SDL_QUIT;
 	shutdownFunc.function_ptr =
-		[](const SDL_Event& event)
+		[](const SDL_Event&)
 		{
 			Shutdown();
 		};
