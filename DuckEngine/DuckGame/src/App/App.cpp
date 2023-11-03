@@ -18,21 +18,7 @@ void App::Init()
 
 	EDITOR_ONLY(Editor::Init());
 
-	DE::World* world = DE::Engine::CreateNewWorld();
-	DE::Entity* entity = world->CreateEntity<DE::Entity>();
-	entity->SetName("Test");
-	entity->SetPosition(fm::vec2(10, 10));
-	entity->SetSize(fm::vec2(100, 100));
-	entity->SetRotation(30);
-	const auto textureResource = DE::ResourceManager::GetResource<DE::TextureResource>("Assets/Textures/Player.png");
-	entity->SetTexture(textureResource);
-
-	entity = world->CreateEntity<DE::Entity>();
-	entity->SetName("Test2");
-	entity->SetPosition(fm::vec2(100, 100));
-	entity->SetSize(fm::vec2(100, 100));
-	entity->SetRotation(0);
-
+	DE::Engine::LoadWorldFromFile("Assets/Worlds/World.DuckWorld");
 
 #ifndef DUCK_EDITOR
 	DE::Engine::BeginPlay();

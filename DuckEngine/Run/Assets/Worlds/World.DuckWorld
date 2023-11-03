@@ -3,8 +3,8 @@
       {
          "name": "Test",
          "position": [
-            -117.0,
-            -54.0
+            -42.0,
+            23.0
          ],
          "rotation": 30.0,
          "scriptPath": "",
@@ -12,20 +12,21 @@
             100.0,
             100.0
          ],
-         "texturePath": "E:\\_Programming\\GitHub\\DuckEngine\\DuckEngine\\Run\\Assets\\top.jpg"
+         "texturePath": "Assets/Textures/Player.png"
       },
       {
          "name": "Test2",
          "position": [
-            100.0,
-            100.0
+            203.0,
+            29.0
          ],
-         "rotation": 0.0,
+         "rotation": 47.0,
          "scriptPath": "",
          "size": [
             100.0,
             100.0
-         ]
+         ],
+         "texturePath": "Assets/top.jpg"
       }
    ],
    "Name": "World"

@@ -101,21 +101,19 @@ void InspectorLayer::Update(f32)
 					ImGui::TextUnformatted("Texture");
 					ImGui::NextColumn();
 
-					if (selectedEntity->GetTexture())
+					if ((selectedEntity->GetTexture() && ImGui::ImageButton((ImTextureID)selectedEntity->GetTexture()->GetTexture(), {72, 72}))
+						|| (!selectedEntity->GetTexture() && ImGui::Button("Add Texture")))
 					{
-						if (ImGui::ImageButton((ImTextureID)selectedEntity->GetTexture()->GetTexture(), {72, 72}))
+						std::optional<std::string> openedPath = OpenFromFileExplorer(
+							L"Image Files (*.png;*.jpg;*.jpeg;*.bmp;*.gif)\0*.png;*.jpg;*.jpeg;*.bmp;*.gif\0"
+							L"All Files (*.*)\0*.*\0",
+							"png");
+						if (openedPath)
 						{
-							std::optional<std::string> openedPath = OpenFromFileExplorer(
-								L"Image Files (*.png;*.jpg;*.jpeg;*.bmp;*.gif)\0*.png;*.jpg;*.jpeg;*.bmp;*.gif\0"
-								L"All Files (*.*)\0*.*\0",
-								"png");
-							if (openedPath)
-							{
-								std::string relativePath = relative(openedPath.value(), std::filesystem::current_path()).string();
-								std::ranges::replace(relativePath, '\\', '/');
+							std::string relativePath = relative(openedPath.value(), std::filesystem::current_path()).string();
+							std::ranges::replace(relativePath, '\\', '/');
 
-								selectedEntity->SetTexture(DE::ResourceManager::GetResource<DE::TextureResource>(relativePath));
-							}
+							selectedEntity->SetTexture(DE::ResourceManager::GetResource<DE::TextureResource>(relativePath));
 						}
 					}
 

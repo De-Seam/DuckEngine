@@ -61,7 +61,15 @@ void World::LoadFromFile(const std::string& filePath)
 {
 	Log(LogType::Info, "Loading world from %s", filePath.c_str());
 
+	m_filePath = filePath;
+
 	std::ifstream file(filePath);
+	if (!file)
+	{
+		Log(LogType::Error, "Failed to load world from %s", filePath.c_str());
+		return;
+	}
+
 	nlohmann::json json;
 	file >> json;
 
