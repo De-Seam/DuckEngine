@@ -63,10 +63,11 @@ std::optional<std::string> SaveFileExplorer()
 		}
 		else
 		{
-			// Error handling
+			Log(DE::LogType::Error, "Error opening file");
+			return std::nullopt;
 		}
 		//*/
-		std::string savedPath(&buffer[0]);
+		std::string savedPath(buffer.data());
 #else
 		std::string savedPath = NPath;
 #endif
@@ -102,7 +103,8 @@ std::optional<std::string> OpenFileExplorer()
 		}
 		else
 		{
-			// Error handling
+			Log(DE::LogType::Error, "Error opening file");
+			return std::nullopt;
 		}
 		//*/
 		std::string openedPath(buffer.data());
