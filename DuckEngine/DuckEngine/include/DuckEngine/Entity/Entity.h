@@ -28,7 +28,14 @@ public:
 	void SetName(const std::string& name) { m_name = name; }
 	void SetPosition(const fm::vec2& position) { m_position = position; }
 	void SetSize(const fm::vec2& size) { m_size = size; }
-	void SetRotation(f32 rotation) { m_rotation = fmodf(rotation + 180.f, 360.f) - 180.f; }
+
+	void SetRotation(f32 rotation)
+	{
+		rotation = fmodf(rotation + 180.0f, 360.0f);
+		rotation -= floorf(rotation * (1 / 360.0f)) * 360.0f;
+		m_rotation = rotation - 180.0f;
+	}
+
 	void SetTexture(const std::shared_ptr<TextureResource>& texture) { m_texture = texture; }
 	void SetScriptPath(const std::string& scriptPath) { m_scriptPath = scriptPath; }
 

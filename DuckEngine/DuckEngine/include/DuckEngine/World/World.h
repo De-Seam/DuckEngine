@@ -27,7 +27,7 @@ public:
 	virtual void LoadFromJson(const nlohmann::json& json);
 
 	template<typename T>
-	T* CreateEntity();
+	std::shared_ptr<T> CreateEntity();
 
 	const std::string& GetName() { return m_name; }
 	const std::string& GetFilePath() { return m_filePath; }
@@ -47,9 +47,9 @@ private:
 };
 
 template<typename T>
-T* World::CreateEntity()
+std::shared_ptr<T> World::CreateEntity()
 {
 	std::shared_ptr<T>& entity = m_entities.emplace_back(std::move(std::make_unique<T>()));
-	return entity.get();
+	return entity;
 }
 }

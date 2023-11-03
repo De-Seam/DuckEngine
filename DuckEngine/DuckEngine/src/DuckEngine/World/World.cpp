@@ -92,7 +92,7 @@ void World::LoadFromJson(const nlohmann::json& json)
 	m_name = json["Name"];
 	for (u_size i = 0; i < json["Entities"].size(); i++)
 	{
-		Entity* entity = CreateEntity<Entity>();
+		std::shared_ptr<Entity> entity = CreateEntity<Entity>();
 		entity->SetJSONVariables(json["Entities"][i]);
 	}
 }
