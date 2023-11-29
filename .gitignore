@@ -46,3 +46,5 @@ DuckEngine/Run/DuckEngine.pdb
 !DuckEngine/DuckEngine/ext/lib/Release/*
 !DuckEngine/DuckGame/ext/lib/Debug/*
 !DuckEngine/DuckGame/ext/lib/Release/*
+
+!DuckEngine/Run/*
