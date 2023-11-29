@@ -41,3 +41,8 @@ build/
 *.pdb
 DuckEngine/Run/DuckEngine.exp
 DuckEngine/Run/DuckEngine.pdb
+
+!DuckEngine/DuckEngine/ext/lib/Debug/*
+!DuckEngine/DuckEngine/ext/lib/Release/*
+!DuckEngine/DuckGame/ext/lib/Debug/*
+!DuckEngine/DuckGame/ext/lib/Release/*
