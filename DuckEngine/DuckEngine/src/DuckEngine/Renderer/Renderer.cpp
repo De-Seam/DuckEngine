@@ -94,6 +94,8 @@ void Renderer::DrawRectangleOutline(const fm::vec2& position, const fm::vec2& si
 
 	const SDL_Rect rect = GetSDLRect(position, size);
 	// Draw rectangle outline
+	const SDL_FRect dstRect = GetSDLFRect(position, size);
+	SDL_RenderDrawRectF(m_renderer, &dstRect);
 	SDL_RenderDrawRect(m_renderer, &rect);
 }
 
@@ -161,8 +163,8 @@ SDL_Rect Renderer::GetSDLRect(const fm::vec2& position, const fm::vec2& halfSize
 
 	// Calculate the screen rectangle
 	SDL_Rect sdlRect;
-	sdlRect.x = static_cast<int>(screenCenter.x - halfSize.x) + (m_windowSize.x / 2);
-	sdlRect.y = static_cast<int>(screenCenter.y - halfSize.y) + (m_windowSize.y / 2);
+	sdlRect.x = static_cast<int>(screenCenter.x - screenHalfSize.x) + (m_windowSize.x / 2);
+	sdlRect.y = static_cast<int>(screenCenter.y - screenHalfSize.y) + (m_windowSize.y / 2);
 	sdlRect.w = static_cast<int>(screenHalfSize.x * 2);
 	sdlRect.h = static_cast<int>(screenHalfSize.y * 2);
 
